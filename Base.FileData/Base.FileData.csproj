@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bootstrapper.Boundary\Bootstrapper.Boundary.csproj" />
+    <ProjectReference Include="..\Bootstrapper.Core\Bootstrapper.Core.csproj" />
+  </ItemGroup>
+
+</Project>

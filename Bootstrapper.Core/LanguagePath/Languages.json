@@ -1,0 +1,16 @@
+{
+	"Languages": [
+		{
+			"Code": "tr",
+			"Name": "Türkçe",
+			"IconCode": "tr",
+			"HrefLangs":["tr-TR"]
+		},
+		{
+			"Code": "en",
+			"Name": "English",
+			"IconCode": "en",
+			"HrefLangs":["en-us","en-gb"]
+		}
+	]
+}
