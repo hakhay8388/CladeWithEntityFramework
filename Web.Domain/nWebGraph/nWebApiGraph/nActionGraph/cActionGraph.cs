@@ -35,6 +35,7 @@ using Bootstrapper.Core.nApplication;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nPageResultAction;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nMenuResultAction;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nResultItemAction;
+using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nSetUserOnClientAction;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nActionGraph
 {
@@ -91,6 +92,7 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nActionGraph
 
         public cResultItemAction ResultItemAction { get; set; }
 
+        public cSetUserOnClientAction SetUserOnClientAction { get; set; }
 
         public cActionGraph(cApp _App, cWebGraph _WebGraph)
             : base(_App)

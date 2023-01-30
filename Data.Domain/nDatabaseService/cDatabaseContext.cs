@@ -6,6 +6,7 @@ using System.Reflection;
 using Data.Domain.nDatabaseService.nSystemEntities;
 using System.Reflection.Emit;
 using System.Reflection.Metadata;
+using Data.Domain.nDatabaseService.nEntities;
 
 namespace Data.Domain.nDatabaseService
 {
@@ -28,6 +29,7 @@ namespace Data.Domain.nDatabaseService
         public DbSet<cUserDetailEntity> UserDetails { get; set; }
         public DbSet<cUserEntity> Users { get; set; }
         public DbSet<cUserSessionEntity> UserSessions { get; set; }
+        public DbSet<cPaymentEntity> Payments { get; set; }
 
 
         public cDatabaseContext()

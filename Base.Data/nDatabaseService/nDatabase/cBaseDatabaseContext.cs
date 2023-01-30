@@ -63,19 +63,29 @@ namespace Base.Data.nDatabaseService.nDatabase
             Console.WriteLine("Perform End : " + _ServiceMethod.Method.ToString());
         }
 
+ 
         private void InvokeTransactionalAction(Func<bool> _ServiceMethod)
         {
             IDbContextTransaction __Transaction = null;
             try
             {
-                __Transaction = Database.BeginTransaction();
-                if (_ServiceMethod())
+                List<MethodBase> __Methods = App.Handlers.StackHandler.GetMethods("InvokeTransactionalAction", 0);
+
+                if (__Methods.Where(__Item => __Item.DeclaringType.Name == this.GetType().Name).ToList().Count < 2)
                 {
-                    __Transaction.Commit();
+                    __Transaction = Database.BeginTransaction();
+                    if (_ServiceMethod())
+                    {
+                        __Transaction.Commit();
+                    }
+                    else
+                    {
+                        __Transaction.Rollback();
+                    }
                 }
                 else
                 {
-                    __Transaction.Rollback();
+                    throw new Exception("ic ice aclilan transation mevcut..!");
                 }
             }
             catch (Exception _Ex)
@@ -88,6 +98,8 @@ namespace Base.Data.nDatabaseService.nDatabase
                 throw _Ex;
             }
         }
+
+
 
     }
 }

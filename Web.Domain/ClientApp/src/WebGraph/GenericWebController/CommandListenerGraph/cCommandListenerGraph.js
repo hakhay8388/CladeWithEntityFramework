@@ -20,7 +20,7 @@ var cCommandListenerGraph = Class(cBaseObject,
     ,
     InitializeCommandListeners: function ()
     {
-      this.LogInOutCommandListener = new cLogInOutCommandListener();
+      //this.LogInOutCommandListener = new cLogInOutCommandListener();
       this.GoPageCommandListener = new cGoPageCommandListener();
       this.GeneralCommandListener = new cGeneralCommandListener();
       this.CacheCommandListener = new cCacheCommandListener();
@@ -29,7 +29,7 @@ var cCommandListenerGraph = Class(cBaseObject,
     Destroy: function ()
     {
 
-      this.LogInOutCommandListener.Destroy(); 
+      //this.LogInOutCommandListener.Destroy(); 
       this.GoPageCommandListener.Destroy();
       this.GeneralCommandListener.Destroy();
       this.CacheCommandListener.Destroy();
@@ -37,7 +37,7 @@ var cCommandListenerGraph = Class(cBaseObject,
 
       this.CommandListenerList.Destroy();
 
-      delete this.LogInOutCommandListener; 
+      //delete this.LogInOutCommandListener; 
       delete this.GoPageCommandListener;
       delete this.GeneralCommandListener;
       delete this.CacheCommandListener;

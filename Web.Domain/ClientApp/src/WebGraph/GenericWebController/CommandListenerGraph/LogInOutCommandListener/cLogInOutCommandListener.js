@@ -30,7 +30,7 @@ var cLogInOutCommandListener = Class(
 
       this.HashChanged = this.HashChanged.bind(this);
       this.HashControlFunction(this.HashChanged);
-      Actions.CheckLogin();
+      //Actions.CheckLogin();
     },
     Destroy: function ()
     {

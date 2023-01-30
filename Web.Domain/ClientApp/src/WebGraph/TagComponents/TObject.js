@@ -253,8 +253,6 @@ var TObject = Class(
       });
     },
     HandleLoading: function () {
-      //return < div className="animated fadeIn pt-1 text-center" >{this.state.Language.Loading}</div>
-      // return <div className="animated fadeIn pt-3 text-center"><h2>{this.state.Language.Loading} {' '}<Spinner color="primary" /></h2></div>
       return (
         <Grid
           container
@@ -273,26 +271,6 @@ var TObject = Class(
           </Grid>
         </Grid>
       );
-
-      /*
-            <Grid
-              container
-              direction="row"
-              justifyContent="center"
-              alignItems="center"
-              style={{ minHeight: '30vh' }}
-            >
-              <Grid item>
-                <h4 style={{ color: "#969696" }}>
-                  {GenericWebGraph.Managers.LanguageManager.ActiveLanguage.Loading}{" "}
-                </h4>
-              </Grid>
-              <Grid item style={{ paddingLeft: 10 }}>
-                <CircularProgress  />
-              </Grid>
-
-            </Grid>
-            */
     },
     componentDidUpdate(_PrevProps, _PrevState) {
       this.RenderCount++;

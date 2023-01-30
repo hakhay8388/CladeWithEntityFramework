@@ -6,8 +6,8 @@ import { WebGraph } from "../GenericCoreGraph/WebGraph/WebGraph";
 
 import Button from '@mui/material/Button';
 
-const TDynamicLoader = React.lazy(() => import("./TDynamicLoader"));
-const TLogin = React.lazy(() => import("./Pages/UnloginedPages/TLogin"));
+const TDynamicLoader = React.lazy(() => import("./Loaders/TDynamicLoader"));
+const TUnloginedLayout = React.lazy(() => import("./Pages/UnloginedPages/Containers/TUnloginedLayout"));
 
 class TApp extends Component {
     constructor(_Props) {
@@ -28,6 +28,7 @@ class TApp extends Component {
     }
 
     render() {
+        var __This = this;
         return (
             <div style={{ fontFamily: "Montserrat" }}>
                 <React.Suspense fallback={<div className="container">
@@ -38,7 +39,7 @@ class TApp extends Component {
                     <ThemeProvider theme={this.GetTheme()}>
                         <TDynamicLoader getInnerChilds={() => {
                             return <div>
-                                <TLogin />
+                                <TUnloginedLayout {...this.props} />
                             </div>
                         }} />
                     </ThemeProvider>

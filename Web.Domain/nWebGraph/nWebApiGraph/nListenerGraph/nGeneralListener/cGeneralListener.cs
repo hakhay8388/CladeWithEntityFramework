@@ -23,6 +23,7 @@ using Web.Domain.nWebGraph.nSessionManager;
 using Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nParamListener;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nSetGlobalParamListAction;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nGetGlobalParamListCommand;
+using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nLogInOutAction;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nGeneralListener
 {
@@ -77,6 +78,8 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nGeneralListener
 
             cSetGlobalParamListProps __GlobalParamListResultProps = WebGraph.ListenerGraph.GetListenerByType<cParamListener>().PrepareGetGlobalParamListProps(_Controller, new cGetGlobalParamListCommandData() );
             WebGraph.ActionGraph.SetGlobalParamListAction.Action(_Controller, __GlobalParamListResultProps);
+
+            WebGraph.ActionGraph.LogInOutAction.Action(_Controller);
 
         }
     }

@@ -1,29 +1,40 @@
 import React, { Component } from 'react';
 
 
-import GenericWebGraph from "../../WebGraph/GenericWebController/GenericWebGraph"
+import GenericWebGraph from "../../GenericWebController/GenericWebGraph"
 //import { CommandInterfaces } from "../GenericWebController/CommandInterpreter/cCommandInterpreter"
-import { DebugAlert, Class, Interface, Abstract, ObjectTypes, JSTypeOperator } from "../../WebGraph/GenericCoreGraph/ClassFramework/Class"
-import cBaseObject from "../GenericCoreGraph/BaseObject/cBaseObject";
+import { DebugAlert, Class, Interface, Abstract, ObjectTypes, JSTypeOperator } from "../../GenericCoreGraph/ClassFramework/Class"
+import cBaseObject from "../../GenericCoreGraph/BaseObject/cBaseObject";
 
 //import TObject from "../../WebGraph/TagComponents/TObject"
 //import Actions from "../../WebGraph/GenericWebController/ActionGraph/Actions"
-import { CommandIDs } from "../../WebGraph/GenericWebController/CommandInterpreter/CommandIDs/CommandIDs"
-import { ActionIDs } from "../../WebGraph/GenericWebController/ActionGraph/ActionIDs/ActionIDs";
+import { CommandIDs } from "../../GenericWebController/CommandInterpreter/CommandIDs/CommandIDs"
+import { ActionIDs } from "../../GenericWebController/ActionGraph/ActionIDs/ActionIDs";
 //import { WebGraph } from "../../WebGraph/GenericCoreGraph/WebGraph/WebGraph"
 //import cCommandListenerGraph from "../../WebGraph/GenericWebController/CommandListenerGraph/cCommandListenerGraph"
 //import cManagersWithListener from "../../WebGraph/GenericWebController/ManagersWithListener/cManagersWithListener"
 
 
 
-import cManagers from "../../WebGraph/GenericWebController/Managers/cManagers";
-import { cCommandInterpreter } from "../../WebGraph/GenericWebController/CommandInterpreter/cCommandInterpreter";
-import cActionGraph from "../../WebGraph/GenericWebController/ActionGraph/cActionGraph";
+import cManagers from "../../GenericWebController/Managers/cManagers";
+import { cCommandInterpreter } from "../../GenericWebController/CommandInterpreter/cCommandInterpreter";
+import cActionGraph from "../../GenericWebController/ActionGraph/cActionGraph";
+import Pages from "../../TagComponents/Pages/Pages";
 
-const TMessageBox = React.lazy(() => import("./Listeners/TMessageBox"));
-const THotSpotMessage = React.lazy(() => import("./Listeners/THotSpotMessage"));
-const TManagersWithListenerLoader = React.lazy(() => import("./Listeners/TManagersWithListenerLoader"));
-const TGlobalLoading = React.lazy(() => import("./Utilities/TGlobalLoading"));
+
+
+//const cGlobalParamsManager = React.lazy(() => import("../GenericWebController/ManagersWithListener/GlobalParamsManager/cGlobalParamsManager"));
+
+const TMessageBox = React.lazy(() => import("../Listeners/TMessageBox"));
+const THotSpotMessage = React.lazy(() => import("../Listeners/THotSpotMessage"));
+const TListenerLoader = React.lazy(() => import("./TListenerLoader"));
+const TPagesLoader = React.lazy(() => import("./TPagesLoader"));
+
+
+
+
+
+const TGlobalLoading = React.lazy(() => import("../Utilities/TGlobalLoading"));
 
 
 
@@ -85,14 +96,16 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
                 GenericWebGraph.CommandInterpreter = new cCommandInterpreter();
                 GenericWebGraph.ActionGraph = new cActionGraph();
 
-                window.GenericWebGraph = GenericWebGraph;
+                var __PageResult = __This.GetCommandByNameInCommandArray(response, "PageResult");
+                Pages.LoadPages(__PageResult.Data);
 
-                
+                window.GenericWebGraph = GenericWebGraph;
                 
 
                 __This.setState({
                     innerChilds: <div>
-                        <TManagersWithListenerLoader />
+                        <TListenerLoader />
+                        <TPagesLoader />
                         <TMessageBox />
                         <THotSpotMessage />
                         <TGlobalLoading />

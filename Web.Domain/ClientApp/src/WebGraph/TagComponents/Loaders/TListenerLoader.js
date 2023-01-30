@@ -7,25 +7,26 @@ import {
   ObjectTypes,
   JSTypeOperator,
 } from "../../GenericCoreGraph/ClassFramework/Class";
-import TObject from "../../TagComponents/TObject";
+import TObject from "../TObject";
 
 import cManagersWithListener from "../../GenericWebController/ManagersWithListener/cManagersWithListener"
 import GenericWebGraph from "../../GenericWebController/GenericWebGraph"
+import cCommandListenerGraph from "../../GenericWebController/CommandListenerGraph/cCommandListenerGraph"
 
 
-var TManagersWithListenerLoader = Class(
-  TObject,
+var TListenerLoader = Class(TObject,
     {
-        ObjectType: ObjectTypes.Get("TManagersWithListenerLoader"),
+        ObjectType: ObjectTypes.Get("TListenerLoader"),
         constructor: function (_Props) {
-            TManagersWithListenerLoader.BaseObject.constructor.call(this, _Props);
+            TListenerLoader.BaseObject.constructor.call(this, _Props);
             GenericWebGraph.ManagersWithListener = new cManagersWithListener();
+            GenericWebGraph.CommandListenerGraph = new cCommandListenerGraph();
         },
         Destroy: function () {
-            TManagersWithListenerLoader.BaseObject.Destroy.call(this);
+            TListenerLoader.BaseObject.Destroy.call(this);
         },
         componentDidMount: function () {
-            TManagersWithListenerLoader.BaseObject.componentDidMount.call(this);
+            TListenerLoader.BaseObject.componentDidMount.call(this);
         },
         render: function () {
             return (<div></div>);
@@ -35,4 +36,4 @@ var TManagersWithListenerLoader = Class(
   {}
 );
 
-export default TManagersWithListenerLoader;
+export default TListenerLoader;

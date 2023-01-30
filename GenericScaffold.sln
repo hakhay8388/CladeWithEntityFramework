@@ -30,6 +30,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AllLayerGenerealFiles", "AllLayerGenerealFiles", "{933EF2E4-7194-483C-9BF0-5206C08B97A9}"
 	ProjectSection(SolutionItems) = preProject
 		ApplicationSettings.xml = ApplicationSettings.xml
+		EntityFramework.txt = EntityFramework.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Layer4_Core", "Layer4_Core", "{8D0278C5-3122-4DFD-8180-4793B2F9445E}"
@@ -40,7 +41,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Boundary", "Data.Bound
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.BatchJobService", "App.BatchJobService\App.BatchJobService.csproj", "{8F028F56-6FD4-4833-8102-6C6E9385697E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.QueryTester", "App.QueryTester\App.QueryTester.csproj", "{D4694908-0919-4702-85CD-E37CB6CC91CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.QueryTester", "App.QueryTester\App.QueryTester.csproj", "{D4694908-0919-4702-85CD-E37CB6CC91CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

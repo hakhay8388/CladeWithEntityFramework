@@ -39,7 +39,7 @@ var TMainPage = Class(TObject,
 
       return (
           <div>
-              Test
+              User Page Main
         </div>
       )
     },

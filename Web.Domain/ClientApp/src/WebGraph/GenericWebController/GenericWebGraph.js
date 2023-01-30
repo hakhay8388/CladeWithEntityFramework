@@ -127,30 +127,6 @@ function WindowSizeChanged() {
 
 
 
-
-
-GenericWebGraph.IsPageExists = function (_PageName, _ControlOnlyRootPage) {
-  /*if (_PageName == "/" || _PageName == "") {
-    return true;
-  }
-
-  if (!_PageName.startsWith("/")) {
-    _PageName = "/" + _PageName;
-  }
-
-  if (_ControlOnlyRootPage) {
-    var __PageNameList = _PageName.split("/");
-    _PageName = "/" + __PageNameList[1];
-  }
-  var __Found = Pages.Routes.find((__Item) => __Item.purepath == _PageName);
-  if (__Found == undefined) {
-    if (__PageNameList.length > 2 && __PageNameList[1].length == 2) {
-      _PageName = "/" + __PageNameList[2];
-    }
-    __Found = Pages.Routes.find((__Item) => __Item.purepath == _PageName);
-  }
-  return JSTypeOperator.IsDefined(__Found) && __Found;*/
-};
 GenericWebGraph.SetCookie = function (params) {
   var name = params.name,
     value = params.value,

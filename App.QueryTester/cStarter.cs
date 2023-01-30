@@ -13,6 +13,7 @@ using Data.Domain.nDatabaseService;
 
 using Data.Domain.nDefaultValueTypes;
 using System.Xml.Linq;
+using Data.Domain.nDatabaseService.nEntities;
 
 namespace App.QueryTester
 {
@@ -34,8 +35,6 @@ namespace App.QueryTester
             if (App.Configuration.LoadGlobalParamsOnStart) DataService.GlobalParams.LoadGlobalParams();
 
             cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
-
-           
 
             Console.WriteLine("Test");
         }
