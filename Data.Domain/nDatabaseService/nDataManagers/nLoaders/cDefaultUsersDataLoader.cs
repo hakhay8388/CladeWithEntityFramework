@@ -19,15 +19,18 @@ namespace Data.Domain.nDataService.nDataManagers.nLoaders
         public int DeveloperCount = 10;
 
         public cRoleDataManager RoleDataManager { get; set; }
+        public cPageDataManager PageDataManager { get; set; }
         public cUserDataManager UserDataManager { get; set; }
         public cDefaultUsersDataLoader(cApp _App, cDataService _DataService, IFileDateService _FileDataService, cChecksumDataManager _ChecksumDataManager
             , cRoleDataManager _RoleDataManager
             , cUserDataManager _UserDataManager
+            , cPageDataManager _PageDataManager
             )
           : base(_App, LoaderIDs.DefaultUsersDataLoader, _DataService, _FileDataService, _ChecksumDataManager)
         {
             RoleDataManager = _RoleDataManager;
             UserDataManager = _UserDataManager;
+            PageDataManager = _PageDataManager;
         }
 
         public void Init()
@@ -73,7 +76,8 @@ namespace Data.Domain.nDataService.nDataManagers.nLoaders
                             UserDetail = new cUserDetailEntity()
                             {
                                 Telephone = (!__Add.IsNullOrEmpty() ? __Add + "-" + __Add + "-" + __Add : "")
-                            }
+                            },
+                            MainPage = PageDataManager.GetPageByCode(PageIDs.AdminMainPage.Code)
                         });
                         
                         __Admin.Save();
@@ -119,7 +123,8 @@ namespace Data.Domain.nDataService.nDataManagers.nLoaders
                             UserDetail = new cUserDetailEntity()
                             {
                                 Telephone = (!__Add.IsNullOrEmpty() ? __Add + "-" + __Add + "-" + __Add : "")
-                            }
+                            },
+                            MainPage = PageDataManager.GetPageByCode(PageIDs.UserMainPage.Code)
                         });
 
                         __User.Save();
@@ -165,7 +170,8 @@ namespace Data.Domain.nDataService.nDataManagers.nLoaders
                             UserDetail = new cUserDetailEntity()
                             {
                                 Telephone = (!__Add.IsNullOrEmpty() ? __Add + "-" + __Add + "-" + __Add : "")
-                            }
+                            },
+                            MainPage = PageDataManager.GetPageByCode(PageIDs.DeveloperMainPage.Code)
                         });
 
                         __Developer.Save();

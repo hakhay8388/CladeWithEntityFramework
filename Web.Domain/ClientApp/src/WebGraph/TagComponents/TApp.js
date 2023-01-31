@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 
 const TDynamicLoader = React.lazy(() => import("./Loaders/TDynamicLoader"));
 const TUnloginedLayout = React.lazy(() => import("./Pages/UnloginedPages/Containers/TUnloginedLayout"));
+const TAdminLayout = React.lazy(() => import("./Pages/AdminPages/Containers/TAdminLayout"));
 
 class TApp extends Component {
     constructor(_Props) {
@@ -27,6 +28,8 @@ class TApp extends Component {
         return window.Themes.DefaultTheme;
     }
 
+    pu
+
     render() {
         var __This = this;
         return (
@@ -39,7 +42,7 @@ class TApp extends Component {
                     <ThemeProvider theme={this.GetTheme()}>
                         <TDynamicLoader getInnerChilds={() => {
                             return <div>
-                                <TUnloginedLayout {...this.props} />
+                                <TAdminLayout {...this.props} />
                             </div>
                         }} />
                     </ThemeProvider>

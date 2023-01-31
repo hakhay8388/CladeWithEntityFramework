@@ -21,7 +21,12 @@ var TListenerLoader = Class(TObject,
             TListenerLoader.BaseObject.constructor.call(this, _Props);
             GenericWebGraph.ManagersWithListener = new cManagersWithListener();
             GenericWebGraph.CommandListenerGraph = new cCommandListenerGraph();
+            this.InitCommand();
         },
+        InitCommand: function () {
+            GenericWebGraph.CommandInterpreter.InterpretCommand(this.props.RunAfterLoad);
+        }
+        ,
         Destroy: function () {
             TListenerLoader.BaseObject.Destroy.call(this);
         },

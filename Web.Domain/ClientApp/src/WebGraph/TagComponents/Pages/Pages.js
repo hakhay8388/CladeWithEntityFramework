@@ -48,10 +48,11 @@ Pages.LoadPages = function (_Pages, _CallbackFunction) {
     _Pages.PagesItems.map(function (_Item, _Index) {
 
         Pages.Routes.push({
-            path: "/" + Pages.GetRouteString(_Item, true),
-            purepath: "/" + _Item.Path,
-            name: GenericWebGraph.Managers.LanguageManager.ActiveLanguage[_Item.Name],
-            component: React.lazy(() => import("./GlobalPages/" + _Item.Component)
+            Path: "/" + Pages.GetRouteString(_Item, true),
+            PurePath: "/" + _Item.Path,
+            IsMainPage: _Item.IsMainPage,
+            Name: GenericWebGraph.Managers.LanguageManager.ActiveLanguage[_Item.Name],
+            Component: React.lazy(() => import("./GlobalPages/" + _Item.Component)
                 .catch(
                     () => import("./AdminPages/" + _Item.Component)
                         .catch(
@@ -62,7 +63,7 @@ Pages.LoadPages = function (_Pages, _CallbackFunction) {
                         )
                 )
             ),
-            exact: true,
+            exact: _Item.SubParamName.length === 0
         });     
 
     });

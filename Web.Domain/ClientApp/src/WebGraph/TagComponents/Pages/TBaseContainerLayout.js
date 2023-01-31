@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Switch} from "react-router-dom";
 import { Class, JSTypeOperator, ObjectTypes } from "../../GenericCoreGraph/ClassFramework/Class";
 import TObject from "../../TagComponents/TObject";
 import GenericWebGraph from "../../GenericWebController/GenericWebGraph";
@@ -37,16 +37,31 @@ var TBaseContainerLayout = Class(
             else {
                 return (
                     <Routes>
-                        {Pages.Routes.map((route, idx) => {
-                            return (
-                                <Route
-                                    key={idx}
-                                    path={_Lang + route.path}
-                                    exact={route.exact}
-                                    name={route.name}
-                                    element={<route.component />}
-                                />
-                            );
+                        {Pages.Routes.map((_Route, _Index) =>
+                        {
+                            if (_Route.IsMainPage)
+                            {
+                                return (
+                                    <Route
+                                        key={_Index}
+                                        path={_Lang + "/"}
+                                        exact={_Route.Exact}
+                                        name={_Route.Name}
+                                        element={<_Route.Component />}
+                                    />
+                                );
+                            }
+                            else {
+                                return (
+                                    <Route
+                                        key={_Index}
+                                        path={_Lang + _Route.Path}
+                                        exact={_Route.Exact}
+                                        name={_Route.Name}
+                                        element={<_Route.Component />}
+                                    />
+                                );
+                            }                            
                         })}
                     </Routes>
                 );

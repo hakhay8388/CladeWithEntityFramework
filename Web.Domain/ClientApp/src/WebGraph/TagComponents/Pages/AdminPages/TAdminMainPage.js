@@ -18,11 +18,11 @@ import { withStyles } from "@mui/styles";
 import GlobalStyles from "../../../../ScriptStyles/GlobalStyles";
 import classNames from "classnames";
 
-var TMainPage = Class(TObject,
+var TAdminMainPage = Class(TObject,
   {
-    ObjectType: ObjectTypes.Get("TMainPage"),
+      ObjectType: ObjectTypes.Get("TAdminMainPage"),
     constructor: function (_Props) {
-      TMainPage.BaseObject.constructor.call(this, _Props);
+        TAdminMainPage.BaseObject.constructor.call(this, _Props);
       this.state = {
         ...this.state,
       };
@@ -31,7 +31,7 @@ var TMainPage = Class(TObject,
       var __This = this;
     },
       Destroy: function () {
-          TMainPage.BaseObject.Destroy.call(this);
+          TAdminMainPage.BaseObject.Destroy.call(this);
       }
     ,
     render() {
@@ -39,7 +39,7 @@ var TMainPage = Class(TObject,
 
       return (
           <div>
-              Test
+              Admin Page Main
         </div>
       )
     },
@@ -47,4 +47,4 @@ var TMainPage = Class(TObject,
   {}
 );
 
-export default withStyles(GlobalStyles)(TMainPage);
+export default withStyles(GlobalStyles)(TAdminMainPage);

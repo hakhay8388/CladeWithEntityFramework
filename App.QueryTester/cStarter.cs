@@ -13,7 +13,6 @@ using Data.Domain.nDatabaseService;
 
 using Data.Domain.nDefaultValueTypes;
 using System.Xml.Linq;
-using Data.Domain.nDatabaseService.nEntities;
 
 namespace App.QueryTester
 {

@@ -109,7 +109,7 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nPermissionListener
                         }
                         else
                         {
-                            PageIDs __PageID = PageIDs.GetByCode(__MenuEntity.Code, PageIDs.MainPage);
+                            PageIDs __PageID = PageIDs.GetByCode(__MenuEntity.Code, PageIDs.UnloginedMainPage);
                             __PageResultProps.MenuItems.Add(new cMenuItem()
                             {
                                 //url = __PageID.Code == PageIDs.MainPage.Code ? "global" : __PageID.Url,
@@ -152,9 +152,10 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nPermissionListener
                     {
                         Path = __Page.Url,
                         Name = __Page.Name,
-                        OriginalCode = PageIDs.GetByCode(__Page.Code, PageIDs.MainPage).OriginalCode,
-                        SubParamName = PageIDs.GetByCode(__Page.Code, PageIDs.MainPage).SubParamName,
-                        Component = __Page.ComponentName
+                        OriginalCode = PageIDs.GetByCode(__Page.Code, PageIDs.UserMainPage).OriginalCode,
+                        SubParamName = PageIDs.GetByCode(__Page.Code, PageIDs.UserMainPage).SubParamName,
+                        Component = __Page.ComponentName,
+                        IsMainPage = _Controller.ClientSession.User.MainPage.Code == __Page.Code,
                     });
                 }
 
@@ -171,8 +172,9 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nPermissionListener
                             Path = __Page.Url,
                             Name = __Page.Name,
                             OriginalCode = __Page.OriginalCode,
-                            SubParamName = PageIDs.GetByCode(__Page.Code, PageIDs.MainPage).SubParamName,
-                            Component = __Page.Component
+                            SubParamName = PageIDs.GetByCode(__Page.Code, PageIDs.UnloginedMainPage).SubParamName,
+                            Component = __Page.Component,
+                            IsMainPage = __Page.IsUnloginedMainPage
                         });
                     }
                 }

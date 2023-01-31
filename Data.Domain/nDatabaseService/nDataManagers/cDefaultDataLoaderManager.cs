@@ -66,8 +66,8 @@ namespace Data.Domain.nDataService.nDataManagers
 
             __DatabaseContext.Perform(() => { LanguageDataLoader.Init(); });
             __DatabaseContext.Perform(() => { GlobalParamsDataLoader.Init(); });
-            __DatabaseContext.Perform(() => { RoleDataLoader.Init(); });
             __DatabaseContext.Perform(() => { PageDataLoader.Init(); });
+            __DatabaseContext.Perform(() => { RoleDataLoader.Init(); });
             __DatabaseContext.Perform(() => { RolePageLoader.Init(); });
             __DatabaseContext.Perform(() => { MenuDataLoader.Init(); });
             __DatabaseContext.Perform(() => { RoleMenuLoader.Init(); });

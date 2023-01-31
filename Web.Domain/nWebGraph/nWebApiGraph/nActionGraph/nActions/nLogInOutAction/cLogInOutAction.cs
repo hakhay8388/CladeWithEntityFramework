@@ -9,6 +9,7 @@ using Bootstrapper.Core.nApplication;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nHotSpotMessageAction;
 
 using Web.Domain.Controllers;
+using Data.Domain.nDatabaseService.nSystemEntities;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nLogInOutAction
 {
@@ -21,7 +22,14 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nLogInOutActio
 
 		public override void Action(IController _Controller = null, List<cSession> _SignalSessions = null, bool _InstantSend = false)
 		{
-			cLogInOutProps __LogInOutProps = new cLogInOutProps();
+			if (_Controller.ClientSession.IsLogined)
+			{
+				_Controller.ClientSession.User.Load(__Item => __Item.Roles);
+				_Controller.ClientSession.User.Load(__Item => __Item.UserDetail);
+			}
+
+
+            cLogInOutProps __LogInOutProps = new cLogInOutProps();
 			__LogInOutProps.LoginState = _Controller.ClientSession.IsLogined;
 			__LogInOutProps.SessionID = _Controller.ClientSession.SessionID;
 

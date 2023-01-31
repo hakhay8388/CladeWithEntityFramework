@@ -55,8 +55,9 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
         this.FirstInitData = null;
         window.App.DynamicLoader = this;
         this.InitFirstLoad();
-    }
-    ,
+      }
+        ,
+
     InitFirstLoad: function()
     {
         var __LanguageCode = window.GetLanguageCodeFromUrl();
@@ -99,12 +100,14 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
                 var __PageResult = __This.GetCommandByNameInCommandArray(response, "PageResult");
                 Pages.LoadPages(__PageResult.Data);
 
+                var __CheckLogin = __This.GetCommandByNameInCommandArray(response, "LogInOut");
+
                 window.GenericWebGraph = GenericWebGraph;
                 
 
                 __This.setState({
                     innerChilds: <div>
-                        <TListenerLoader />
+                        <TListenerLoader RunAfterLoad={[__CheckLogin]} />
                         <TPagesLoader />
                         <TMessageBox />
                         <THotSpotMessage />

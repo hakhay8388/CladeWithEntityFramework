@@ -25,6 +25,11 @@ namespace Data.Domain.nDataService.nDataManagers
             return cPageEntity.Get(__Item => __Item.Url == _Url).FirstOrDefault();
         }
 
+        public cPageEntity GetPageByCode(string _Code)
+        {
+            return cPageEntity.Get(__Item => __Item.Code == _Code).FirstOrDefault();
+        }
+
         public cPageEntity AddPage(string _Name, string _Code, string _Url, string _ComponentName)
         {
             cPageEntity __PageEntity = cPageEntity.Add(new cPageEntity()
@@ -97,7 +102,7 @@ namespace Data.Domain.nDataService.nDataManagers
 
         public List<cPageEntity> GetPageByUser(cUserEntity _User)
         {
-            return GetPageByUserQuery(_User).ToList(); ;
+            return GetPageByUserQuery(_User).ToList();
         }
 
 

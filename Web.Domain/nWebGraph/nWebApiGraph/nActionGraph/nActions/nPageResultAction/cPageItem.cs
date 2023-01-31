@@ -18,5 +18,7 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nPageResultAct
         public string[] SubParamName { get; set; }
 
         public string Component { get; set; }
+
+        public bool IsMainPage { get; set; }
     }
 }

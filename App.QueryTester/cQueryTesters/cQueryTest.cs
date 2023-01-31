@@ -1,7 +1,6 @@
 ﻿using Bootstrapper.Core.nApplication;
 using Bootstrapper.Core.nCore;
 using Data.Domain.nDatabaseService;
-using Data.Domain.nDatabaseService.nEntities;
 using Data.Domain.nDatabaseService.nSystemEntities;
 using Data.Domain.nDataService.nDataManagers;
 
@@ -61,14 +60,7 @@ namespace App.QueryTester.cQueryTesters
                 Console.WriteLine("Thread ID_3: " + Thread.CurrentThread.ManagedThreadId);
                 __DatabaseContext.Perform(() =>
                 {
-                    Console.WriteLine("Thread ID_4: " + Thread.CurrentThread.ManagedThreadId);
-                    cPaymentEntity __PaymentEntity = cPaymentEntity.Add(new cPaymentEntity()
-                    {
-                        Price = 150,
-                        Name = "Test150",
-                    });
-                    __PaymentEntity.Save();
-                    Console.WriteLine("thisIsAsyncStart: " + Thread.CurrentThread.ManagedThreadId);
+                    
                     Task.Delay(1);
 
                     /*__DatabaseContext.Perform(async () =>

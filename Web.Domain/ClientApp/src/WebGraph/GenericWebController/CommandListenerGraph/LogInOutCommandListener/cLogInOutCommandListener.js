@@ -121,17 +121,19 @@ var cLogInOutCommandListener = Class(
     ,
     Receive_DoCheckLoginRequestCommand: function (_Data)
     {
-      if ((_Data.IsLogined && window.App.User == null) || (!_Data.IsLogined && window.App.User != null))
+      /*if ((_Data.IsLogined && window.App.User == null) || (!_Data.IsLogined && window.App.User != null))
       {
         setTimeout(function ()
         {
           Actions.CheckLogin();
         }, 500);
-      }
+      }*/
     }
     ,
     Receive_LogInOutCommand: function (_Data)
     {
+        console.log("test");
+        /*
       window.App.Checked = true;
       var __Url = window.GetUrl();
       var __UrlParams = window.GetUrlParams();
@@ -178,12 +180,12 @@ var cLogInOutCommandListener = Class(
         {
           GenericWebGraph.GoPage(__Url + __UrlParams);
         }
-      }
+      }*/
       /*else if (window.App.User != null)
       {
         window.location.href = "./";
       }*/
-      else
+      /*else
       {
         GenericWebGraph.CloseAllModals();
         GenericWebGraph.CloseAllHotSpotMessage();
@@ -210,7 +212,7 @@ var cLogInOutCommandListener = Class(
         {
           GenericWebGraph.GoPage(__Url + __UrlParams);
         }
-      }
+      }*/
     },
     Receive_ForceLogoutCommand: function (_Data)
     {

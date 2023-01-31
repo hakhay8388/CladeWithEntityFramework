@@ -23,6 +23,8 @@ namespace Data.Domain.nDatabaseService.nSystemEntities
 
         public  int State { get; set; }
 
+        public virtual cPageEntity MainPage { get; set; }
+
         public List<cUserSessionEntity> Sessions { get; set; }
 
         public List<cRoleEntity> Roles { get; set; }

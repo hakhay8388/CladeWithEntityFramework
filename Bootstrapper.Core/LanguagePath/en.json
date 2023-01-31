@@ -21,4 +21,5 @@
 	"Close": {"message": "Kapat" ,"description": ""},
 	"Loading": {"message": "Yükleniyor..." ,"description": ""},
 	"Login": {"message": "Login" ,"description": ""},
+	"NotificationGeneralNotices": {"message": "General Notices" ,"description": ""},  
 } 

@@ -15,10 +15,9 @@ namespace Data.Domain.nDefaultValueTypes
 
         /////////// Global Pages ////////////
 
-        public static PageIDs MainPage = new PageIDs(GetVariableName(() => MainPage), "MainPage", "mainpage", "TMainPage", 0, true);
+        public static PageIDs UnloginedMainPage = new PageIDs(GetVariableName(() => UnloginedMainPage), "UnloginedMainPage", "unloginedmainpage", "TUnloginedMainPage", 0, true, true);
         public static PageIDs LoginPage = new PageIDs(GetVariableName(() => LoginPage), "LoginPage", "login", "TLogin", 0, true);
-
-        public static PageIDs MenuPage = new PageIDs(GetVariableName(() => MenuPage), "MenuPage", "menupage", "TMenuPage", 60, false, new string[] { "menuName" });
+        public static PageIDs MenuPage = new PageIDs(GetVariableName(() => MenuPage), "MenuPage", "menupage", "TMenuPage", 60, false, false, new string[] { "menuName" });
 
 
         /////////// Admin Pages 1000 - 2000////////////
@@ -55,9 +54,10 @@ namespace Data.Domain.nDefaultValueTypes
         public string Component { get; set; }
         public string[] SubParamName { get; set; }
         public bool UnloginedPage { get; set; }
+        public bool IsUnloginedMainPage { get; set; }
         public string OriginalCode { get; set; }
 
-        public PageIDs(string _Code, string _Name, string _Url, string _Component, int _ID, bool _UnloginedPage, string[] _SubParamName = null)
+        public PageIDs(string _Code, string _Name, string _Url, string _Component, int _ID, bool _UnloginedPage = false, bool _IsUnloginedMainPage = false, string[] _SubParamName = null)
             : base(_Name, _Code, _ID)
         {
             TypeList = TypeList ?? new List<PageIDs>();
@@ -67,6 +67,7 @@ namespace Data.Domain.nDefaultValueTypes
             TypeList.Add(this);
 
             UnloginedPage = _UnloginedPage;
+            IsUnloginedMainPage = _IsUnloginedMainPage;
             Component = _Component;
             SubParamName = _SubParamName == null ? new string[] { } : _SubParamName;
 
