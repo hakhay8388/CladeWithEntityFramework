@@ -15,7 +15,21 @@ import moment from "moment";
 
 function GenericWebGraph() { }
 
-GenericWebGraph.Init = function () {
+GenericWebGraph.Init = function (_OnComplete) {
+    import("../GenericWebController/ManagersWithListener/cManagersWithListener")
+        .then((_Event1) => {
+            var cManagersWithListener = _Event1.default;
+            import("../GenericWebController/CommandListenerGraph/cCommandListenerGraph")
+                .then((_Event2) => {
+                    var cCommandListenerGraph = _Event2.default;
+                    GenericWebGraph.ManagersWithListener = new cManagersWithListener();
+                    GenericWebGraph.CommandListenerGraph = new cCommandListenerGraph();
+                    if (JSTypeOperator.IsFunction(_OnComplete))
+                    {
+                        _OnComplete();
+                    }                    
+                });
+        });
 };
 
 GenericWebGraph.ObjectList = function () {

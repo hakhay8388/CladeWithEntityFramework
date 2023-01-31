@@ -27,8 +27,6 @@ import Pages from "../../TagComponents/Pages/Pages";
 
 const TMessageBox = React.lazy(() => import("../Listeners/TMessageBox"));
 const THotSpotMessage = React.lazy(() => import("../Listeners/THotSpotMessage"));
-const TListenerLoader = React.lazy(() => import("./TListenerLoader"));
-const TPagesLoader = React.lazy(() => import("./TPagesLoader"));
 
 
 
@@ -56,8 +54,7 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
         window.App.DynamicLoader = this;
         this.InitFirstLoad();
       }
-        ,
-
+      ,
     InitFirstLoad: function()
     {
         var __LanguageCode = window.GetLanguageCodeFromUrl();
@@ -100,23 +97,23 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
                 var __PageResult = __This.GetCommandByNameInCommandArray(response, "PageResult");
                 Pages.LoadPages(__PageResult.Data);
 
-                var __CheckLogin = __This.GetCommandByNameInCommandArray(response, "LogInOut");
+                var __SetUserOnClient = __This.GetCommandByNameInCommandArray(response, "SetUserOnClient");
 
                 window.GenericWebGraph = GenericWebGraph;
-                
 
-                __This.setState({
-                    innerChilds: <div>
-                        <TListenerLoader RunAfterLoad={[__CheckLogin]} />
-                        <TPagesLoader />
-                        <TMessageBox />
-                        <THotSpotMessage />
-                        <TGlobalLoading />
-                        {__This.props.getInnerChilds()}
-                    </div>
+                GenericWebGraph.Init(function () {
+                    GenericWebGraph.CommandInterpreter.InterpretCommand([__SetUserOnClient]);
+
+                    __This.setState({
+                        innerChilds: <div>
+                            <TMessageBox />
+                            <THotSpotMessage />
+                            <TGlobalLoading />
+                            {__This.props.getInnerChilds()}
+                        </div>
+                    });
                 });
-
-
+                
             }).catch(err =>
             {
                 DebugAlert.Show("hata", err);

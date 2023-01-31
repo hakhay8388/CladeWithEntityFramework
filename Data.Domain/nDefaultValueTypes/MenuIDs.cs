@@ -14,7 +14,7 @@ namespace Data.Domain.nDefaultValueTypes
 
         //////////// Global Pages ////////////
 
-        public static MenuIDs MainPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => MainPage), "MainPage", "fas fa-home", 0, true);
+        public static MenuIDs UnloginedMainPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => UnloginedMainPage), "UnloginedMainPage", "fas fa-home", 0, true);
         public static MenuIDs LoginPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => LoginPage), "LoginPage", "cui-list", 20, true);
         ///////////////////////////////////////
 

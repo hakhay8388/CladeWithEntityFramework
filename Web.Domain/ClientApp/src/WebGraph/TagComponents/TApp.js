@@ -15,6 +15,7 @@ class TApp extends Component {
         super();
 
         this.GetTheme = this.GetTheme.bind(this);
+        this.GetRoleLayout = this.GetRoleLayout.bind(this);
 
         window.App.App = this;
         this.state = {
@@ -28,7 +29,17 @@ class TApp extends Component {
         return window.Themes.DefaultTheme;
     }
 
-    pu
+    GetRoleLayout()
+    {
+        if (window.App.User == null)
+        {
+            return <TUnloginedLayout {...this.props} />
+        }
+        else
+        {
+            return <TAdminLayout {...this.props} />
+        }
+    }
 
     render() {
         var __This = this;
@@ -39,10 +50,10 @@ class TApp extends Component {
                         <div className="lds-ripple"><div></div><div></div></div>
                     </div>
                 </div>}>
-                    <ThemeProvider theme={this.GetTheme()}>
+                    <ThemeProvider theme={__This.GetTheme()}>
                         <TDynamicLoader getInnerChilds={() => {
                             return <div>
-                                <TAdminLayout {...this.props} />
+                                {__This.GetRoleLayout()}
                             </div>
                         }} />
                     </ThemeProvider>

@@ -116,7 +116,11 @@ var cLogInOutCommandListener = Class(
     },
     Receive_SetUserOnClientCommand: function (_Data)
     {
-      window.App.User = _Data.User;
+        window.App.User = _Data.User;
+        if (window.App.User != null)
+        {
+            GenericWebGraph.ManagersWithListener.SignalListerner.HandleConnect();   
+        }
     }
     ,
     Receive_DoCheckLoginRequestCommand: function (_Data)
@@ -133,6 +137,18 @@ var cLogInOutCommandListener = Class(
     Receive_LogInOutCommand: function (_Data)
     {
         console.log("test");
+
+        /*if (_Data.LoginState && window.App.User == null)
+        {
+            GenericWebGraph.CloseAllModals();
+            DebugAlert.Show("Logined");
+            GenericWebGraph.ManagersWithListener.SignalListerner.HandleConnect();   
+        }
+        else if (_Data.LoginState) {
+           
+        }*/
+
+
         /*
       window.App.Checked = true;
       var __Url = window.GetUrl();

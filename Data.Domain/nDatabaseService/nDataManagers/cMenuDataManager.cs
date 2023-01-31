@@ -142,10 +142,21 @@ namespace Data.Domain.nDataService.nDataManagers
         }
 
 
-        public List<dynamic> GetMenuByActorToDynamicList(cUserEntity _User, string _MenuTypeCode, string _RootMenuCode, bool _IncludePages, Action<dynamic> _Action)
+        public List<dynamic> GetMenuByActorToDynamicList(cUserEntity _User, string _MenuTypeCode, string _RootMenuCode, bool _IncludePages, Action<dynamic> _Action = null)
         {
             IQueryable<cMenuEntity> __Query = GetMenuByUserQuery(_User, _MenuTypeCode, _RootMenuCode, _IncludePages);
-            return __Query.ToDynamicObjectList(_Action);
+            return __Query.Select(__Item => new 
+            {
+                ID = __Item.ID,
+                Name = __Item.Name,
+                Code = __Item.Code,
+                CreateDate = __Item.CreateDate,
+                Icon = __Item.Icon,
+                MenuTypeCode = __Item.MenuTypeCode,
+                Url = __Item.Page.Url,
+                SortValue = __Item.SortValue
+            })
+            .ToDynamicObjectList(_Action);
         }
 
 

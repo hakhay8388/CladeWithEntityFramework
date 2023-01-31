@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Web.Domain.Controllers;
 using Web.Domain.nWebGraph.nSessionManager;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActionIDs;
+using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nLogInOutAction;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nSetUserOnClientAction
 {
@@ -21,9 +22,14 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nSetUserOnClie
 
         public override void Action(IController _Controller = null, List<cSession> _SignalSessions = null, bool _InstantSend = false)
         {
-            cSetUserOnClientProps __SetUserOnClientProps = new cSetUserOnClientProps();
+            if (_Controller.ClientSession.IsLogined)
+            {
+                _Controller.ClientSession.User.Load(__Item => __Item.Roles);
+                _Controller.ClientSession.User.Load(__Item => __Item.UserDetail);
+            }
 
-            __SetUserOnClientProps.User = _Controller.ClientSession.User.ToDynamic();
+            cSetUserOnClientProps __SetUserOnClientProps = new cSetUserOnClientProps();
+            __SetUserOnClientProps.User = _Controller.ClientSession.User != null ? _Controller.ClientSession.User : null;
 
             JObject __JsonObject = __SetUserOnClientProps.SerializeObject();
             if (__JsonObject["User"].HasValues)
@@ -41,7 +47,7 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nSetUserOnClie
             _UserEntity.Load(__Item => __Item.Roles);
             _UserEntity.Load(__Item => __Item.UserDetail);
 
-            __SetUserOnClientProps.User = _UserEntity;
+            __SetUserOnClientProps.User = _Controller.ClientSession.User != null ? _Controller.ClientSession.User : null;
 
             JObject __JsonObject = __SetUserOnClientProps.SerializeObject();
             if (__JsonObject["User"].HasValues)

@@ -79,7 +79,7 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nGeneralListener
             cSetGlobalParamListProps __GlobalParamListResultProps = WebGraph.ListenerGraph.GetListenerByType<cParamListener>().PrepareGetGlobalParamListProps(_Controller, new cGetGlobalParamListCommandData() );
             WebGraph.ActionGraph.SetGlobalParamListAction.Action(_Controller, __GlobalParamListResultProps);
 
-            WebGraph.ActionGraph.LogInOutAction.Action(_Controller);
+            WebGraph.ActionGraph.SetUserOnClientAction.Action(_Controller);
 
         }
     }

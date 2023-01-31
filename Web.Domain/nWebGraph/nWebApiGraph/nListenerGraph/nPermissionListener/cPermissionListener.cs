@@ -48,20 +48,16 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nPermissionListener
                     {
                         if (__MenuID.IsMainMenu)
                         {
-                            List<dynamic> __SubMenus = MenuDataManager.GetMenuByActorToDynamicList(
-                                _Controller.ClientSession.User, MenuTypes.CenterMenu.Code, __MenuID.Code,
-                                true,
-                                (_Item) =>
+                            List<dynamic> __SubMenus = MenuDataManager.GetMenuByActorToDynamicList(_Controller.ClientSession.User, MenuTypes.CenterMenu.Code, __MenuID.Code, true);
+                                /*(_Item) =>
                                 {
-                                    cPageEntity __Page = __MenuEntity.Page;
-
                                     _Item.icon = _Item.Icon;
                                     _Item.name = _Item.Name;
                                     _Item.mainMenu = false;
                                     _Item.subMenu = new object[] { };
                                     _Item.Active = false;
                                     _Item.url = _Item.Url;
-                                });
+                                });*/
 
 
                             __PageResultProps.MenuItems.Add(new cMenuItem()

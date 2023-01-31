@@ -45,6 +45,8 @@ Pages.GetRoutePureName = function (_Item)
 
 Pages.LoadPages = function (_Pages, _CallbackFunction) {
 
+    Pages.Routes = [];
+
     _Pages.PagesItems.map(function (_Item, _Index) {
 
         Pages.Routes.push({
