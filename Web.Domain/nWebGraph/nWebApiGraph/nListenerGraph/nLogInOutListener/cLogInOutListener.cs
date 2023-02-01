@@ -40,8 +40,53 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nLogInOutListener
 
 		public void ReceiveLogoutData(cListenerEvent _ListenerEvent, IController _Controller, cLogoutCommandData _ReceivedData)
 		{
-			
-		}
+            if (_Controller.ClientSession.IsLogined)
+            {
+                cMessageProps __MessageProps = new cMessageProps();
+                __MessageProps.Header = _Controller.GetWordValue("Exit");
+                __MessageProps.Message = _Controller.GetWordValue("DoYouWantToExit");
+                __MessageProps.ColorType = EColorTypes.None;
+                __MessageProps.MessageButtons = EMessageButtons.YesNo;
+                __MessageProps.DefaultMessageButton = EMessageButton.No;
+
+                __MessageProps.FirstButtonColorType = EColorTypes.Error;
+                __MessageProps.FirstButtonEnabled = true;
+
+                __MessageProps.SecondButtonColorType = EColorTypes.Success;
+                __MessageProps.SecondButtonEnabled = true;
+                __MessageProps.Action = delegate (cBaseCommand __BaseCommand, IController __InnerController, EMessageButton __MessageButton, object __RequestObject)
+                {
+                    if (__MessageButton.ID == EMessageButton.Yes.ID)
+                    {
+
+                        string __Session_ID = __InnerController.ClientSession.SessionID;
+                        long _UserID = __InnerController.ClientSession.User.ID;
+
+                        cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
+
+                        __DatabaseContext.Perform(() =>
+                        {
+                            SessionDataManager.DeleteSession(__Session_ID);
+                            __DatabaseContext.SaveChanges();
+                        });
+
+                        __InnerController.Logout();
+
+                        //WebGraph.ActionGraph.SuccessResultAction.Action(_Controller);
+                        WebGraph.ActionGraph.LogInOutAction.Action(__InnerController, new List<cSession>() { __InnerController.ClientSession }, true);
+
+                        //WebGraph.ActionGraph.DoCheckLoginRequestAction.Action(__InnerController, new cDoCheckLoginRequestProps() { IsLogined = false }, new List<cSession>() { __InnerController.ClientSession }, true);
+                        //WebGraph.ActionGraph.DoCheckLoginRequestAction.Action(__InnerController, new cDoCheckLoginRequestProps() { IsLogined = false });
+                    }
+                };
+
+                WebGraph.ActionGraph.ShowMessageAction.Action(_Controller, __MessageProps);
+            }
+            else
+            {
+                WebGraph.ActionGraph.LogInOutAction.Action(_Controller);
+            }
+        }
 
 		public void ReceiveLoginData(cListenerEvent _ListenerEvent, IController _Controller, cLoginCommandData _ReceivedData)
 		{
@@ -51,7 +96,7 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nLogInOutListener
 
                 if (!String.IsNullOrEmpty(_ReceivedData.UserName) && !String.IsNullOrEmpty(_ReceivedData.Password))
                 {
-                    cDatabaseContext __DataService = DataService.GetDatabaseContext();
+                    cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
 
                     cUserEntity __UserEntity = UserDataManager.GetUserByEmailAndPassword(_ReceivedData.UserName, _ReceivedData.Password);
 
@@ -63,7 +108,7 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nLogInOutListener
 
                             if (_ReceivedData.StaySession)
                             {
-                                __DataService.Perform(() =>
+                                __DatabaseContext.Perform(() =>
                                 {
                                     SessionDataManager.AddUserSession(__UserEntity, _Controller.ClientSession.SessionID, _Controller.ClientSession.IpAddress);
 

@@ -103,15 +103,8 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
 
                 GenericWebGraph.Init(function () {
                     GenericWebGraph.CommandInterpreter.InterpretCommand([__SetUserOnClient]);
-
-                    __This.setState({
-                        innerChilds: <div>
-                            <TMessageBox />
-                            <THotSpotMessage />
-                            <TGlobalLoading />
-                            {__This.props.getInnerChilds()}
-                        </div>
-                    });
+                    __This.HandleSetChilds();
+                    
                 });
                 
             }).catch(err =>
@@ -119,6 +112,26 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
                 DebugAlert.Show("hata", err);
             });
 
+      }
+        ,
+      HandleSetChilds: function ()
+      {
+          var __This = this;
+          this.setState({
+              innerChilds: <div>
+                  <TMessageBox />
+                  <THotSpotMessage />
+                  <TGlobalLoading />
+                  {__This.props.getInnerChilds()}
+              </div>
+          });
+      }
+      ,
+      HandleRefresh: function () {
+          var __This = this;
+          Pages.ReloadPages(function () {
+              __This.HandleSetChilds();
+          });
       }
         ,
       GetCommandByNameInCommandArray: function (_CommandArray, _CommandName)

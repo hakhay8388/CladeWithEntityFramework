@@ -1,7 +1,7 @@
 import { createTheme  } from "@mui/material/styles";
 
 const DefaultTheme = createTheme ({
- /* palette: {
+  palette: {
     primary: {
       main: "#ff5757",
       dark: "#B23C3C",
@@ -99,7 +99,7 @@ const DefaultTheme = createTheme ({
       textTransform: "none",
       textDecoration: "none",
     }
-  }*/
+  }
 });
 
 export default DefaultTheme;

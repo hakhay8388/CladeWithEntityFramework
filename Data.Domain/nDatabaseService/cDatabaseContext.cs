@@ -29,6 +29,9 @@ namespace Data.Domain.nDatabaseService
         public DbSet<cUserEntity> Users { get; set; }
         public DbSet<cUserSessionEntity> UserSessions { get; set; }
 
+        public DbSet<cNotificationEntity> Notifications { get; set; }
+        public DbSet<cNotificationUserDetailEntity> NotificationUserDetails{ get; set; }
+
 
         public cDatabaseContext()
             : base()

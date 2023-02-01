@@ -8,9 +8,10 @@ import GenericWebGraph from "../../../../GenericWebController/GenericWebGraph";
 import AdminStyles from "../../../../../ScriptStyles/AdminStyles";
 import {withStyles} from "@mui/styles";
 
+import TBaseFooter from "../../TBaseFooter";
 
-var TAdminFooter = Class(
-  TObject,
+
+var TAdminFooter = Class(TBaseFooter,
   {
       ObjectType: ObjectTypes.Get("TAdminFooter"),
     constructor: function (_Props) {

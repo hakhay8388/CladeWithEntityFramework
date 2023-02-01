@@ -13,9 +13,9 @@ namespace Data.Domain.nDatabaseService.nSystemEntities
 
         public string Code { get; set; }
 
-        public virtual List<cRoleMenuMapEntity> Menus { get; set; }
+        public List<cRoleMenuMapEntity> Menus { get; set; }
         
-        public virtual List<cPageEntity> Pages { get; set; }
+        public List<cPageEntity> Pages { get; set; }
 
         public List<cUserEntity> Users { get; set; }
 

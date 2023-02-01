@@ -69,9 +69,15 @@ Pages.LoadPages = function (_Pages, _CallbackFunction) {
         });     
 
     });
-
 }
 
+Pages.ReloadPages = function (_CallbackFunction) {
+    Actions.GetPageList(function (_Message) {
+        CommandIDs.ResultListCommand.RunIfHas(_Message, function (_Data) {
+            Pages.LoadPages(_Data, _CallbackFunction);
+        });
+    });
+}
 Pages.IsPageExists = function (_PageName, _ControlOnlyRootPage)
 {
     if (_PageName == "/" || _PageName == "") {

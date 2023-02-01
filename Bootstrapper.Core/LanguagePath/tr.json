@@ -21,6 +21,11 @@
 	"Close": {"message": "Kapat" ,"description": ""},
 	"Loading": {"message": "Yükleniyor..." ,"description": ""},
 	"Login": {"message": "Giriş" ,"description": ""},
+	"Logout": {"message": "Çıkış" ,"description": ""},
 	"NotificationGeneralNotices": {"message": "Genel Bildirimler" ,"description": ""},  
+	"Exit": {"message": "Çıkış","description": ""},
+	"Add": {"message": "Ekle","description": ""},
+	"DoYouWantToExit": {"message": "Oturumu kapatmak istediğinizden emin misiniz?","description": ""},
+
 }
 	

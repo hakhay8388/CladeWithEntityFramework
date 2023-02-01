@@ -33,6 +33,8 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommandIDs
         public static CommandIDs GetMenuList = new CommandIDs(GetVariableName(() => GetMenuList), 13, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.User, RoleIDs.Unlogined, RoleIDs.Developer });
         public static CommandIDs GetPageList = new CommandIDs(GetVariableName(() => GetPageList), 14, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.User, RoleIDs.Unlogined, RoleIDs.Developer });
 
+        public static CommandIDs GetNotifications = new CommandIDs(GetVariableName(() => GetNotifications), 20, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.User, RoleIDs.Developer });
+        public static CommandIDs ReadNotification = new CommandIDs(GetVariableName(() => ReadNotification), 21, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.User, RoleIDs.Developer });
 
 
         /// <summary>

@@ -1,5 +1,5 @@
 import React from "react";
-import {  Class,  JSTypeOperator,  ObjectTypes } from "../../../../GenericCoreGraph/ClassFramework/Class";
+import { Class, JSTypeOperator, ObjectTypes } from "../../../../GenericCoreGraph/ClassFramework/Class";
 import TObject from "../../../TObject";
 import GenericWebGraph from "../../../../GenericWebController/GenericWebGraph";
 import Actions from "../../../../GenericWebController/ActionGraph/Actions";
@@ -8,8 +8,9 @@ import { withStyles } from "@mui/styles";
 
 import AdminStyles from "../../../../../ScriptStyles/AdminStyles";
 
-var TAdminHeader = Class(
-  TObject,
+import TBaseHeader from "../../TBaseHeader";
+
+var TAdminHeader = Class(TBaseHeader,
   {
       ObjectType: ObjectTypes.Get("TAdminHeader"),
     constructor: function (_Props) {
@@ -17,7 +18,6 @@ var TAdminHeader = Class(
       this.state = {
         ...this.state        
       };
-      window.App.AdminHeader = this;
     },
     Destroy: function () {
         TAdminHeader.BaseObject.Destroy.call(this);

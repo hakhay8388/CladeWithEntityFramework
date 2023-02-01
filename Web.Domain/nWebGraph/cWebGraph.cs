@@ -4,6 +4,7 @@ using Bootstrapper.Core.nAttributes;
 using Bootstrapper.Core.nCore;
 using Web.Domain.Controllers;
 using Web.Domain.nWebGraph.nErrorMessageManager;
+using Web.Domain.nWebGraph.nNotificationManager;
 using Web.Domain.nWebGraph.nSessionManager;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph;
@@ -32,8 +33,9 @@ namespace Web.Domain.nWebGraph
 
 		public cErrorMessageManager ErrorMessageManager { get; set; }
 
+        public cNotificationManager NotificationManager { get; set; }
 
-		public cWebGraph(cApp _App)
+        public cWebGraph(cApp _App)
             :base(_App)
         {
         }
@@ -46,13 +48,16 @@ namespace Web.Domain.nWebGraph
             ListenerGraph = App.Factories.ObjectFactory.ResolveInstance<cListenerGraph>();
             ValidationGraph = App.Factories.ObjectFactory.ResolveInstance<cValidationGraph>();
 			ErrorMessageManager = App.Factories.ObjectFactory.ResolveInstance<cErrorMessageManager>();
+            NotificationManager = App.Factories.ObjectFactory.ResolveInstance<cNotificationManager>();
 
 
-			SessionManagerServices.Init();
+            SessionManagerServices.Init();
             ActionGraph.Init();
             CommandGraph.Init();
             ListenerGraph.Init();
             ValidationGraph.Init();
-		}
+            NotificationManager.Init();
+
+        }
     }
 }

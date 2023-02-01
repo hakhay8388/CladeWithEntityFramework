@@ -90,7 +90,7 @@ namespace Web.Domain.Controllers
 			}
 		}
 
-		public override Task OnConnectedAsync()
+		public override	 Task OnConnectedAsync()
 		{
 			CurrentContext = Context.GetHttpContext();
 			//App.Handlers.ContextHandler.AddContext(Context.GetHttpContext());

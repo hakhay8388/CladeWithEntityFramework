@@ -138,16 +138,37 @@ var cLogInOutCommandListener = Class(
     {
         console.log("test");
 
-        /*if (_Data.LoginState && window.App.User == null)
-        {
+        if (_Data.LoginState && window.App.User == null) {
             GenericWebGraph.CloseAllModals();
             DebugAlert.Show("Logined");
-            GenericWebGraph.ManagersWithListener.SignalListerner.HandleConnect();   
+            GenericWebGraph.ManagersWithListener.SignalListerner.HandleConnect();
+
+            window.App.User = _Data.User;
+            window.App.SessionID = _Data.SessionID;
+            GenericWebGraph.MainPage = null;
+
+            GenericWebGraph.Managers.LanguageManager.SetLanguage(
+                window.App.User.Language
+            );
+            window.App.DynamicLoader.HandleRefresh();
+
         }
         else if (_Data.LoginState) {
-           
-        }*/
+            GenericWebGraph.CloseAllModals();
+            DebugAlert.Show("Logined");
+            GenericWebGraph.ManagersWithListener.SignalListerner.HandleConnect();
+        }
+        else {
+            GenericWebGraph.CloseAllModals();
+            DebugAlert.Show("Unlogined");
+            GenericWebGraph.ManagersWithListener.SignalListerner.HandleDisconnect();
 
+            window.App.User = null;
+            window.App.SessionID = null;
+            GenericWebGraph.MainPage = null;
+
+            window.App.DynamicLoader.HandleRefresh();
+        }
 
         /*
       window.App.Checked = true;

@@ -23,12 +23,21 @@ namespace Data.Domain.nDatabaseService.nSystemEntities
 
         public  int State { get; set; }
 
-        public virtual cPageEntity MainPage { get; set; }
+        public List<cNotificationUserDetailEntity> NotificationDetail { get; set; }
+
+        public cPageEntity MainPage { get; set; }
 
         public List<cUserSessionEntity> Sessions { get; set; }
 
         public List<cRoleEntity> Roles { get; set; }
 
         public  cUserDetailEntity UserDetail { get; set; }
+
+        public void LoadInnerDatas()
+        {
+            Load(__Item => __Item.MainPage);
+            Load(__Item => __Item.Roles);
+            Load(__Item => __Item.UserDetail);
+        }
     }
 }

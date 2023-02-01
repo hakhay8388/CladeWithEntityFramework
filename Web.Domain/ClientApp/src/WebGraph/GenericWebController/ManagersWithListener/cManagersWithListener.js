@@ -3,6 +3,7 @@ import { DebugAlert, Class, Interface, Abstract, ObjectTypes, JSTypeOperator } f
 import cBaseObject from "../../GenericCoreGraph/BaseObject/cBaseObject";
 import cGlobalParamsManager from "./GlobalParamsManager/cGlobalParamsManager";
 import cSignalListerner from "./SignalListerner/cSignalListerner";
+import cNotificationManager from "./NotificationManager/cNotificationManager";
 
 
 
@@ -20,6 +21,7 @@ var cManagersWithListener = Class(cBaseObject,
     {
       this.GlobalParamsManager = new cGlobalParamsManager();
       this.SignalListerner = new cSignalListerner();
+      this.NotificationManager = new cNotificationManager();
     }
     ,
     Destroy: function ()

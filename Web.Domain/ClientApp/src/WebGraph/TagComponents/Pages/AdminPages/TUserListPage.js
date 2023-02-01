@@ -18,11 +18,11 @@ import { withStyles } from "@mui/styles";
 import GlobalStyles from "../../../../ScriptStyles/GlobalStyles";
 import classNames from "classnames";
 
-var TUserMainPage = Class(TObject,
+var TUserListPage = Class(TObject,
   {
-      ObjectType: ObjectTypes.Get("TUserMainPage"),
+      ObjectType: ObjectTypes.Get("TUserListPage"),
     constructor: function (_Props) {
-        TUserMainPage.BaseObject.constructor.call(this, _Props);
+        TUserListPage.BaseObject.constructor.call(this, _Props);
       this.state = {
         ...this.state,
       };
@@ -31,7 +31,7 @@ var TUserMainPage = Class(TObject,
       var __This = this;
     },
       Destroy: function () {
-          TUserMainPage.BaseObject.Destroy.call(this);
+          TUserListPage.BaseObject.Destroy.call(this);
       }
     ,
     render() {
@@ -47,4 +47,4 @@ var TUserMainPage = Class(TObject,
   {}
 );
 
-export default withStyles(GlobalStyles)(TUserMainPage);
+export default withStyles(GlobalStyles)(TUserListPage);

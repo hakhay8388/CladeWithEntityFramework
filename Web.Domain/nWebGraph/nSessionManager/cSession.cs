@@ -60,6 +60,7 @@ namespace Web.Domain.nWebGraph.nSessionManager
 
         public void SetUser(cUserEntity _User)
         {
+            _User.LoadInnerDatas();
             User = _User;
         }
 
@@ -75,7 +76,7 @@ namespace Web.Domain.nWebGraph.nSessionManager
         {
             SessionID = "";
             //SignalRIDList.Clear();
-            //User = null;
+            User = null;
         }
 
         public bool IsUsableForMe(CommandIDs _CommandID)

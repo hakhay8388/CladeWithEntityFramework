@@ -1,7 +1,7 @@
 ﻿add-migration Version1 -Context cDatabaseContext
 EntityFrameworkCore\Add-Migration V1 -Context cDatabaseContext
 
-EntityFrameworkCore\Add-Migration V1 -Project Data.Domain
+EntityFrameworkCore\Add-Migration V3 -Project Data.Domain
 
 
 add-migration firstahmet
