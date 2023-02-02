@@ -50,7 +50,6 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
                 </div>,
             }
             this.FirstInitData = null;
-            this.IndependentChilds = <div></div>;
             window.App.DynamicLoader = this;
             this.InitFirstLoad();
         }
@@ -101,7 +100,6 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
 
                     GenericWebGraph.Init(function () {
                         GenericWebGraph.CommandInterpreter.InterpretCommand([__SetUserOnClient]);
-                        __This.IndependentChilds = __This.HandleGetIndependentChilds();
                         __This.HandleSetChilds();
 
                     });
@@ -112,20 +110,14 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
 
         }
         ,
-        HandleGetIndependentChilds: function () {
-            return (<div>
-                <TMessageBox />
-                <THotSpotMessage />
-                <TGlobalLoading />
-            </div>
-          );
-      }
-        ,
       HandleSetChilds: function ()
       {
           var __This = this;
           this.setState({
               innerChilds: <div>
+                      <TMessageBox />
+                      <THotSpotMessage />
+                      <TGlobalLoading />
                   {__This.props.getInnerChilds()}
               </div>
           });
@@ -158,7 +150,6 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
     render()
     {
         return (<div>
-            {this.IndependentChilds}
             {this.state.innerChilds }
         </div>
             

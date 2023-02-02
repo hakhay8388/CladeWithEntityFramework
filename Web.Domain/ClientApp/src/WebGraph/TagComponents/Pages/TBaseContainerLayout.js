@@ -95,7 +95,9 @@ var TBaseContainerLayout = Class(
                         }}
                     >
                         <div style={{ width: "100%", position: "fixed", zIndex: 1020 }}>
-                            {this.HandleGetHeader()}
+                            <Suspense>
+                                {this.HandleGetHeader()}
+                            </Suspense>
                         </div>
                         <div
                             style={{
@@ -123,7 +125,9 @@ var TBaseContainerLayout = Class(
                             }}
                             id="footerStatus"
                         >
-                            {this.HandleGetFooter()}
+                            <Suspense>
+                                {this.HandleGetFooter()}
+                            </Suspense>
                         </div>
                     </div>
                 </Suspense>

@@ -24,7 +24,6 @@ var TObject = Class(
       TObject.BaseObject.constructor.call(this, _Props);
       this.keyCount = 0;
       this.getKey = this.getKey.bind(this);
-      GenericWebGraph.CommandInterpreter.ConnectToCommands(this);
       this.AsyncLoad = this.AsyncLoad.bind(this);
       this.OnUrlPop = this.OnUrlPop.bind(this);
       this.OnUrlChanged = this.OnUrlChanged.bind(this);
@@ -113,6 +112,10 @@ var TObject = Class(
     },
     componentDidMount: function () {
         TObject.BaseObject.componentDidMount.call(this);
+        GenericWebGraph.CommandInterpreter.ConnectToCommands(this);
+
+        GenericWebGraph.AddResizeEvent(this.HandleOnResizeMain);
+        GenericWebGraph.ManagersWithListener.SignalListerner.HandleAddSignalEvent(this.HandleOnSignalStatusChanged);
 
         this.OnSmDown.AddIfNotExists(this, this.HandleOnSmDown);
         this.OnSmUp.AddIfNotExists(this, this.HandleOnSmUp);
@@ -178,8 +181,6 @@ var TObject = Class(
     ,
       componentWillMount: function () {
       TObject.BaseObject.componentWillMount.call(this);
-          GenericWebGraph.AddResizeEvent(this.HandleOnResizeMain);
-        GenericWebGraph.ManagersWithListener.SignalListerner.HandleAddSignalEvent(this.HandleOnSignalStatusChanged);
       //GenericWebGraph.Managers.KeyboardManager.ConnectKeypress(this);
     },
 

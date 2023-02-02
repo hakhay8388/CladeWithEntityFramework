@@ -37,7 +37,7 @@ var TMessageBox = Class(TBaseDialogModal,
           modalTitleType: "",
         };
       window.App.MessageBox = this;
-    }
+      }
     ,
     Destroy: function ()
     {
