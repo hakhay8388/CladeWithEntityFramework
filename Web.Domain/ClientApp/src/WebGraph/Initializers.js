@@ -1,4 +1,4 @@
-import "../WebGraph/TagComponents/Utilities/History";
+//import "../WebGraph/TagComponents/Utilities/History";
 import "../WebGraph/Enums/Enums";
 
 
@@ -108,6 +108,65 @@ Array.prototype.sortByDesc = function (p) {
     });
 };
 
+
+
+
+window.SetUrl = function (_Url, _First = false) {
+
+    if (_Url.startsWith("/")) {
+        _Url = _Url.substring(1);
+    }
+
+    if (_Url.endsWith("/")) {
+        _Url = _Url.substring(0, _Url.length - 1);
+    }
+
+    if (_First) {
+        if (_Url == "") {
+            window.History.replace(_Url, { firstPage: true });
+        }
+        else {
+            window.History.replace("/" + _Url, { firstPage: true });
+        }
+    }
+    else {
+        if (_Url == "") {
+            window.History.push(_Url);
+        }
+        else {
+            window.History.push("/" + _Url);
+        }
+
+    }
+};
+
+
+window.GoPage = function (_Page, _First = false) {
+    if (_Page == null) {
+        window.SetUrl("", _First);
+    } else {
+        window.SetUrl(_Page, _First);
+    }
+
+    /*if (GenericWebGraph.MainPage && GenericWebGraph.MainPage != null) {
+      if (_Page == null) {
+        window.SetUrl("", _First);
+      } else {
+        window.SetUrl(_Page, _First);
+      }
+    } else {
+      Pages.LoadPages(function () 
+      {
+        window.App.App.forceUpdate();
+        //WebGraph.ForceUpdateAllWithAsyncLoad(true);
+       //console.log("Pages Loaded...");
+      });
+    }*/
+};
+
+window.GoMainPage = function (_First = false) {
+    window.GoPage("", _First);
+};
 
 
 

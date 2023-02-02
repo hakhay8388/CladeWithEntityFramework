@@ -58,23 +58,24 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nLogInOutListener
                 {
                     if (__MessageButton.ID == EMessageButton.Yes.ID)
                     {
-
-                        string __Session_ID = __InnerController.ClientSession.SessionID;
-                        long _UserID = __InnerController.ClientSession.User.ID;
-
-                        cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
-
-                        __DatabaseContext.Perform(() =>
+                        if (_Controller.ClientSession.IsLogined)
                         {
-                            SessionDataManager.DeleteSession(__Session_ID);
-                            __DatabaseContext.SaveChanges();
-                        });
+                            string __Session_ID = __InnerController.ClientSession.SessionID;
+                            long _UserID = __InnerController.ClientSession.User.ID;
 
-                        __InnerController.Logout();
+                            cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
 
-                        //WebGraph.ActionGraph.SuccessResultAction.Action(_Controller);
-                        WebGraph.ActionGraph.LogInOutAction.Action(__InnerController, new List<cSession>() { __InnerController.ClientSession }, true);
+                            __DatabaseContext.Perform(() =>
+                            {
+                                SessionDataManager.DeleteSession(__Session_ID);
+                                __DatabaseContext.SaveChanges();
+                            });
 
+                            __InnerController.Logout();
+
+                            //WebGraph.ActionGraph.SuccessResultAction.Action(_Controller);
+                            WebGraph.ActionGraph.LogInOutAction.Action(__InnerController, new List<cSession>() { __InnerController.ClientSession }, true);
+                        }
                         //WebGraph.ActionGraph.DoCheckLoginRequestAction.Action(__InnerController, new cDoCheckLoginRequestProps() { IsLogined = false }, new List<cSession>() { __InnerController.ClientSession }, true);
                         //WebGraph.ActionGraph.DoCheckLoginRequestAction.Action(__InnerController, new cDoCheckLoginRequestProps() { IsLogined = false });
                     }

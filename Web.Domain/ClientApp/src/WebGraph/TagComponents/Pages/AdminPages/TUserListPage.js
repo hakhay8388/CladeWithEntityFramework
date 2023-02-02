@@ -19,31 +19,31 @@ import GlobalStyles from "../../../../ScriptStyles/GlobalStyles";
 import classNames from "classnames";
 
 var TUserListPage = Class(TObject,
-  {
-      ObjectType: ObjectTypes.Get("TUserListPage"),
-    constructor: function (_Props) {
-        TUserListPage.BaseObject.constructor.call(this, _Props);
-      this.state = {
-        ...this.state,
-      };
-    },
-    AsyncLoad: function () {
-      var __This = this;
-    },
-      Destroy: function () {
-          TUserListPage.BaseObject.Destroy.call(this);
-      }
-    ,
-    render() {
-      const { classes } = this.props;
+    {
+        ObjectType: ObjectTypes.Get("TUserListPage"),
+        constructor: function (_Props) {
+            TUserListPage.BaseObject.constructor.call(this, _Props);
+            this.state = {
+                ...this.state,
+            };
+        },
+        AsyncLoad: function () {
+            var __This = this;
+        },
+        Destroy: function () {
+            TUserListPage.BaseObject.Destroy.call(this);
+        }
+        ,
+        render() {
+            const { classes } = this.props;
 
-      return (
-          <div>
-              User List Main
-        </div>
-      )
+            return (
+                <div>
+                    User List Main
+                </div>
+            )
+        },
     },
-  },
   {}
 );
 

@@ -74,7 +74,7 @@ var TObject = Class(
         };
       }
       
-      this.HistoryListener = window.History.listen(this.OnHistoryChanged);
+      //this.HistoryListener = window.History.listen(this.OnHistoryChanged);
     },
     OnHistoryChanged: function (_Location, _Action) {
       var __This = this;
@@ -189,7 +189,7 @@ var TObject = Class(
     componentWillUnmount() {
       GenericWebGraph.CommandInterpreter.DisconnectToCommands(this);
       TObject.BaseObject.componentWillUnmount.call(this);
-        this.HistoryListener();
+        //this.HistoryListener();
         GenericWebGraph.RemoveResizeEvent(this.HandleOnResizeMain);
         this.OnSmDown.Remove(this, this.HandleOnSmDown);
         this.OnSmUp.Remove(this, this.HandleOnSmUp);

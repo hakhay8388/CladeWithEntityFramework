@@ -45,15 +45,25 @@ Pages.GetRoutePureName = function (_Item)
 
 Pages.LoadPages = function (_Pages, _CallbackFunction) {
 
+    for (var __Item in Pages)
+    {
+        if (!JSTypeOperator.IsFunction(Pages[__Item])) {
+            delete Pages[__Item];
+        }        
+    }
+
     Pages.Routes = [];
 
     _Pages.PagesItems.map(function (_Item, _Index) {
+
+        Pages[_Item.Name] = _Item;
 
         Pages.Routes.push({
             Path: "/" + Pages.GetRouteString(_Item, true),
             PurePath: "/" + _Item.Path,
             IsMainPage: _Item.IsMainPage,
-            Name: GenericWebGraph.Managers.LanguageManager.ActiveLanguage[_Item.Name],
+            //Name: GenericWebGraph.Managers.LanguageManager.ActiveLanguage[_Item.Name],
+            Name: _Item.Name,
             Component: React.lazy(() => import("./GlobalPages/" + _Item.Component)
                 .catch(
                     () => import("./AdminPages/" + _Item.Component)
@@ -65,15 +75,18 @@ Pages.LoadPages = function (_Pages, _CallbackFunction) {
                         )
                 )
             ),
-            exact: _Item.SubParamName.length === 0
+            Exact: _Item.SubParamName.length === 0
         });     
 
     });
+    if (JSTypeOperator.IsFunction(_CallbackFunction)) {
+        _CallbackFunction();
+    }
 }
 
 Pages.ReloadPages = function (_CallbackFunction) {
     Actions.GetPageList(function (_Message) {
-        CommandIDs.ResultListCommand.RunIfHas(_Message, function (_Data) {
+        CommandIDs.PageResultCommand.RunIfHas(_Message, function (_Data) {
             Pages.LoadPages(_Data, _CallbackFunction);
         });
     });
@@ -92,12 +105,12 @@ Pages.IsPageExists = function (_PageName, _ControlOnlyRootPage)
       var __PageNameList = _PageName.split("/");
       _PageName = "/" + __PageNameList[1];
     }
-    var __Found = Pages.Routes.find((__Item) => __Item.purepath == _PageName);
+    var __Found = Pages.Routes.find((__Item) => __Item.PurePath == _PageName);
     if (__Found == undefined) {
       if (__PageNameList.length > 2 && __PageNameList[1].length == 2) {
         _PageName = "/" + __PageNameList[2];
       }
-      __Found = Pages.Routes.find((__Item) => __Item.purepath == _PageName);
+      __Found = Pages.Routes.find((__Item) => __Item.PurePath == _PageName);
     }
     return JSTypeOperator.IsDefined(__Found) && __Found;
 };

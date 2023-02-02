@@ -12,3 +12,8 @@ SELECT pg_terminate_backend(pg_stat_activity.pid)
 FROM pg_stat_activity
 WHERE pg_stat_activity.datname = 'myDataBase' -- ← change this to your DB
   AND pid <> pg_backend_pid();
+
+
+pre-build
+
+(if exist "$(TargetDir)*old.pdb" del "$(TargetDir)*old.pdb") & (if exist "$(TargetDir)*.pdb" ren "$(TargetDir)*.pdb" *.old.pdb)

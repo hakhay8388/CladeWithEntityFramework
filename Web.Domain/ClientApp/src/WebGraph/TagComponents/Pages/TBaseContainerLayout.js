@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { Routes, Route, Switch} from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import { Class, JSTypeOperator, ObjectTypes } from "../../GenericCoreGraph/ClassFramework/Class";
 import TObject from "../../TagComponents/TObject";
 import GenericWebGraph from "../../GenericWebController/GenericWebGraph";
@@ -30,9 +30,10 @@ var TBaseContainerLayout = Class(
         }
         ,
         HandleGetRoutes: function (_Lang) {
+            var __This = this;
             var __IsPageExists = Pages.IsPageExists(this.props.router.location.pathname, true);
             if (!__IsPageExists) {
-                GenericWebGraph.GoMainPage();
+                window.GoMainPage();
             }
             else {
                 return (
@@ -43,22 +44,24 @@ var TBaseContainerLayout = Class(
                             {
                                 return (
                                     <Route
+                                        {...__This.props}
                                         key={_Index}
                                         path={_Lang + "/"}
                                         exact={_Route.Exact}
                                         name={_Route.Name}
-                                        element={<_Route.Component />}
+                                        element={<_Route.Component {...__This.props} />}
                                     />
                                 );
                             }
                             else {
                                 return (
                                     <Route
+                                        {...__This.props}
                                         key={_Index}
                                         path={_Lang + _Route.Path}
                                         exact={_Route.Exact}
                                         name={_Route.Name}
-                                        element={<_Route.Component />}
+                                        element={<_Route.Component {...__This.props} />}
                                     />
                                 );
                             }                            
@@ -79,7 +82,7 @@ var TBaseContainerLayout = Class(
             //https://html-css-js.com/css/generator/box-shadow/
 
             return (
-                 <React.Suspense fallback={<div className="container">
+                 <Suspense fallback={<div className="container">
                     <div className="center">
                         <div className="lds-ripple"><div></div><div></div></div>
                     </div>
@@ -104,7 +107,7 @@ var TBaseContainerLayout = Class(
                         >
                             <main onClick={this.HandleMainClicked}>
                                 <div className={classes.container}>
-                                   {this.HandleGetRoutes("/" + GenericWebGraph.Managers.LanguageManager.ActiveLanguage.LanguageCode)}
+                                   {/*this.HandleGetRoutes("/" + GenericWebGraph.Managers.LanguageManager.ActiveLanguage.LanguageCode)*/}
                                    {this.HandleGetRoutes("")}
                                 </div>
                             </main>
@@ -123,7 +126,7 @@ var TBaseContainerLayout = Class(
                             {this.HandleGetFooter()}
                         </div>
                     </div>
-                </React.Suspense>
+                </Suspense>
 
 
                

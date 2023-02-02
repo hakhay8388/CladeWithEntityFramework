@@ -176,27 +176,6 @@ GenericWebGraph.SetCookie = function (params) {
 // Attaching the event listener function to window's resize event
 window.addEventListener("resize", WindowSizeChanged);
 
-GenericWebGraph.GoPage = function (_Page, _First = false) 
-{
-  /*if (GenericWebGraph.MainPage && GenericWebGraph.MainPage != null) {
-    if (_Page == null) {
-      window.SetUrl("", _First);
-    } else {
-      window.SetUrl(_Page, _First);
-    }
-  } else {
-    Pages.LoadPages(function () 
-    {
-      window.App.App.forceUpdate();
-      //WebGraph.ForceUpdateAllWithAsyncLoad(true);
-     //console.log("Pages Loaded...");
-    });
-  }*/
-};
-
-GenericWebGraph.GoMainPage = function (_First = false) {
-  GenericWebGraph.GoPage("", _First);
-};
 
 GenericWebGraph.GetDayIDByDate = function (_Date) {
   var __DayNumber = _Date.getDay();

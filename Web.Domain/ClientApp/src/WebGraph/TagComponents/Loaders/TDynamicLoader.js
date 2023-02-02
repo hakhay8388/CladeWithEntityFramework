@@ -37,81 +37,88 @@ const TGlobalLoading = React.lazy(() => import("../Utilities/TGlobalLoading"));
 
 
 var TDynamicLoader = Class(cBaseObject, //TObject,
-  {
-    ObjectType: ObjectTypes.Get("TDynamicLoader")
-    ,
-    constructor: function (_Props)
     {
-        TDynamicLoader.BaseObject.constructor.call(this, _Props);
-        this.state = {
-            innerChilds: <div className="container">
-                <div className="center">
-                    <div className="lds-ripple"><div></div><div></div></div>
-                </div>
-            </div>
+        ObjectType: ObjectTypes.Get("TDynamicLoader")
+        ,
+        constructor: function (_Props) {
+            TDynamicLoader.BaseObject.constructor.call(this, _Props);
+            this.state = {
+                innerChilds: <div className="container">
+                    <div className="center">
+                        <div className="lds-ripple"><div></div><div></div></div>
+                    </div>
+                </div>,
+            }
+            this.FirstInitData = null;
+            this.IndependentChilds = <div></div>;
+            window.App.DynamicLoader = this;
+            this.InitFirstLoad();
         }
-        this.FirstInitData = null;
-        window.App.DynamicLoader = this;
-        this.InitFirstLoad();
-      }
-      ,
-    InitFirstLoad: function()
-    {
-        var __LanguageCode = window.GetLanguageCodeFromUrl();
-        if (__LanguageCode.length != 2)
-        {
-            __LanguageCode = "";
-        }
+        ,
+        InitFirstLoad: function () {
+            var __LanguageCode = window.GetLanguageCodeFromUrl();
+            if (__LanguageCode.length != 2) {
+                __LanguageCode = "";
+            }
 
-        var __This = this;
-        fetch('/webgraph/webapi', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                CID: 1,
-                Data: {
-                    LanguageCode: __LanguageCode
-                }
+            var __This = this;
+            fetch('/webgraph/webapi', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    CID: 1,
+                    Data: {
+                        LanguageCode: __LanguageCode
+                    }
+                })
             })
-        })
-            .then(response => response.json())
-            .then(response => {
-                __This.FirstInitData = response;
-                var __CommandList = __This.GetCommandByNameInCommandArray(response, "CommandList");
-                CommandIDs.LoadCommands(__CommandList.Data.CommandList);
+                .then(response => response.json())
+                .then(response => {
+                    __This.FirstInitData = response;
+                    var __CommandList = __This.GetCommandByNameInCommandArray(response, "CommandList");
+                    CommandIDs.LoadCommands(__CommandList.Data.CommandList);
 
-                var __ActionList = __This.GetCommandByNameInCommandArray(response, "ActionList");
-                ActionIDs.LoadActions(__ActionList.Data.ActionList);
+                    var __ActionList = __This.GetCommandByNameInCommandArray(response, "ActionList");
+                    ActionIDs.LoadActions(__ActionList.Data.ActionList);
 
-                GenericWebGraph.Managers = new cManagers();
+                    GenericWebGraph.Managers = new cManagers();
 
-                var __Language = __This.GetCommandByNameInCommandArray(response, "Language");
-                GenericWebGraph.Managers.LanguageManager.HandleSetActiveLanguage(__Language.Data);
+                    var __Language = __This.GetCommandByNameInCommandArray(response, "Language");
+                    GenericWebGraph.Managers.LanguageManager.HandleSetActiveLanguage(__Language.Data);
 
-                GenericWebGraph.CommandInterpreter = new cCommandInterpreter();
-                GenericWebGraph.ActionGraph = new cActionGraph();
+                    GenericWebGraph.CommandInterpreter = new cCommandInterpreter();
+                    GenericWebGraph.ActionGraph = new cActionGraph();
 
-                var __PageResult = __This.GetCommandByNameInCommandArray(response, "PageResult");
-                Pages.LoadPages(__PageResult.Data);
+                    var __PageResult = __This.GetCommandByNameInCommandArray(response, "PageResult");
+                    Pages.LoadPages(__PageResult.Data);
 
-                var __SetUserOnClient = __This.GetCommandByNameInCommandArray(response, "SetUserOnClient");
+                    var __SetUserOnClient = __This.GetCommandByNameInCommandArray(response, "SetUserOnClient");
 
-                window.GenericWebGraph = GenericWebGraph;
+                    window.GenericWebGraph = GenericWebGraph;
 
-                GenericWebGraph.Init(function () {
-                    GenericWebGraph.CommandInterpreter.InterpretCommand([__SetUserOnClient]);
-                    __This.HandleSetChilds();
-                    
+                    GenericWebGraph.Init(function () {
+                        GenericWebGraph.CommandInterpreter.InterpretCommand([__SetUserOnClient]);
+                        __This.IndependentChilds = __This.HandleGetIndependentChilds();
+                        __This.HandleSetChilds();
+
+                    });
+
+                }).catch(err => {
+                    DebugAlert.Show("hata", err);
                 });
-                
-            }).catch(err =>
-            {
-                DebugAlert.Show("hata", err);
-            });
 
+        }
+        ,
+        HandleGetIndependentChilds: function () {
+            return (<div>
+                <TMessageBox />
+                <THotSpotMessage />
+                <TGlobalLoading />
+            </div>
+          );
       }
         ,
       HandleSetChilds: function ()
@@ -119,9 +126,6 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
           var __This = this;
           this.setState({
               innerChilds: <div>
-                  <TMessageBox />
-                  <THotSpotMessage />
-                  <TGlobalLoading />
                   {__This.props.getInnerChilds()}
               </div>
           });
@@ -129,7 +133,8 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
       ,
       HandleRefresh: function () {
           var __This = this;
-          Pages.ReloadPages(function () {
+          Pages.ReloadPages(function ()
+          {
               __This.HandleSetChilds();
           });
       }
@@ -152,8 +157,11 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
     ,
     render()
     {
-        return (
-            this.state.innerChilds
+        return (<div>
+            {this.IndependentChilds}
+            {this.state.innerChilds }
+        </div>
+            
       );
     }
   }, {});

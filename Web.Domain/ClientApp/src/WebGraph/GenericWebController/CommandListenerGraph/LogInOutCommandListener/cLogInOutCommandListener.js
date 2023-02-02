@@ -105,7 +105,7 @@ var cLogInOutCommandListener = Class(
           )
           {
             __AnyAction = true;
-            GenericWebGraph.GoMainPage();
+            window.GoMainPage();
           }
         }
       }
@@ -136,7 +136,6 @@ var cLogInOutCommandListener = Class(
     ,
     Receive_LogInOutCommand: function (_Data)
     {
-        console.log("test");
 
         if (_Data.LoginState && window.App.User == null) {
             GenericWebGraph.CloseAllModals();
@@ -191,31 +190,31 @@ var cLogInOutCommandListener = Class(
 
         if (__Url == "" || __Url == "/")
         {
-          GenericWebGraph.GoMainPage();
+          window.GoMainPage();
         } else
         {
-          GenericWebGraph.GoPage(__Url + __UrlParams);
+          window.GoPage(__Url + __UrlParams);
         }
       } else if (_Data.LoginState)
       {
         DebugAlert.Show("Logined");
-        GenericWebGraph.CloseAllModals();
-        GenericWebGraph.ManagersWithListener.SignalListerner.HandleConnect();
+        window.CloseAllModals();
+        window.ManagersWithListener.SignalListerner.HandleConnect();
 
         window.ClearPages();
         window.App.User = _Data.User;
         window.App.SessionID = _Data.SessionID;
-        GenericWebGraph.MainPage = null;
-        GenericWebGraph.Managers.LanguageManager.SetLanguage(
+        window.MainPage = null;
+        window.Managers.LanguageManager.SetLanguage(
           window.App.User.Language
         );
 
         if (__Url == "" || __Url == "/")
         {
-          GenericWebGraph.GoMainPage();
+          window.GoMainPage();
         } else
         {
-          GenericWebGraph.GoPage(__Url + __UrlParams);
+          window.GoPage(__Url + __UrlParams);
         }
       }*/
       /*else if (window.App.User != null)
@@ -244,10 +243,10 @@ var cLogInOutCommandListener = Class(
 
         if (__Url == "" || __Url == "/")
         {
-          GenericWebGraph.GoMainPage();
+          window.GoMainPage();
         } else
         {
-          GenericWebGraph.GoPage(__Url + __UrlParams);
+          window.GoPage(__Url + __UrlParams);
         }
       }*/
     },

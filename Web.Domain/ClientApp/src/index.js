@@ -16,7 +16,7 @@ const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
 root.render(
-    <BrowserRouter history={window.History} basename={baseUrl}>
+    <BrowserRouter /*history={window.History}*/ basename={baseUrl}>
         <TApp />
     </BrowserRouter>);
 

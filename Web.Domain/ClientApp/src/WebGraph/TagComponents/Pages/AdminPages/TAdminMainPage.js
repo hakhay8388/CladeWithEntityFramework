@@ -36,8 +36,11 @@ var TAdminMainPage = Class(TObject,
             TAdminMainPage.BaseObject.Destroy.call(this);
         }
         ,
-        HandleRedirect: function (_Event) {
-            
+        HandleRedirect: function (_Event)
+        {
+            console.log("aa");
+            this.props.router.navigate(window.Pages.UserList.Path);
+            //window.GoPage(window.Pages.UserList.Path);
         }
         ,
         HandleLogout: function (_Event) {
