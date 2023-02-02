@@ -148,19 +148,13 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nLogInOutListener
 
 		public void ReceiveCheckLoginData(cListenerEvent _ListenerEvent, IController _Controller, cCheckLoginCommandData _ReceivedData)
 		{
-            
-            List<cSession> __Sessions = WebGraph.SessionManager(_Controller).GetSessionByUserID(_Controller.ClientSession.User.ID);
 
-
-            cMessageProps __MessageProps = new cMessageProps();
-            __MessageProps.CloseRequired = false;
-            __MessageProps.Header = _Controller.GetWordValue("Error");
-            __MessageProps.Message = _Controller.GetWordValue("NoPermission");
-
-
-            WebGraph.ActionGraph.ShowMessageAction.Action(_Controller, __MessageProps, __Sessions, true);
-
-            WebGraph.ActionGraph.HotSpotMessageAction.Action(_Controller, new cHotSpotProps() { ColorType = EColorTypes.None, Header = "aaa", Message = "bbb", DurationMS = 5000, WaitTime = 1000 });
+            WebGraph.ActionGraph.ResultItemAction.Action(_Controller, new nActionGraph.nActions.nResultItemAction.cResultItemProps()
+            {
+                Item = new { 
+                    Name = "Obaaaaaaa"
+                }
+            });
         }
 
 		

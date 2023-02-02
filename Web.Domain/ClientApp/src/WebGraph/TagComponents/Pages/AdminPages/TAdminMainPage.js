@@ -27,10 +27,12 @@ var TAdminMainPage = Class(TObject,
             this.state = {
                 ...this.state,
                 ButtonEnabled: true,
+                ButtonName: "Admin Test"
             };
         },
-        AsyncLoad: function () {
+        AsyncLoad: function (_Event) {
             var __This = this;
+            __This.HandleSubmit();
         },
         Destroy: function () {
             TAdminMainPage.BaseObject.Destroy.call(this);
@@ -38,7 +40,6 @@ var TAdminMainPage = Class(TObject,
         ,
         HandleRedirect: function (_Event)
         {
-            console.log("aa");
             this.props.router.navigate(window.Pages.UserList.Path);
             //window.GoPage(window.Pages.UserList.Path);
         }
@@ -47,34 +48,19 @@ var TAdminMainPage = Class(TObject,
             Actions.Logout();
         }
         ,
-        HandleSubmit: function (_Event) {
+        HandleSubmit: function () {
             var __This = this;
 
-            Actions.Login(
-                this.state.UserName,
-                this.state.Password,
-                this.state.StaySession,
-                function (_Message) {
-                    CommandIDs.SuccessResultCommand.RunIfNotHas(
-                        _Message,
-                        function (_Data) {
-                            __This.setState({
-                                ButtonEnabled: true,
-                            });
-                        }
-                    );
-
-                    CommandIDs.SuccessResultCommand.RunIfHas(
-                        _Message,
-                        function (_Data) {
-                            __This.setState({
-                                ButtonEnabled: false,
-                            });
-                        }
-                    );
-                }
-            );
-
+            Actions.CheckLogin(function (_Message) {
+                CommandIDs.ResultItemCommand.RunIfHas(
+                    _Message,
+                    function (_Data) {
+                        __This.setState({
+                            ButtonName: _Data.Item.Name,
+                        });
+                    }
+                );
+            });
         }
         ,
         render: function () {
@@ -96,7 +82,7 @@ var TAdminMainPage = Class(TObject,
                                 style={{ width: "21px", height: "21px" }}
                                 color={"primary"}
                             />
-                        ) : "Admin Test"
+                            ) : this.state.ButtonName
                         }
                         </Button>
                     </Grid>
