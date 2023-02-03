@@ -13,6 +13,11 @@
   <UICultureName>tr-TR</UICultureName>
   <LogToFile>true</LogToFile>
   <LogToConsole>false</LogToConsole>
+  <ElasticSearchSetting>
+    <LogToElastic>false</LogToElastic>
+    <ElasticUrl>Elk Host</ElasticUrl>
+    <ElasticIndexPrefix>GenericScaffold</ElasticIndexPrefix>
+  </ElasticSearchSetting>
   <LogDebugEnabled>true</LogDebugEnabled>
   <LogInfoEnabled>true</LogInfoEnabled>
   <LogExceptionEnabled>true</LogExceptionEnabled>

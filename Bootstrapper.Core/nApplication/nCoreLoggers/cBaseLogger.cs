@@ -1,15 +1,28 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http.Json;
+using System.Net.Http;
 using Bootstrapper.Core.nCore;
+using Nest;
+using Bootstrapper.Boundary.nCore.nLoggerType;
+using Bootstrapper.Core.nHandlers.nElasticSearchHandler;
 
 namespace Bootstrapper.Core.nApplication.nCoreLoggers
 {
     public abstract class cBaseLogger : cCoreObject
     {
-        public cBaseLogger(cApp _App)
+        public ELoggerType LoggerType { get; set; }
+        public ElasticClient ELKClient { get; set; }
+        public cBaseLogger(cApp _App, ELoggerType _LoggerType)
             : base(_App)
         {
+            LoggerType = _LoggerType;
+        }
+
+        public override void Init()
+        {
+            ELKClient = App.Handlers.ElasticSearchHandler.CreateClient(LoggerType.Name);
         }
         protected abstract string LogPath();
         protected abstract bool IsEnabled();
@@ -54,6 +67,34 @@ namespace Bootstrapper.Core.nApplication.nCoreLoggers
             }
         }
 
+        protected void WriteToElastic(List<string> _Values)
+        {
+            if (App.Configuration.ApplicationSettings.ElasticSearchSetting.LogToElastic)
+            {
+                _Values.ForEach(__Item =>
+                {
+                    ELKClient.IndexDocument(new cLogItem() { LogValue = __Item, LogTime = DateTime.Now });
+                });
+            }
+        }
+
+        protected void WriteToElastic(string _Value)
+        {
+            if (App.Configuration.ApplicationSettings.ElasticSearchSetting.LogToElastic)
+            {
+                ELKClient.IndexDocument(new cLogItem() { LogValue = _Value, LogTime = DateTime.Now });
+            }
+        }
+
+        protected void WriteToElastic(string _Value, params object[] _Args)
+        {
+            if (App.Configuration.ApplicationSettings.ElasticSearchSetting.LogToElastic)
+            {
+                ELKClient.IndexDocument(new cLogItem() { LogValue = _Value.FormatEx(_Args), LogTime = DateTime.Now });
+            }
+        }
+
+
         //////////////////////////////////////////
         /////////////////////////////////////////////
         /////////////////////////////////////////////
@@ -67,6 +108,7 @@ namespace Bootstrapper.Core.nApplication.nCoreLoggers
         {
             if (App.Configuration.ApplicationSettings.LogInfoEnabled && IsEnabled())
             {
+                WriteToElastic(_Value, _Args);
                 _Value = PrepereString(new List<string>() { _Value.FormatEx(_Args) });
                 WriteTo(_Value, LogFileName);
             }
@@ -78,6 +120,7 @@ namespace Bootstrapper.Core.nApplication.nCoreLoggers
             {
                 lock (this)
                 {
+                    WriteToElastic(_BulkValue);
                     string __Value = PrepereString(_BulkValue);
                     WriteTo(__Value, LogFileName);
                 }
@@ -98,6 +141,7 @@ namespace Bootstrapper.Core.nApplication.nCoreLoggers
         {
             if (App.Configuration.ApplicationSettings.LogDebugEnabled && IsEnabled())
             {
+                WriteToElastic(_Value, _Args);
                 _Value = PrepereString(new List<string>() { _Value.FormatEx(_Args) });
                 WriteTo(_Value, DebugLogFileName);
             }
@@ -109,6 +153,7 @@ namespace Bootstrapper.Core.nApplication.nCoreLoggers
             {
                 lock (this)
                 {
+                    WriteToElastic(_BulkValue);
                     string __Value = PrepereString(_BulkValue);
                     WriteTo(__Value, DebugLogFileName);
                 }
@@ -144,6 +189,7 @@ namespace Bootstrapper.Core.nApplication.nCoreLoggers
         {
             if (App.Configuration.ApplicationSettings.LogExceptionEnabled && IsEnabled())
             {
+                WriteToElastic(_Value, _Args);
                 _Value = PrepereExceptionString(_Value, _Args);
                 WriteTo(_Value, ErrorLogFileName);
             }
@@ -176,16 +222,19 @@ var __RavenClient = new RavenClient("https://f0e36791227e431fa63b44e81991a3d8@o1
                 lock (this)
                 {
                     if (_BulkValueBeforeError != null)
-                    {
+                    {   
+                        WriteToElastic(_BulkValueBeforeError);
                         string __Value = PrepereString(_BulkValueBeforeError);
                         WriteTo(__Value, ErrorLogFileName);
                     }
                     if (_Ex != null)
                     {
+                        WriteToElastic(_Ex.Message + "\n {0} \n {1} \n {2}", _Ex.StackTrace, _Ex.Source, _Ex.InnerException);
                         LogError(_Ex.Message + "\n {0} \n {1} \n {2}", _Ex.StackTrace, _Ex.Source, _Ex.InnerException);
                     }
                     if (_BulkValueAfterError != null)
                     {
+                        WriteToElastic(_BulkValueAfterError);
                         string __Value = PrepereString(_BulkValueAfterError);
                         WriteTo(__Value, ErrorLogFileName);
                     }

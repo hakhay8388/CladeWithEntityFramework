@@ -1,29 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <cApplicationSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <DomainNames>
-    <string>Bootstrapper</string>
-    <string>Base</string>
-    <string>Data</string>
-	<string>Core</string>
-    <string>Web</string>
-    <string>App</string>
-    <string>GenericScaffold</string>
-  </DomainNames>
-  <TargetHostName>localhost</TargetHostName>
-  <UICultureName>tr-TR</UICultureName>
-  <LogToFile>true</LogToFile>
-  <LogToConsole>false</LogToConsole>
-  <LogDebugEnabled>true</LogDebugEnabled>
-  <LogInfoEnabled>true</LogInfoEnabled>
-  <LogExceptionEnabled>true</LogExceptionEnabled>
-  <LogExecutedSqlEnabled>true</LogExecutedSqlEnabled>
-  <LogSqlGlobalInfoEnabled>false</LogSqlGlobalInfoEnabled>
-  <LogGeneralEnabled>true</LogGeneralEnabled>
-  <LogBatchJobEnabled>true</LogBatchJobEnabled>
-  <LogPerformanceEnabled>true</LogPerformanceEnabled>
-  <LogLifecycleEnabled>true</LogLifecycleEnabled>
-  <LogWebHooksEnabled>true</LogWebHooksEnabled>
-  <LogIntegrationsEnabled>true</LogIntegrationsEnabled>
-  <RequestPerformanceLogPath>true</RequestPerformanceLogPath>
-  <DatabaseConnectionString>Server=127.0.0.1;Port=5432;Database=myDataBase;User Id=postgres;Password=123456;</DatabaseConnectionString>
+	<DomainNames>
+		<string>Bootstrapper</string>
+		<string>Base</string>
+		<string>Data</string>
+		<string>Core</string>
+		<string>Web</string>
+		<string>App</string>
+		<string>GenericScaffold</string>
+	</DomainNames>
+	<TargetHostName>localhost</TargetHostName>
+	<UICultureName>tr-TR</UICultureName>
+	<LogToFile>true</LogToFile>
+	<LogToConsole>true</LogToConsole>
+	
+	<ElasticSearchSetting>
+		<LogToElastic>true</LogToElastic>
+		<ElasticUrl>http://172.24.244.20:9200/</ElasticUrl>
+		<ElasticIndexPrefix>GenericScaffold</ElasticIndexPrefix>
+	  </ElasticSearchSetting>
+	<LogToElastic>false</LogToElastic>
+	<LogDebugEnabled>true</LogDebugEnabled>
+	<LogInfoEnabled>true</LogInfoEnabled>
+	<LogExceptionEnabled>true</LogExceptionEnabled>
+	<LogExecutedSqlEnabled>true</LogExecutedSqlEnabled>
+	<LogSqlGlobalInfoEnabled>false</LogSqlGlobalInfoEnabled>
+	<LogGeneralEnabled>true</LogGeneralEnabled>
+	<LogBatchJobEnabled>true</LogBatchJobEnabled>
+	<LogPerformanceEnabled>true</LogPerformanceEnabled>
+	<LogLifecycleEnabled>true</LogLifecycleEnabled>
+	<LogWebHooksEnabled>true</LogWebHooksEnabled>
+	<LogIntegrationsEnabled>true</LogIntegrationsEnabled>
+	<RequestPerformanceLogPath>true</RequestPerformanceLogPath>
+	<DatabaseConnectionString>Server=127.0.0.1;Port=5432;Database=myDataBase;User Id=postgres;Password=123456;</DatabaseConnectionString>
 </cApplicationSettings>

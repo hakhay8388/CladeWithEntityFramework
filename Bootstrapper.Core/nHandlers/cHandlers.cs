@@ -25,6 +25,7 @@ using Bootstrapper.Core.nHandlers.nStackHandler;
 using Bootstrapper.Core.nHandlers.nXmlHandler;
 using Bootstrapper.Core.nHandlers.nScriptHandler;
 using Bootstrapper.Core.nHandlers.nLanguageHandler;
+using Bootstrapper.Core.nHandlers.nElasticSearchHandler;
 
 namespace Bootstrapper.Core.nHandlers
 {
@@ -49,10 +50,13 @@ namespace Bootstrapper.Core.nHandlers
         public cScriptHandler ScriptHandler { get; set; }
         public cLanguageHandler LanguageHandler { get; set; }
 
+        public cElasticSearchHandler ElasticSearchHandler { get; set; }
+
         public cHandlers(nApplication.cApp _App)
             : base(_App)
         {
             AssemblyHandler = new cAssemblyHandler(_App);
+            ElasticSearchHandler = new cElasticSearchHandler(_App);
             LambdaHandler = new cLambdaHandler(_App);
             ReflectionHandler = new cReflectionHandler(_App);
             FileHandler = new cFileHandler(_App);
@@ -68,13 +72,15 @@ namespace Bootstrapper.Core.nHandlers
 			StackHandler = new cStackHandler(_App);
             XmlHandler = new cXmlHandler(_App);
             ScriptHandler = new cScriptHandler(_App);
-            LanguageHandler = new cLanguageHandler(App);
+            LanguageHandler = new cLanguageHandler(_App);
+            
         }
 
         public override void Init()
         {
             App.Factories.ObjectFactory.RegisterInstance<cHandlers>(this);
-			StackHandler.Init();
+            ElasticSearchHandler.Init();
+            StackHandler.Init();
 			AssemblyHandler.Init();
             LambdaHandler.Init();
             ReflectionHandler.Init();
@@ -90,7 +96,7 @@ namespace Bootstrapper.Core.nHandlers
             EmailHandler.Init();
 			ExcelHandler.Init();
             ScriptHandler.Init();
-
+            
         }
     }
 }
