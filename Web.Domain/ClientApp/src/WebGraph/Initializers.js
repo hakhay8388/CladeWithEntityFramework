@@ -111,61 +111,41 @@ Array.prototype.sortByDesc = function (p) {
 
 
 
-window.SetUrl = function (_Url, _First = false) {
+window.SetUrl = function (_Url) {
 
-    if (_Url.startsWith("/")) {
-        _Url = _Url.substring(1);
-    }
+    if (window.App.App != null)
+    {
+        if (_Url.startsWith("/")) {
+            _Url = _Url.substring(1);
+        }
 
-    if (_Url.endsWith("/")) {
-        _Url = _Url.substring(0, _Url.length - 1);
-    }
+        if (_Url.endsWith("/")) {
+            _Url = _Url.substring(0, _Url.length - 1);
+        }
 
-    if (_First) {
         if (_Url == "") {
-            window.History.replace(_Url, { firstPage: true });
+            window.App.App.props.router.navigate("");
         }
         else {
-            window.History.replace("/" + _Url, { firstPage: true });
+            window.App.App.props.router.navigate("/" + _Url);
         }
-    }
-    else {
-        if (_Url == "") {
-            window.History.push(_Url);
-        }
-        else {
-            window.History.push("/" + _Url);
-        }
-
     }
 };
 
 
-window.GoPage = function (_Page, _First = false) {
-    if (_Page == null) {
-        window.SetUrl("", _First);
+window.GoPage = function (_Page)
+{
+    if (_Page == null)
+    {
+        window.SetUrl("");
     } else {
-        window.SetUrl(_Page, _First);
+        window.SetUrl(_Page);
     }
-
-    /*if (GenericWebGraph.MainPage && GenericWebGraph.MainPage != null) {
-      if (_Page == null) {
-        window.SetUrl("", _First);
-      } else {
-        window.SetUrl(_Page, _First);
-      }
-    } else {
-      Pages.LoadPages(function () 
-      {
-        window.App.App.forceUpdate();
-        //WebGraph.ForceUpdateAllWithAsyncLoad(true);
-       //console.log("Pages Loaded...");
-      });
-    }*/
 };
 
-window.GoMainPage = function (_First = false) {
-    window.GoPage("", _First);
+window.GoMainPage = function ()
+{
+    window.GoPage("");
 };
 
 
