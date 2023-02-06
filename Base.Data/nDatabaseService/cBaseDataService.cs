@@ -50,6 +50,21 @@ namespace Base.Data.nDatabaseService
             }
         }
 
+        public DbContext GetCoreEFDatabaseContext()
+        {
+            return (DbContext)ServiceContext.App.Factories.ObjectFactory.ResolveInstance<TDatabaseContext>();
+        }
+
+        public void Save()
+        {
+            GetCoreEFDatabaseContext().SaveChanges();
+        }
+
+        public TCastDatabaseContext GetDatabaseContext<TCastDatabaseContext>() where TCastDatabaseContext : DbContext
+        {
+            return (TCastDatabaseContext)GetCoreEFDatabaseContext();
+        }
+
         public void ComponentLoad()
         {
             try
@@ -119,20 +134,6 @@ namespace Base.Data.nDatabaseService
             }
         }
 
-        public DbContext GetCoreEFDatabaseContext()
-        {
-            return (DbContext)ServiceContext.App.Factories.ObjectFactory.ResolveInstance<TDatabaseContext>();
-            
-        }
-
-        public void Save()
-        {
-            GetCoreEFDatabaseContext().SaveChanges();
-        }
-
-        public TCastDatabaseContext GetDatabaseContext<TCastDatabaseContext>() where TCastDatabaseContext : DbContext
-        {
-            return (TCastDatabaseContext)GetCoreEFDatabaseContext();
-        }
+   
     }
 }
