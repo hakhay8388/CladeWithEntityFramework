@@ -18,8 +18,9 @@
     <ProjectReference Include="..\Base.FileData\Base.FileData.csproj" />
     <ProjectReference Include="..\Bootstrapper.Boundary\Bootstrapper.Boundary.csproj" />
     <ProjectReference Include="..\Bootstrapper.Core\Bootstrapper.Core.csproj" />
-    <ProjectReference Include="..\Data.Boundary\Data.Boundary.csproj" />
-    <ProjectReference Include="..\Data.Domain\Data.Domain.csproj" />
+    <ProjectReference Include="..\Domain.Boundary\Domain.Boundary.csproj" />
+    <ProjectReference Include="..\Domain.Data\Domain.Data.csproj" />
+    <ProjectReference Include="..\Sys.Data\Sys.Data.csproj" />
   </ItemGroup>
 
 </Project>

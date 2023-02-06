@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace Base.Data.nDatabaseService
 {
-    [Register(null, false, true, true, true, LifeTime.ContainerControlledLifetimeManager)]
     public abstract class cBaseDataService<TDatabaseContext> : cCoreService<cDataServiceContext>, IDataService
         where TDatabaseContext : cBaseDatabaseContext
     {
@@ -33,7 +32,7 @@ namespace Base.Data.nDatabaseService
 
         public void Migrate()
         {
-            TDatabaseContext __DatabaseContext = GetDatabaseContext();
+            DbContext __DatabaseContext = GetCoreEFDatabaseContext();
             if (!IsMigrated)
             {
                 lock (this)
@@ -69,14 +68,31 @@ namespace Base.Data.nDatabaseService
             }
         }
 
-        public void LoadDefaultData()
+        public void LoadDomainDefaultData()
         {
             try
             {
-                Type __Type = App.Handlers.AssemblyHandler.GetTypeFromBaseInDomainHierarchy<IDefaultDataLoader>();
+                Type __Type = App.Handlers.AssemblyHandler.GetTypeFromBaseInDomainHierarchy<IDomainDefaultDataLoader>();
                 if (__Type != null)
                 {
-                    IDefaultDataLoader __DefaultDataLoader = ServiceContext.App.Factories.ObjectFactory.ResolveInstance<IDefaultDataLoader>();
+                    IDomainDefaultDataLoader __DefaultDataLoader = ServiceContext.App.Factories.ObjectFactory.ResolveInstance<IDomainDefaultDataLoader>();
+                    if (__DefaultDataLoader != null) __DefaultDataLoader.Load();
+                }
+            }
+            catch (Exception _Ex)
+            {
+                App.Loggers.CoreLogger.LogError(_Ex);
+            }
+        }
+
+        public void LoadSysDefaultData()
+        {
+            try
+            {
+                Type __Type = App.Handlers.AssemblyHandler.GetTypeFromBaseInDomainHierarchy<ISysDefaultDataLoader>();
+                if (__Type != null)
+                {
+                    ISysDefaultDataLoader __DefaultDataLoader = ServiceContext.App.Factories.ObjectFactory.ResolveInstance<ISysDefaultDataLoader>();
                     if (__DefaultDataLoader != null) __DefaultDataLoader.Load();
                 }
             }
@@ -103,15 +119,20 @@ namespace Base.Data.nDatabaseService
             }
         }
 
-        public TDatabaseContext GetDatabaseContext()
-        {
-            return ServiceContext.App.Factories.ObjectFactory.ResolveInstance<TDatabaseContext>();
-        }
-
         public DbContext GetCoreEFDatabaseContext()
         {
-            return (DbContext)GetDatabaseContext();
+            return (DbContext)ServiceContext.App.Factories.ObjectFactory.ResolveInstance<TDatabaseContext>();
             
+        }
+
+        public void Save()
+        {
+            GetCoreEFDatabaseContext().SaveChanges();
+        }
+
+        public TCastDatabaseContext GetDatabaseContext<TCastDatabaseContext>() where TCastDatabaseContext : DbContext
+        {
+            return (TCastDatabaseContext)GetCoreEFDatabaseContext();
         }
     }
 }

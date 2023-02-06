@@ -1,19 +1,21 @@
-﻿using Bootstrapper.Core.nApplication;
+﻿using Base.Data.nDatabaseService;
+using Bootstrapper.Core.nApplication;
 using Bootstrapper.Core.nCore;
-using Data.Domain.nDatabaseService;
-using Data.Domain.nDatabaseService.nSystemEntities;
-using Data.Domain.nDataService.nDataManagers;
+using Domain.Data.nDatabaseService;
+using Sys.Data.nDatabaseService;
+using Sys.Data.nDatabaseService.nSystemEntities;
+using Sys.Data.nDataService.nDataManagers;
 
 namespace App.QueryTester.cQueryTesters
 {
     public class cQueryTest : cCoreObject
     {
-        public cDataService DataService { get; set; }
+        public IDataService DataService { get; set; }
 
         public cMenuDataManager MenuDataManager { get; set; }
 
         public cQueryTest(cApp _App
-            , cDataService _DataService
+            , IDataService _DataService
             , cMenuDataManager _MenuDataManager
         )
             : base(_App)
@@ -56,7 +58,7 @@ namespace App.QueryTester.cQueryTesters
         {
             try
             {
-                cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
+                cSysDatabaseContext __DatabaseContext = DataService.GetDatabaseContext<cSysDatabaseContext>();
                 Console.WriteLine("Thread ID_3: " + Thread.CurrentThread.ManagedThreadId);
                 __DatabaseContext.Perform(() =>
                 {

@@ -10,7 +10,7 @@ using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nHotSpotMessageAct
 
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nShowMessageAction;
 using Web.Domain.Controllers;
-using Data.Domain.nDefaultValueTypes;
+using Sys.Boundary.nDefaultValueTypes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nNoPermissionAction

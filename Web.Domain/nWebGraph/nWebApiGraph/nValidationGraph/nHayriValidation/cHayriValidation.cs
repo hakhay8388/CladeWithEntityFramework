@@ -2,17 +2,19 @@
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nValidationResultAction;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph;
 using System;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
 using Bootstrapper.Core.nApplication;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nLoginCommand;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nHayriCommand;
+using Domain.Data.nDatabaseService;
+using Base.Data.nDatabaseService;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nValidationGraph.nHayriValidation
 {
     public class cHayriValidation : cBaseValidation, IHayriReceiver
     {
 
-		public cHayriValidation(cApp _App, cWebGraph _WebGraph, cDataService _DataService)
+		public cHayriValidation(cApp _App, cWebGraph _WebGraph, IDataService _DataService)
 			: base(_App, _WebGraph, _DataService)
 		{
 			WebGraph = _WebGraph;

@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bootstrapper.Boundary\Bootstrapper.Boundary.csproj" />
+    <ProjectReference Include="..\Sys.Boundary\Sys.Boundary.csproj" />
+  </ItemGroup>
+
+</Project>

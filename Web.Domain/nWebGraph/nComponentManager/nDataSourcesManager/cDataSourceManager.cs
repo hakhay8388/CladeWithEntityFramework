@@ -1,6 +1,6 @@
 ﻿using Bootstrapper.Core.nApplication;
 using Bootstrapper.Core.nCore;
-using Data.Domain.nDefaultValueTypes;
+using Sys.Boundary.nDefaultValueTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

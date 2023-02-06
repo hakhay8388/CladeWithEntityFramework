@@ -2,16 +2,18 @@
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nValidationResultAction;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph;
 using System;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
 using Bootstrapper.Core.nApplication;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nLoginCommand;
+using Domain.Data.nDatabaseService;
+using Base.Data.nDatabaseService;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nValidationGraph.nSellerRegisterValidation
 {
     public class cLoginValidation : cBaseValidation, ILoginReceiver
     {
 
-		public cLoginValidation(cApp _App, cWebGraph _WebGraph, cDataService _DataService)
+		public cLoginValidation(cApp _App, cWebGraph _WebGraph, IDataService _DataService)
 			: base(_App, _WebGraph, _DataService)
 		{
 			WebGraph = _WebGraph;

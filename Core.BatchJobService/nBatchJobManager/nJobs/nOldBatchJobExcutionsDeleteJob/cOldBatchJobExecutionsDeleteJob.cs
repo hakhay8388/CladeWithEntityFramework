@@ -3,9 +3,10 @@ using Base.FileData;
 using Core.BatchJobService.nBatchJobManager.nJobs.nTestJob;
 using Core.BatchJobService.nDataService.nDataManagers;
 using Core.BatchJobService.nDefaultValueTypes;
-using Data.Domain.nDatabaseService;
-using Data.Domain.nDataService;
-using Data.Domain.nDataService.nDataManagers;
+using Domain.Data.nDatabaseService;
+using Sys.Data.nDatabaseService;
+using Sys.Data.nDataService;
+using Sys.Data.nDataService.nDataManagers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Core.BatchJobService.nBatchJobManager.nJobs.nOldBatchJobExcutionsDelet
     public class cOldBatchJobExecutionsDeleteJob : cBaseJob<cOldBatchJobExecutionsDeleteJobProps>
     {
         cBatchJobExecutionDataManager BatchJobExecutionDataManager { get; set; }
-        public cOldBatchJobExecutionsDeleteJob(cDataServiceContext _CoreServiceContext, cDataService _DataService, IFileDateService _FileDataService
+        public cOldBatchJobExecutionsDeleteJob(cDataServiceContext _CoreServiceContext, IDataService _DataService, IFileDateService _FileDataService
             , cBatchJobDataManager _BatchJobDataManager
             , cBatchJobExecutionDataManager _BatchJobExecutionDataManager)
          : base(BatchJobIDs.OldBatchJobExcutionsDelete, _CoreServiceContext, _DataService, _FileDataService, _BatchJobDataManager)
@@ -25,7 +26,7 @@ namespace Core.BatchJobService.nBatchJobManager.nJobs.nOldBatchJobExcutionsDelet
 
         public override cBatchJobResult Run(cOldBatchJobExecutionsDeleteJobProps _Props)
         {
-            cDatabaseContext __DateService = DataService.GetDatabaseContext();
+            cDomainDatabaseContext __DateService = DataService.GetDatabaseContext<cDomainDatabaseContext>();
 
             int __DeleteCount = 0;
             __DateService.Perform(() =>

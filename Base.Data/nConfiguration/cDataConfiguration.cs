@@ -9,15 +9,10 @@ namespace Base.Data.nConfiguration
 {
     public class cDataConfiguration : cFileDataConfiguration
     {
-        public bool LoadDefaultDataOnStart { get; set; }
-        public bool LoadGlobalParamsOnStart { get; set; }
-
-        public string TargetHostName { get; set; }
-
         public cDataConfiguration(EBootType _BootType)
             :base(_BootType)
         {
-            LoadDefaultDataOnStart = true;
+            LoadSysDefaultDataOnStart = true;
             LoadGlobalParamsOnStart = true;
         }
 

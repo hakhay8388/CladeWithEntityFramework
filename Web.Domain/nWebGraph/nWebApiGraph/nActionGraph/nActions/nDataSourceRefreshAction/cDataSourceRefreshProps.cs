@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Web.Domain.nUtils.nValueTypes;
 
-using Data.Domain.nDefaultValueTypes;
+using Sys.Boundary.nDefaultValueTypes;
 using Newtonsoft.Json.Linq;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nDataSourceRefreshAction

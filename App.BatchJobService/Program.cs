@@ -3,11 +3,12 @@ using Base.Data.nConfiguration;
 using Base.Web.nCustomDI;
 using Bootstrapper.Boundary.nCore.nBootType;
 using Bootstrapper.Core.nApplication;
-using Data.Domain.nConfiguration;
+using Sys.Data.nConfiguration;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using System.Text;
 using Web.Domain;
+using Domain.Data.nConfiguration;
 
 public class Program
 {

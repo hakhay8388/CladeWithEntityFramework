@@ -2,16 +2,18 @@
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nCacheItAction;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommandIDs;
 using Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph;
-using Data.Domain.nDefaultValueTypes;
+using Sys.Boundary.nDefaultValueTypes;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using Bootstrapper.Core.nCore;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
 using Bootstrapper.Core.nApplication;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using Domain.Data.nDatabaseService;
+using Base.Data.nDatabaseService;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph
 {
@@ -21,10 +23,10 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph
 		public List<cBaseCommand> CommandList { get; set; }
 		public cWebGraph WebGraph { get; set; }
 
-		public cDataService DataService { get; set; }
+		public IDataService DataService { get; set; }
 
 
-		public cCommandGraph(cApp _App, cWebGraph _WebGraph, cDataService _DataService)
+		public cCommandGraph(cApp _App, cWebGraph _WebGraph, IDataService _DataService)
 			: base(_App)
 		{
 			CommandList = new List<cBaseCommand>();

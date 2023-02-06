@@ -9,8 +9,9 @@ using Bootstrapper.Core.nCore;
 using Bootstrapper.Boundary.nCore.nObjectLifeTime;
 using Bootstrapper.Core.nApplication;
 using Base.FileData;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
 using Core.GenericWebScaffold.nWebGraph.nComponentManager.nDataSourcesManager;
+using Domain.Data.nDatabaseService;
 
 namespace Web.Domain.nWebGraph.nComponentManager
 {
@@ -20,10 +21,10 @@ namespace Web.Domain.nWebGraph.nComponentManager
         public cDataSourceManager DataSourceManager { get; set; }
 
         public cDataServiceContext CoreServiceContext { get; set; }
-        public cDataService DataService { get; set; }
+        public IDataService DataService { get; set; }
         public IFileDateService FileDataService { get; set; }
 
-        public cComponentManager(cApp _App, cDataServiceContext _CoreServiceContext, cDataService _DataService, IFileDateService _FileDataService
+        public cComponentManager(cApp _App, cDataServiceContext _CoreServiceContext, IDataService _DataService, IFileDateService _FileDataService
             , cDataSourceManager _DataSourceManager
             )
             : base(_App)
@@ -44,7 +45,7 @@ namespace Web.Domain.nWebGraph.nComponentManager
 
         public void Load()
         {
-            cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
+            cSysDatabaseContext __DatabaseContext = DataService.GetDatabaseContext<cSysDatabaseContext>();
             __DatabaseContext.Perform(LoadDefaultPureData);
         }
         public void LoadDefaultPureData()

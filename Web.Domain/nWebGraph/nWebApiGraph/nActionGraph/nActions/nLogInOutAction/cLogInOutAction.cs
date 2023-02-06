@@ -9,7 +9,7 @@ using Bootstrapper.Core.nApplication;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nHotSpotMessageAction;
 
 using Web.Domain.Controllers;
-using Data.Domain.nDatabaseService.nSystemEntities;
+using Sys.Data.nDatabaseService.nSystemEntities;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nLogInOutAction
 {

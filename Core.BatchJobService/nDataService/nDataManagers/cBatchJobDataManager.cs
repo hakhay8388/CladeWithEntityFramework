@@ -3,24 +3,25 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using Data.Domain.nDefaultValueTypes;
-using Data.Boundary.nData;
-using Data.Domain.nDataService.nDataManagers;
-using Data.Domain.nDataService;
+using Sys.Boundary.nDefaultValueTypes;
+using Sys.Boundary.nData;
+using Sys.Data.nDataService.nDataManagers;
+using Sys.Data.nDataService;
 using Core.BatchJobService.nDefaultValueTypes;
 using Base.Data.nDatabaseService;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
 
 
 using System.Xml.Linq;
 using Microsoft.EntityFrameworkCore;
-using Data.Domain.nDatabaseService.nSystemEntities;
+using Sys.Data.nDatabaseService.nSystemEntities;
+using Domain.Data.nDatabaseService;
 
 namespace Core.BatchJobService.nDataService.nDataManagers
 {
     public class cBatchJobDataManager : cBaseDataManager
     {
-        public cBatchJobDataManager(cDataServiceContext _CoreServiceContext, cDataService _DataService, IFileDateService _FileDataService)
+        public cBatchJobDataManager(cDataServiceContext _CoreServiceContext, IDataService _DataService, IFileDateService _FileDataService)
           : base(_CoreServiceContext, _DataService, _FileDataService)
         {
         }
@@ -46,8 +47,6 @@ namespace Core.BatchJobService.nDataService.nDataManagers
 
         public cBatchJobEntity AddBatchJob(string _Code, string _Name, int _TimePeriodMilisecond, EBatchJobState _State, bool _AutoExecution, bool _ExecuteFirstWithoutWait, bool _StopAfterFirstExecution, int _MaxRetryCount)
         {
-            cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
-
             cBatchJobEntity __BatchJobEntity = cBatchJobEntity.Add(new cBatchJobEntity() {
                 Code = _Code,
                 Name = _Name,
@@ -59,14 +58,12 @@ namespace Core.BatchJobService.nDataService.nDataManagers
                 MaxRetryCount = _MaxRetryCount
             });
 
-            __DatabaseContext.SaveChanges();
+            __BatchJobEntity.Save();
 
             return __BatchJobEntity;
         }
         public cBatchJobEntity UpdateBatchJob(cBatchJobEntity _BatchJobEntity, string _Code, string _Name, int _TimePeriodMilisecond, EBatchJobState _State, bool _AutoExecution, bool _ExecuteFirstWithoutWait, bool _StopAfterFirstExecution, int _MaxRetryCount)
         {
-            cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
-
             _BatchJobEntity.Code = _Code;
             _BatchJobEntity.Name = _Name;
             _BatchJobEntity.State = _State.ID;
@@ -75,13 +72,12 @@ namespace Core.BatchJobService.nDataService.nDataManagers
             _BatchJobEntity.StopAfterFirstExecution = _StopAfterFirstExecution;
             _BatchJobEntity.TimePeriodMilisecond = _TimePeriodMilisecond;
             _BatchJobEntity.MaxRetryCount = _MaxRetryCount;
-            __DatabaseContext.SaveChanges();
+            _BatchJobEntity.Save();
 
             return _BatchJobEntity;
         }
         public cBatchJobEntity UpdateBatchJob(long _ID, int _TimePeriodMilisecond,bool _AutoExecution, bool _ExecuteFirstWithoutWait, bool _StopAfterFirstExecution, int _MaxRetryCount)
         {
-            cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
 
             cBatchJobEntity _BatchJobEntity = cBatchJobEntity.GetEntityByID(_ID);
 
@@ -91,15 +87,13 @@ namespace Core.BatchJobService.nDataService.nDataManagers
             _BatchJobEntity.StopAfterFirstExecution = _StopAfterFirstExecution;
             _BatchJobEntity.TimePeriodMilisecond = _TimePeriodMilisecond;
             _BatchJobEntity.MaxRetryCount = _MaxRetryCount;
-            __DatabaseContext.SaveChanges();
+            _BatchJobEntity.Save();
 
             return _BatchJobEntity;
         }
 
         public cBatchJobEntity CreateBatchJobIfNotExists(string _Code, string _Name, int _TimePeriodMilisecond, EBatchJobState _State, bool _AutoExecution, bool _ExecuteFirstWithoutWait, bool _StopAfterFirstExecution, int _MaxRetryCount)
         {
-            cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
-
             cBatchJobEntity __BatchJobEntity = GetBatchJobByCode(_Code);
             if (__BatchJobEntity == null)
             {

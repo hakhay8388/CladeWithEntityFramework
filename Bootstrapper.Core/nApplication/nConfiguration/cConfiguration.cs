@@ -61,7 +61,8 @@ namespace Bootstrapper.Core.nApplication.nConfiguration
         public string BatchJobLogPath { get; private set; }
 
 
-        public bool LoadDefaultDataOnStart { get; set; }
+        public bool LoadDomainDefaultDataOnStart { get; set; }
+        public bool LoadSysDefaultDataOnStart { get; set; }
         public bool LoadBatchJobOnStart { get; set; }
         public bool LoadGlobalParamsOnStart { get; set; }
 
@@ -104,7 +105,8 @@ namespace Bootstrapper.Core.nApplication.nConfiguration
             LogPath = GetVariableName(() => LogPath);
             LogPath = Path.Combine(HomePath, LogPath);
 
-            LoadDefaultDataOnStart = true;
+            LoadDomainDefaultDataOnStart = true;
+            LoadSysDefaultDataOnStart = true;
             LoadBatchJobOnStart = true;
             LoadGlobalParamsOnStart = true;
 

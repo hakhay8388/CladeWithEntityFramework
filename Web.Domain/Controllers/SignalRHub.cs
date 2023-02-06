@@ -1,6 +1,6 @@
 ﻿using Bootstrapper.Core.nApplication;
 using Web.Domain.nWebGraph;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.SignalR;
@@ -12,6 +12,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Web.Domain.nWebGraph;
 using Web.Domain.nWebGraph.nSessionManager;
+using Domain.Data.nDatabaseService;
+using Base.Data.nDatabaseService;
 
 namespace Web.Domain.Controllers
 {
@@ -35,7 +37,7 @@ namespace Web.Domain.Controllers
 		public cSession ClientSession { get; set; }
 		public JObject CommandJson { get; set; }
 		public JArray ActionJson { get; set; }
-		public cDataService DataService { get; set; }
+		public IDataService DataService { get; set; }
 		public HttpContext CurrentContext { get; set; }
 
 		public IHubContext<SignalRHub> SignalHub { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

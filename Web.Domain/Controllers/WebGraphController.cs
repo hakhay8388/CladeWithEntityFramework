@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nSetServerDateTimeAction;
 using Web.Domain.nWebGraph;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
 using Microsoft.AspNetCore.SignalR;
 using Web.Domain.Controllers;
 using Web.Domain.nWebGraph.nSessionManager;
 using Newtonsoft.Json;
 using System.Dynamic;
+using Domain.Data.nDatabaseService;
+using Base.Data.nDatabaseService;
 
 namespace Web.Domain.Controllers
 {
@@ -18,7 +20,7 @@ namespace Web.Domain.Controllers
     {
 
 
-        public WebGraphController(cApp _App, cWebGraph _WebGraph, cDataService _DataService, IHubContext<SignalRHub> _SignalHub)
+        public WebGraphController(cApp _App, cWebGraph _WebGraph, IDataService _DataService, IHubContext<SignalRHub> _SignalHub)
             : base(_App, _WebGraph, _DataService, _SignalHub)
         {
         }

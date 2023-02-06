@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Data.Boundary.nData;
+using Sys.Boundary.nData;
 using Newtonsoft.Json.Linq;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nNotificationAction

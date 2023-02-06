@@ -3,7 +3,8 @@
 	<DomainNames>
 		<string>Bootstrapper</string>
 		<string>Base</string>
-		<string>Data</string>
+		<string>Sys</string>
+		<string>Domain</string>
 		<string>Core</string>
 		<string>Web</string>
 		<string>App</string>
@@ -15,11 +16,10 @@
 	<LogToConsole>true</LogToConsole>
 	
 	<ElasticSearchSetting>
-		<LogToElastic>true</LogToElastic>
+		<LogToElastic>false</LogToElastic>
 		<ElasticUrl>http://172.24.244.20:9200/</ElasticUrl>
 		<ElasticIndexPrefix>GenericScaffold</ElasticIndexPrefix>
 	  </ElasticSearchSetting>
-	<LogToElastic>false</LogToElastic>
 	<LogDebugEnabled>true</LogDebugEnabled>
 	<LogInfoEnabled>true</LogInfoEnabled>
 	<LogExceptionEnabled>true</LogExceptionEnabled>

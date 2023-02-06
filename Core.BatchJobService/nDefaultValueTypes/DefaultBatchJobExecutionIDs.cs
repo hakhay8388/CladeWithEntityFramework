@@ -1,6 +1,6 @@
 ﻿using Core.BatchJobService.nBatchJobManager.nJobs;
 using Core.BatchJobService.nBatchJobManager.nJobs.nOldBatchJobExcutionsDeleteJob;
-using Data.Boundary.nData;
+using Sys.Boundary.nData;
 using System;
 using System.Collections.Generic;
 using System.Data;

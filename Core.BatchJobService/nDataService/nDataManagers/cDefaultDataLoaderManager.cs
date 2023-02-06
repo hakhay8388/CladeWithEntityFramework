@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using Data.Domain.nDataService.nDataManagers.nLoaders;
+using Sys.Data.nDataService.nDataManagers.nLoaders;
 
-using Data.Domain.nDefaultValueTypes;
-using Data.Domain.nDataService.nDataManagers;
+using Sys.Boundary.nDefaultValueTypes;
+using Sys.Data.nDataService.nDataManagers;
 using Core.BatchJobService.nDataService.nDataManagers.nLoaders;
-using Data.Domain.nDataService;
+using Sys.Data.nDataService;
 using Bootstrapper.Core.nAttributes;
 using Bootstrapper.Boundary.nCore.nObjectLifeTime;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
 using Base.Data.nDatabaseService;
 using Base.FileData;
 using Bootstrapper.Core.nApplication.nStarter;
+using Domain.Data.nDatabaseService;
 
 namespace Core.BatchJobService.nDataService.nDataManagers
 {
@@ -23,7 +24,7 @@ namespace Core.BatchJobService.nDataService.nDataManagers
         public cBatchJobDataLoader BatchJobDataLoader { get; set; }
         public cBatchJobExecutionDataLoader BatchJobExecutionDataLoader { get; set; }
 
-        public cDefaultDataLoaderManager(cDataServiceContext _CoreServiceContext, cDataService _DataService, IFileDateService _FileDataService
+        public cDefaultDataLoaderManager(cDataServiceContext _CoreServiceContext, IDataService _DataService, IFileDateService _FileDataService
             , cBatchJobDataLoader _BatchJobDataLoader
             , cBatchJobExecutionDataLoader _BatchJobExecutionDataLoader
         )
@@ -35,7 +36,7 @@ namespace Core.BatchJobService.nDataService.nDataManagers
 
         public void Load()
         {
-            cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
+            cSysDatabaseContext __DatabaseContext = DataService.GetDatabaseContext<cSysDatabaseContext>();
 
             __DatabaseContext.Perform(LoadBatchJobData);
             __DatabaseContext.Perform(LoadBatchJobExecutionData);

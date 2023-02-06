@@ -1,5 +1,5 @@
 ﻿using Web.Domain.nUtils.nValueTypes;
-using Data.Domain.nDefaultValueTypes;
+using Sys.Boundary.nDefaultValueTypes;
 using System;
 using System.Collections.Generic;
 using System.Data;

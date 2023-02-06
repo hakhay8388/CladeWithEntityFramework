@@ -38,5 +38,9 @@ public static class TypeExtensitons
         }
     }
 
+    public static object CreateInstance(this Type _Type)
+    {
+        return Activator.CreateInstance(_Type);
+    }
 }
 

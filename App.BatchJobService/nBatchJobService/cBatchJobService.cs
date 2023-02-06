@@ -12,9 +12,9 @@ using Bootstrapper.Boundary.nCore.nObjectLifeTime;
 using Bootstrapper.Core.nAttributes;
 using Bootstrapper.Core.nCore;
 using Core.BatchJobService.nDataService.nDataManagers;
-using Data.Boundary.nData;
-using Data.Domain.nDatabaseService.nSystemEntities;
-using Data.Domain.nDataService.nDataManagers;
+using Sys.Boundary.nData;
+using Sys.Data.nDatabaseService.nSystemEntities;
+using Sys.Data.nDataService.nDataManagers;
 
 
 namespace App.BatchJobService.nBatchJobService

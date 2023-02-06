@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using Data.Domain.nDataService.nDataManagers;
-using Data.Boundary.nData;
-using Data.Domain.nDefaultValueTypes;
-using Data.Domain.nDataService;
+using Sys.Data.nDataService.nDataManagers;
+using Sys.Boundary.nData;
+using Sys.Boundary.nDefaultValueTypes;
+using Sys.Data.nDataService;
 using Core.BatchJobService.nDefaultValueTypes;
 using Base.Data.nDatabaseService;
-using Data.Domain.nDatabaseService;
-using Data.Domain.nDatabaseService.nSystemEntities;
+using Sys.Data.nDatabaseService;
+using Sys.Data.nDatabaseService.nSystemEntities;
 
 namespace Core.BatchJobService.nDataService.nDataManagers.nLoaders
 {
@@ -19,7 +19,7 @@ namespace Core.BatchJobService.nDataService.nDataManagers.nLoaders
         public cBatchJobDataManager BatchJobDataManager { get; set; }
 
 
-        public cBatchJobDataLoader(cDataServiceContext _CoreServiceContext, cDataService _DataService, IFileDateService _FileDataService
+        public cBatchJobDataLoader(cDataServiceContext _CoreServiceContext, IDataService _DataService, IFileDateService _FileDataService
             , cBatchJobDataManager _BatchJobDataManager
          )
           : base(_CoreServiceContext, _DataService, _FileDataService)
@@ -29,8 +29,6 @@ namespace Core.BatchJobService.nDataService.nDataManagers.nLoaders
 
         public void Init()
         {
-            cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
-
             ////////////// Global //////////////////
 
             for (int i = 0; i < BatchJobIDs.TypeList.Count; i++)
@@ -46,7 +44,7 @@ namespace Core.BatchJobService.nDataService.nDataManagers.nLoaders
                     __BatchJobList[i].State = EBatchJobState.Stopped.ID;
                 }
             }
-            __DatabaseContext.SaveChanges();
+            DataService.Save();
         }
     }
 }

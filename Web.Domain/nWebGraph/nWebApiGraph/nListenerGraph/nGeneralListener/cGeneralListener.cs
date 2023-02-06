@@ -1,5 +1,5 @@
 ﻿using Bootstrapper.Core.nApplication;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
 using Web.Domain.Controllers;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nCheckLoginCommand;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nLoginCommand;
@@ -14,7 +14,7 @@ using Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nLogInOutListener;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nPageResultAction;
 using Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nPermissionListener;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nGetMenuListCommand;
-using Data.Domain.nDefaultValueTypes;
+using Sys.Boundary.nDefaultValueTypes;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nMenuResultAction;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nGetPageListCommand;
 using Web.Domain.nUtils.nValueTypes;
@@ -24,13 +24,14 @@ using Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nParamListener;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nSetGlobalParamListAction;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nGetGlobalParamListCommand;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nLogInOutAction;
+using Domain.Data.nDatabaseService;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nGeneralListener
 {
      public class cGeneralListener : cBaseListener
         , IFirstInitReceiver
     {
-        public cGeneralListener(cApp _App, cWebGraph _WebGraph, cDataService _DataService)
+        public cGeneralListener(cApp _App, cWebGraph _WebGraph, IDataService _DataService)
                : base(_App, _WebGraph, _DataService)
         {
         }
@@ -60,7 +61,7 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nGeneralListener
 
             if (_Controller.ClientSession.IsLogined)
             {
-                cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
+                cSysDatabaseContext __DatabaseContext = DataService.GetDatabaseContext<cSysDatabaseContext>();
                 __DatabaseContext.Perform(() =>
                 {
                     _Controller.ClientSession.User.Language = _ReceivedData.LanguageCode;

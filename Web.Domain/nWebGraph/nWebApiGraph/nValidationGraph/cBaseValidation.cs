@@ -6,7 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Bootstrapper.Core.nApplication;
 using Bootstrapper.Core.nCore;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
+using Domain.Data.nDatabaseService;
+using Base.Data.nDatabaseService;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nValidationGraph
 {
@@ -14,9 +16,9 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nValidationGraph
     {
         public cWebGraph WebGraph { get; set; }
 
-        public cDataService DataService { get; set; }
+        public IDataService DataService { get; set; }
 
-        public cBaseValidation(cApp _App, cWebGraph _WebGraph, cDataService _DataService)
+        public cBaseValidation(cApp _App, cWebGraph _WebGraph, IDataService _DataService)
             : base(_App)
         {
             WebGraph = _WebGraph;

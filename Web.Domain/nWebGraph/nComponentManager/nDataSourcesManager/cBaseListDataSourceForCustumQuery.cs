@@ -3,9 +3,11 @@
 using Base.Data.nDatabaseService.nDatabase;
 using Bootstrapper.Core.nApplication;
 using Core.GenericWebScaffold.nWebGraph.nComponentManager.nDataSourcesManager;
-using Data.Domain.nDatabaseService;
-using Data.Domain.nDataService.nDataManagers;
-using Data.Domain.nDefaultValueTypes;
+using Sys.Data.nDatabaseService;
+using Sys.Data.nDataService.nDataManagers;
+using Sys.Boundary.nDefaultValueTypes;
+using Domain.Data.nDatabaseService;
+using Base.Data.nDatabaseService;
 
 namespace Web.Domain.nWebGraph.nComponentManager.nDataSourcesManager
 {
@@ -15,7 +17,7 @@ namespace Web.Domain.nWebGraph.nComponentManager.nDataSourcesManager
             DataSourceIDs _DataSourceID
             , cApp _App
             , cWebGraph _WebGraph
-            , cDataService _DataService
+            , IDataService _DataService
             , cDataSourceManager _DataSourceManager
             , cDataSourceDataManager _DataSourceDataManager
         )

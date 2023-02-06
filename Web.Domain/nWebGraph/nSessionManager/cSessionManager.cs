@@ -6,14 +6,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using Data.Domain.nDefaultValueTypes;
+using Sys.Boundary.nDefaultValueTypes;
 using Base.Data.nConfiguration;
 using Bootstrapper.Core.nCore;
 using Bootstrapper.Core.nApplication;
 using Web.Domain.Controllers;
 
-using Data.Domain.nDataService.nDataManagers;
-using Data.Domain.nDatabaseService.nSystemEntities;
+using Sys.Data.nDataService.nDataManagers;
+using Sys.Data.nDatabaseService.nSystemEntities;
 
 namespace Web.Domain.nWebGraph.nSessionManager
 {

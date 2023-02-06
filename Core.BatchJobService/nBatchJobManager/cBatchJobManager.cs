@@ -2,7 +2,7 @@
 using Core.BatchJobService.nBatchJobManager.nJobs;
 using Core.BatchJobService.nBatchJobManager.nJobs.nOldBatchJobExcutionsDeleteJob;
 using Core.BatchJobService.nBatchJobManager.nJobs.nTestJob;
-using Data.Domain.nDataService;
+using Sys.Data.nDataService;
 using System;
 using System.Collections.Generic;
 using System.Text;

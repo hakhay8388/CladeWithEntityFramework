@@ -20,9 +20,5 @@ public static class TypeExtensitons
         throw new Exception("TypeExtensitons -> ResolveInstance");
     }
 
-    public static object CreateInstance(this Type _Type, cApp _App)
-    {
-        return Activator.CreateInstance(_Type);
-    } 
 }
 

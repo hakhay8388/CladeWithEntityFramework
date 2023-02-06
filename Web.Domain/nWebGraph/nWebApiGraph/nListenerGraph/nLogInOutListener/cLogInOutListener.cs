@@ -8,14 +8,16 @@ using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nCheckLoginCommand;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nLoginCommand;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nLogoutCommand;
-using Data.Domain.nDefaultValueTypes;
+using Sys.Boundary.nDefaultValueTypes;
 using System;
 using System.Collections.Generic;
 using Bootstrapper.Core.nApplication;
-using Data.Domain.nDatabaseService;
-using Data.Boundary.nData;
-using Data.Domain.nDatabaseService.nSystemEntities;
-using Data.Domain.nDataService.nDataManagers;
+using Sys.Data.nDatabaseService;
+using Sys.Boundary.nData;
+using Sys.Data.nDatabaseService.nSystemEntities;
+using Sys.Data.nDataService.nDataManagers;
+using Domain.Data.nDatabaseService;
+using Base.Data.nDatabaseService;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nLogInOutListener
 {
@@ -28,7 +30,7 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nLogInOutListener
         public cSessionDataManager SessionDataManager { get; set; }
 
 
-        public cLogInOutListener(cApp _App, cWebGraph _WebGraph, cDataService _DataService
+        public cLogInOutListener(cApp _App, cWebGraph _WebGraph, IDataService _DataService
             , cUserDataManager _UserDataManager
             , cSessionDataManager _SessionDataManager
             )
@@ -63,7 +65,7 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nLogInOutListener
                             string __Session_ID = __InnerController.ClientSession.SessionID;
                             long _UserID = __InnerController.ClientSession.User.ID;
 
-                            cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
+                            cSysDatabaseContext __DatabaseContext = DataService.GetDatabaseContext<cSysDatabaseContext>();
 
                             __DatabaseContext.Perform(() =>
                             {
@@ -97,7 +99,7 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nLogInOutListener
 
                 if (!String.IsNullOrEmpty(_ReceivedData.UserName) && !String.IsNullOrEmpty(_ReceivedData.Password))
                 {
-                    cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
+                    cSysDatabaseContext __DatabaseContext = DataService.GetDatabaseContext<cSysDatabaseContext>();
 
                     cUserEntity __UserEntity = UserDataManager.GetUserByEmailAndPassword(_ReceivedData.UserName, _ReceivedData.Password);
 

@@ -8,8 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Bootstrapper.Core.nApplication;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
 using Bootstrapper.Core.nCore;
+using Domain.Data.nDatabaseService;
+using Base.Data.nDatabaseService;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph
 {
@@ -17,14 +19,14 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph
     {
         public cWebGraph WebGraph { get; set; }
 
-        public cDataService DataService { get; set; }
+        public IDataService DataService { get; set; }
 
         public Dictionary<Type, int> ListenerOrders { get; set; }
 
 		protected IHubContext<SignalRHub> SignalHub { get; set; }
 
 
-		public cBaseListener(cApp _App,  cWebGraph _WebGraph, cDataService _DataService, Dictionary<Type, int> _ListenerOrders = null)
+		public cBaseListener(cApp _App,  cWebGraph _WebGraph, IDataService _DataService, Dictionary<Type, int> _ListenerOrders = null)
 			: base(_App)
         {
             if (_ListenerOrders != null)

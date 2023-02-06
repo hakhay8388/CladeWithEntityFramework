@@ -8,18 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
 
 
-using Data.Domain.nDefaultValueTypes;
+using Sys.Boundary.nDefaultValueTypes;
 using System.Xml.Linq;
+using Domain.Data.nDatabaseService;
+using Base.Data.nDatabaseService;
 
 namespace App.QueryTester
 {
     public class cStarter : cCoreObject, IStarter
     {
-        public cDataService DataService { get; set; }
-        public cStarter(cApp _App, cDataService _DataService)
+        public IDataService DataService { get; set; }
+        public cStarter(cApp _App, IDataService _DataService)
             : base(_App)
         {
             DataService = _DataService;
@@ -29,12 +31,10 @@ namespace App.QueryTester
         {
             DataService.Migrate();
             DataService.ComponentLoad();
-            if (App.Configuration.LoadDefaultDataOnStart) DataService.LoadDefaultData();
+            if (App.Configuration.LoadSysDefaultDataOnStart) DataService.LoadSysDefaultData();
+            if (App.Configuration.LoadDomainDefaultDataOnStart) DataService.LoadDomainDefaultData();
             if (App.Configuration.LoadBatchJobOnStart) DataService.LoadBatchJob();
-            if (App.Configuration.LoadGlobalParamsOnStart) DataService.GlobalParams.LoadGlobalParams();
-
-            cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
-
+            if (App.Configuration.LoadGlobalParamsOnStart) Params.GlobalParams.LoadGlobalParams();
             Console.WriteLine("Test");
         }
     }

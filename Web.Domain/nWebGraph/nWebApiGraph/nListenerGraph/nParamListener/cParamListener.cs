@@ -1,16 +1,18 @@
 ﻿using Bootstrapper.Core.nApplication;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
 using Web.Domain.Controllers;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nGetGlobalParamListCommand;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nSetGlobalParamListAction;
+using Domain.Data.nDatabaseService;
+using Base.Data.nDatabaseService;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nParamListener
 {
      public class cParamListener : cBaseListener
         , IGetGlobalParamListReceiver
     {
-        public cParamListener(cApp _App, cWebGraph _WebGraph, cDataService _DataService)
+        public cParamListener(cApp _App, cWebGraph _WebGraph, IDataService _DataService)
                : base(_App, _WebGraph, _DataService)
         {
         }
@@ -23,7 +25,7 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nParamListener
 
         public cSetGlobalParamListProps PrepareGetGlobalParamListProps(IController _Controller, cGetGlobalParamListCommandData _ReceivedData)
         {
-            List<object> __ClonedGlobalParams = DataService.GlobalParams.PublicParamList.CloneOnlyList();
+            List<object> __ClonedGlobalParams = Params.GlobalParams.PublicParamList.CloneOnlyList();
             cSetGlobalParamListProps __Result = new cSetGlobalParamListProps() {ParamList = __ClonedGlobalParams };
             return __Result;
         }

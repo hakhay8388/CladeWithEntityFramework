@@ -4,20 +4,22 @@ using Bootstrapper.Core.nCore;
 using Web.Domain.Controllers;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nDebugAlertAction;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nShowMessageAction;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.Domain.nWebGraph;
+using Domain.Data.nDatabaseService;
+using Base.Data.nDatabaseService;
 
 namespace Web.Domain.nWebGraph.nErrorMessageManager
 {
     public class cErrorMessageManager : cCoreObject
     {
 		public cWebGraph WebGraph { get; set; }
-		public cDataService DataService { get; set; }
-		public cErrorMessageManager(cApp _App, cWebGraph _WebGraph, cDataService _DataService)
+		public IDataService DataService { get; set; }
+		public cErrorMessageManager(cApp _App, cWebGraph _WebGraph, IDataService _DataService)
            : base(_App)
         {
 			WebGraph = _WebGraph;

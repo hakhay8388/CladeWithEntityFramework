@@ -5,13 +5,14 @@ using Bootstrapper.Core.nApplication;
 using GenericScaffold;
 using Microsoft.EntityFrameworkCore;
 using Base.Data.nConfiguration;
+using Domain.Data.nConfiguration;
 
 public static class Program
 {
     public static void Main()
     {
         //first create configuration
-        cDataConfiguration __DataConfiguration = new cDataConfiguration(EBootType.Console);
+        cDomainDataConfiguration __DataConfiguration = new cDomainDataConfiguration(EBootType.Console);
 
         //this is domain search layer order 
         //this application name is starting with App (TApp.TestConsoleProject) so like this 

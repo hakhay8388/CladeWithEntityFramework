@@ -1,11 +1,13 @@
-﻿using Bootstrapper.Core.nApplication;
+﻿using Base.Data.nDatabaseService;
+using Bootstrapper.Core.nApplication;
 using Bootstrapper.Core.nCore;
 using Core.BatchJobService.nBatchJobManager;
 using Core.BatchJobService.nBatchJobManager.nJobs;
 using Core.BatchJobService.nDataService.nDataManagers;
-using Data.Boundary.nData;
-using Data.Domain.nDatabaseService;
-using Data.Domain.nDatabaseService.nSystemEntities;
+using Domain.Data.nDatabaseService;
+using Sys.Boundary.nData;
+using Sys.Data.nDatabaseService;
+using Sys.Data.nDatabaseService.nSystemEntities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,13 +25,13 @@ namespace App.BatchJobService.nBatchJobService
         public Thread ExecuterThread { get; set; }
         public cBatchJobEntity BatchJobEntity { get; set; }
         public cBatchJobEntity RefreshedBatchJobEntity { get; set; }
-        public cDataService DataService { get; set; }
+        public IDataService DataService { get; set; }
         public cBatchJobDataManager BatchJobDataManager { get; set; }
         public cBatchJobExecutionDataManager BatchJobExecutionDataManager { get; set; }
         public cBatchJobManager BatchJobManager { get; set; }
         public cJob(
             cApp _App
-            , cDataService _DataService
+            , IDataService _DataService
             , cBatchJobDataManager _BatchJobDataManager
             , cBatchJobExecutionDataManager _BatchJobExecutionDataManager,
             cBatchJobManager _BatchJobManager
@@ -51,7 +53,7 @@ namespace App.BatchJobService.nBatchJobService
 
         public void Execute()
         {
-            cDatabaseContext __DataService = DataService.GetDatabaseContext();
+            cSysDatabaseContext __DataService = DataService.GetDatabaseContext<cSysDatabaseContext>();
             IBatchJob __BatchJob = BatchJobManager.GetBatchJobByCode(BatchJobEntity.Code);
             if (__BatchJob == null)
             {

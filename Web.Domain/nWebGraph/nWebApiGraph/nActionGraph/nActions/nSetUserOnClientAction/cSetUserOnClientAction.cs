@@ -1,5 +1,5 @@
 ﻿using Bootstrapper.Core.nApplication;
-using Data.Domain.nDatabaseService.nSystemEntities;
+using Sys.Data.nDatabaseService.nSystemEntities;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;

@@ -65,8 +65,7 @@ namespace Base.Data.nDatabaseService.nDatabase
 
         public void Save()
         {
-            DbContext __DbContext = DataService.GetCoreEFDatabaseContext();
-            __DbContext.SaveChanges();
+            DataService.Save();
         }
 
         public void Delete()

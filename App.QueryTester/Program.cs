@@ -7,6 +7,7 @@ using Base.Data.nConfiguration;
 using App.QueryTester;
 using System.Text;
 using App.QueryTester.cQueryTesters;
+using Domain.Data.nConfiguration;
 
 public static class Program
 {
@@ -15,7 +16,7 @@ public static class Program
         Console.WriteLine("Program Başladı.");
 
         //first create configuration
-        cDataConfiguration __DataConfiguration = new cDataConfiguration(EBootType.Console);
+        cDomainDataConfiguration __DataConfiguration = new cDomainDataConfiguration(EBootType.Console);
 
         //this is domain search layer order 
         //this application name is starting with App (TApp.TestConsoleProject) so like this 

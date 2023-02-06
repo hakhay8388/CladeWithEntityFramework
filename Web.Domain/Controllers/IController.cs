@@ -1,6 +1,6 @@
 ﻿using Bootstrapper.Core.nApplication;
 using Web.Domain.nWebGraph;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json.Linq;
@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.Domain.nWebGraph.nSessionManager;
+using Domain.Data.nDatabaseService;
+using Base.Data.nDatabaseService;
 
 namespace Web.Domain.Controllers
 {
@@ -22,7 +24,7 @@ namespace Web.Domain.Controllers
         JArray ActionJson { get; set; }
         cWebGraph WebGraph { get; set; }
         cApp App { get; set; }
-        cDataService DataService { get; set; }
+        IDataService DataService { get; set; }
         string GetWordValue(string _Word, params object[] _Parameters);
         void Logout();
         void AddSignal(List<cSession> _Sessionlist, JObject _Object);

@@ -1,8 +1,8 @@
 ﻿using Bootstrapper.Core.nApplication;
 using Bootstrapper.Core.nCore;
-using Data.Boundary.nData;
-using Data.Domain.nDatabaseService.nSystemEntities;
-using Data.Domain.nDataService.nDataManagers;
+using Sys.Boundary.nData;
+using Sys.Data.nDatabaseService.nSystemEntities;
+using Sys.Data.nDataService.nDataManagers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

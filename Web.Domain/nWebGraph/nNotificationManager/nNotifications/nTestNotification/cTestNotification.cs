@@ -1,6 +1,6 @@
 ﻿using Bootstrapper.Core.nApplication;
-using Data.Boundary.nData;
-using Data.Domain.nDataService.nDataManagers;
+using Sys.Boundary.nData;
+using Sys.Data.nDataService.nDataManagers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

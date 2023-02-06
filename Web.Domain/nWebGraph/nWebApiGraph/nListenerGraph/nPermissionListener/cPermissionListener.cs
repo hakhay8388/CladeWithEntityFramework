@@ -1,9 +1,9 @@
 ﻿using Base.Data.nDatabaseService;
 using Bootstrapper.Core.nApplication;
-using Data.Domain.nDatabaseService;
-using Data.Domain.nDatabaseService.nSystemEntities;
-using Data.Domain.nDataService.nDataManagers;
-using Data.Domain.nDefaultValueTypes;
+using Sys.Data.nDatabaseService;
+using Sys.Data.nDatabaseService.nSystemEntities;
+using Sys.Data.nDataService.nDataManagers;
+using Sys.Boundary.nDefaultValueTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,7 @@ using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nPageResultAction;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nGetMenuListCommand;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nGetPageListCommand;
+using Domain.Data.nDatabaseService;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nPermissionListener
 {
@@ -23,7 +24,7 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nPermissionListener
         public cMenuDataManager MenuDataManager { get; set; }
         public cPageDataManager PageDataManager { get; set; }
 
-        public cPermissionListener(cApp _App, cWebGraph _WebGraph, cDataService _DataService, cMenuDataManager _MenuDataManager, cPageDataManager _PageDataManager)
+        public cPermissionListener(cApp _App, cWebGraph _WebGraph, IDataService _DataService, cMenuDataManager _MenuDataManager, cPageDataManager _PageDataManager)
           : base(_App, _WebGraph, _DataService)
         {
             WebGraph = _WebGraph;

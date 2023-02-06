@@ -3,15 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using Data.Domain.nDataService.nDataManagers;
-using Data.Boundary.nData;
-using Data.Domain.nDefaultValueTypes;
-using Data.Domain.nDataService;
+using Sys.Data.nDataService.nDataManagers;
+using Sys.Boundary.nData;
+using Sys.Boundary.nDefaultValueTypes;
+using Sys.Data.nDataService;
 using Core.BatchJobService.nDefaultValueTypes;
 using Core.BatchJobService.nBatchJobManager.nJobs;
 using Base.Data.nDatabaseService;
-using Data.Domain.nDatabaseService;
-using Data.Domain.nDatabaseService.nSystemEntities;
+using Sys.Data.nDatabaseService;
+using Sys.Data.nDatabaseService.nSystemEntities;
+using Domain.Data.nDatabaseService;
 
 namespace Core.BatchJobService.nDataService.nDataManagers.nLoaders
 {
@@ -22,7 +23,7 @@ namespace Core.BatchJobService.nDataService.nDataManagers.nLoaders
         public cBatchJobDataManager BatchJobDataManager { get; set; }
 
 
-        public cBatchJobExecutionDataLoader(cDataServiceContext _CoreServiceContext, cDataService _DataService, IFileDateService _FileDataService
+        public cBatchJobExecutionDataLoader(cDataServiceContext _CoreServiceContext, IDataService _DataService, IFileDateService _FileDataService
             , cBatchJobDataManager _BatchJobDataManager
             , cBatchJobExecutionDataManager _BatchJobExecutionDataManager
          )
@@ -34,7 +35,6 @@ namespace Core.BatchJobService.nDataService.nDataManagers.nLoaders
 
         public override void Init()
         {
-            cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
 
             ////////////// Global //////////////////
 

@@ -25,7 +25,7 @@ namespace Web.Domain.nWebGraph.nSessionManager
             if (App.Cfg<cDataConfiguration>().BootType == EBootType.Console
                 || App.Cfg<cDataConfiguration>().BootType == EBootType.Batch)
             {
-                __HostName = App.Cfg<cDataConfiguration>().TargetHostName;
+                __HostName = App.Cfg<cDataConfiguration>().ApplicationSettings.TargetHostName;
             }
             else
             {

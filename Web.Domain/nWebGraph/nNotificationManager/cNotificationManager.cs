@@ -5,18 +5,20 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using Data.Boundary.nData;
+using Sys.Boundary.nData;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Bootstrapper.Core.nCore;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
 using Bootstrapper.Core.nApplication;
-using Data.Domain.nDataService.nDataManagers;
+using Sys.Data.nDataService.nDataManagers;
 using Web.Domain.nWebGraph.nNotificationManager.nNotifications.nTestNotification;
-using Data.Domain.nDatabaseService.nSystemEntities;
+using Sys.Data.nDatabaseService.nSystemEntities;
 using Web.Domain.Controllers;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nNotificationAction;
 using Web.Domain.nWebGraph.nSessionManager;
+using Domain.Data.nDatabaseService;
+using Base.Data.nDatabaseService;
 
 namespace Web.Domain.nWebGraph.nNotificationManager
 {
@@ -24,12 +26,12 @@ namespace Web.Domain.nWebGraph.nNotificationManager
     {
         DateTime LastExecutionTime { get; set; }
         cWebGraph WebGraph { get; set; }
-        cDataService DataService { get; set; }
+        IDataService DataService { get; set; }
         cNotificationDataManager NotificationDataManager { get; set; }
 
         public cTestNotification TestNotification { get; set; }
 
-        public cNotificationManager(cApp _App, cWebGraph _WebGraph, cDataService _DataService, cNotificationDataManager _NotificationDataManager)
+        public cNotificationManager(cApp _App, cWebGraph _WebGraph, IDataService _DataService, cNotificationDataManager _NotificationDataManager)
             : base(_App)
         {
             WebGraph = _WebGraph;
@@ -74,7 +76,7 @@ namespace Web.Domain.nWebGraph.nNotificationManager
                                 List<cNotificationEntity> __Notifications = NotificationDataManager.GetNotBroadcasstedNotification();
                                 if (__Notifications.Count > 0)
                                 {
-                                    cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
+                                    cSysDatabaseContext __DatabaseContext = DataService.GetDatabaseContext<cSysDatabaseContext>();
                                     __DatabaseContext.Perform(() =>
                                     {
                                         for (int i = 0; i < __Notifications.Count; i++)

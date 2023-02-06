@@ -3,10 +3,10 @@ using Base.FileData;
 using Bootstrapper.Core.nCore;
 using Core.BatchJobService.nDataService.nDataManagers;
 using Core.BatchJobService.nDefaultValueTypes;
-using Data.Boundary.nData;
-using Data.Domain.nDatabaseService;
-using Data.Domain.nDatabaseService.nSystemEntities;
-using Data.Domain.nDataService;
+using Sys.Boundary.nData;
+using Sys.Data.nDatabaseService;
+using Sys.Data.nDatabaseService.nSystemEntities;
+using Sys.Data.nDataService;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Web;
+using Domain.Data.nDatabaseService;
 
 namespace Core.BatchJobService.nBatchJobManager.nJobs
 {
@@ -22,12 +23,12 @@ namespace Core.BatchJobService.nBatchJobManager.nJobs
         where TJobProps : cBaseJobProps
     {
         public  BatchJobIDs BatchJobID { get; set; }
-        protected cDataService DataService { get; set; }
+        protected IDataService DataService { get; set; }
         public IFileDateService FileDataService { get; set; }
         public cBatchJobDataManager BatchJobDataManager { get; set; }
         public cBatchJobManager BatchJobManager { get; set; }
 
-		public cBaseJob(BatchJobIDs _BatchJobID, cDataServiceContext _CoreServiceContext, cDataService _DataService, IFileDateService _FileDataService, cBatchJobDataManager _BatchJobDataManager)
+		public cBaseJob(BatchJobIDs _BatchJobID, cDataServiceContext _CoreServiceContext, IDataService _DataService, IFileDateService _FileDataService, cBatchJobDataManager _BatchJobDataManager)
           : base(_CoreServiceContext)
         {
             FileDataService = _FileDataService;
@@ -39,21 +40,19 @@ namespace Core.BatchJobService.nBatchJobManager.nJobs
 
         public virtual void AddQueue(TJobProps _Props)
         {
-            cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
-
             cBatchJobEntity __BatchJobEntity = BatchJobDataManager.GetBatchJobByCode(BatchJobID.Code);
 
             __BatchJobEntity.JobExecutions.Add(new cBatchJobExecutionEntity() {
                         State = EBatchJobExecutionState.NotRunning.ID,
                         ParameterObjects = _Props.SerializeObject()
                 });
-            __DatabaseContext.SaveChanges();
+            __BatchJobEntity.Save();
         }
 				
 		public void Execute(cBatchJobEntity _BatchJobEntity, cBatchJobExecutionEntity _Entity)
         {
             TJobProps __JobProps = cBaseJobProps.GetPropFromString<TJobProps>(_Entity.ParameterObjects);
-            cDatabaseContext __DatabaseContext = DataService.GetDatabaseContext();
+            cDomainDatabaseContext __DatabaseContext = DataService.GetDatabaseContext<cDomainDatabaseContext>();
 
             Stopwatch __StopWatch = new Stopwatch();
             __StopWatch.Start();

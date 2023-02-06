@@ -10,7 +10,9 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.SignalR;
 using Bootstrapper.Core.nApplication;
 using Web.Domain.Controllers;
-using Data.Domain.nDatabaseService;
+using Sys.Data.nDatabaseService;
+using Domain.Data.nDatabaseService;
+using Base.Data.nDatabaseService;
 
 namespace Web.Domain.nWebGraph.nSessionManager
 {
@@ -24,12 +26,12 @@ namespace Web.Domain.nWebGraph.nSessionManager
         public cWebGraph WebGraph { get; set; }
         public cApp App { get; set; }
         public string IpAddress { get; set; }
-        public cDataService DataService { get; set; }
+        public IDataService DataService { get; set; }
         public HttpContext CurrentContext { get; set; }
         public IHubContext<SignalRHub> SignalHub { get; set; }
         public bool IsSignal { get { return false; } }
 
-        public cBaseController(cApp _App, cWebGraph _WebGraph, cDataService _DataService, IHubContext<SignalRHub> _SignalHub)
+        public cBaseController(cApp _App, cWebGraph _WebGraph, IDataService _DataService, IHubContext<SignalRHub> _SignalHub)
         {
             App = _App;
             WebGraph = _WebGraph;

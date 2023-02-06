@@ -126,16 +126,22 @@ namespace Bootstrapper.Core.nApplication.nBootstrapper
                         Register __Register = (Register)__TypeInheritLevel.Type.GetCustomAttribute(typeof(Register));
                         if (__Register.BindFrom == null)
                         {
-                            App.Factories.ObjectFactory.RegisterType(__TypeInheritLevel.Type, __TypeInheritLevel.Type, __Register.LifetimeManager);
+                            if (!__TypeInheritLevel.Type.IsAbstract)
+                            {
+                                App.Factories.ObjectFactory.RegisterType(__TypeInheritLevel.Type, __TypeInheritLevel.Type, __Register.LifetimeManager);
+                            }
                         }
                         else
                         {
                             if (__Register.BindFrom.IsAssignableFrom(__TypeInheritLevel.Type))
                             {
-                                App.Factories.ObjectFactory.RegisterType(__Register.BindFrom, __TypeInheritLevel.Type, __Register.LifetimeManager);
-                                if (__Register.BindThisAllBaseTypes)
+                                if (!__TypeInheritLevel.Type.IsAbstract)
                                 {
-                                    BindAllBaseTypes(__TypeInheritLevel.Type.BaseType, __TypeInheritLevel.Type, __Register.LifetimeManager);
+                                    App.Factories.ObjectFactory.RegisterType(__Register.BindFrom, __TypeInheritLevel.Type, __Register.LifetimeManager);
+                                    if (__Register.BindThisAllBaseTypes)
+                                    {
+                                        BindAllBaseTypes(__TypeInheritLevel.Type.BaseType, __TypeInheritLevel.Type, __Register.LifetimeManager);
+                                    }
                                 }
                             }
                             else
