@@ -30,6 +30,14 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph
             {
                 CommandDataClass = Type.GetType("Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.n" + CommandID.Name + "Command.c" + CommandID.Name + "CommandData");
                 CommandReceiverClass = Type.GetType("Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.n" + CommandID.Name + "Command.I" + CommandID.Name + "Receiver");
+
+                if (CommandDataClass == null)
+                {
+                    CommandDataClass = App.Handlers.AssemblyHandler.GetTypeFromNameInDomainHierarchy("c" + CommandID.Name + "CommandData", true, false, false);
+                    string __Name = CommandDataClass.Namespace + ".I" + CommandID.Name + "Receiver";
+                    CommandReceiverClass = App.Handlers.AssemblyHandler.GetTypeFromFullNameInDomainHierarchy(__Name, false, true, true);
+                }
+
             }
             catch (Exception _Ex)
             {

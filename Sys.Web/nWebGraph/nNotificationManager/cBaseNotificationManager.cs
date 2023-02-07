@@ -102,7 +102,7 @@ namespace Sys.Web.nWebGraph.nNotificationManager
 
                                             if (__Sessions.Count > 0)
                                             {
-                                                WebGraph.ActionGraph.NotificationAction.Action(_Controller, __NotificationProps, __Sessions, true);
+                                                WebGraph.SysActionGraph.NotificationAction.Action(_Controller, __NotificationProps, __Sessions, true);
                                             }
 
                                             __Notifications[i].NotificationBroadcasted = true;

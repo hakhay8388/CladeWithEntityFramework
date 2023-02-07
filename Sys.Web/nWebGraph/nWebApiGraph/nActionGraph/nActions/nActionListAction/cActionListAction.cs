@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Sys.Web.Controllers;
 using Bootstrapper.Core.nApplication;
+using System.ComponentModel.Design;
 
 namespace Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nActionListAction
 {
@@ -29,6 +30,11 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nActionListAction
             {
                 ECommandType __CommandID = ECommandType.TypeList[i];
                 Type __CommandDataClass = Type.GetType("Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.n" + __CommandID.Name + "Command.c" + __CommandID.Name + "CommandData");
+
+                if (__CommandDataClass == null)
+                {
+                    __CommandDataClass = App.Handlers.AssemblyHandler.GetTypeFromNameInDomainHierarchy("c" + __CommandID.Name + "CommandData", true, false, false);
+                }
 
                 FieldInfo[] __FieldInfos = __CommandDataClass.GetFields();
 

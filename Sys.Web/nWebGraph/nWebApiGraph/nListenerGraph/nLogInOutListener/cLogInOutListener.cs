@@ -76,18 +76,18 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nLogInOutListener
                             __InnerController.Logout();
 
                             //WebGraph.ActionGraph.SuccessResultAction.Action(_Controller);
-                            WebGraph.ActionGraph.LogInOutAction.Action(__InnerController, new List<cSession>() { __InnerController.ClientSession }, true);
+                            WebGraph.SysActionGraph.LogInOutAction.Action(__InnerController, new List<cSession>() { __InnerController.ClientSession }, true);
                         }
                         //WebGraph.ActionGraph.DoCheckLoginRequestAction.Action(__InnerController, new cDoCheckLoginRequestProps() { IsLogined = false }, new List<cSession>() { __InnerController.ClientSession }, true);
                         //WebGraph.ActionGraph.DoCheckLoginRequestAction.Action(__InnerController, new cDoCheckLoginRequestProps() { IsLogined = false });
                     }
                 };
 
-                WebGraph.ActionGraph.ShowMessageAction.Action(_Controller, __MessageProps);
+                WebGraph.SysActionGraph.ShowMessageAction.Action(_Controller, __MessageProps);
             }
             else
             {
-                WebGraph.ActionGraph.LogInOutAction.Action(_Controller);
+                WebGraph.SysActionGraph.LogInOutAction.Action(_Controller);
             }
         }
 
@@ -120,30 +120,30 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nLogInOutListener
 
                             _Controller.ClientSession.SetUser(__UserEntity);
 
-                            WebGraph.ActionGraph.LogInOutAction.Action(_Controller);
-                            WebGraph.ActionGraph.HotSpotMessageAction.Action(_Controller, new cHotSpotProps() { Header = _Controller.GetWordValue("Hi"), Message = _Controller.GetWordValue("Welcome", _Controller.ClientSession.User.Name), ColorType = EColorTypes.Success, DurationMS = 2500 });
-                            WebGraph.ActionGraph.SuccessResultAction.Action(_Controller);
+                            WebGraph.SysActionGraph.LogInOutAction.Action(_Controller);
+                            WebGraph.SysActionGraph.HotSpotMessageAction.Action(_Controller, new cHotSpotProps() { Header = _Controller.GetWordValue("Hi"), Message = _Controller.GetWordValue("Welcome", _Controller.ClientSession.User.Name), ColorType = EColorTypes.Success, DurationMS = 2500 });
+                            WebGraph.SysActionGraph.SuccessResultAction.Action(_Controller);
                         }
                         else
                         {
-                            WebGraph.ActionGraph.LogInOutAction.Action(_Controller);
-                            WebGraph.ActionGraph.ShowMessageAction.WarningAction(_Controller, new cMessageProps() { Header = _Controller.GetWordValue("Warning"), Message = _Controller.GetWordValue("AccountStateMessage", __UserEntity.Name, __UserState.Name) });
+                            WebGraph.SysActionGraph.LogInOutAction.Action(_Controller);
+                            WebGraph.SysActionGraph.ShowMessageAction.WarningAction(_Controller, new cMessageProps() { Header = _Controller.GetWordValue("Warning"), Message = _Controller.GetWordValue("AccountStateMessage", __UserEntity.Name, __UserState.Name) });
                         }
                     }
                     else
                     {
-                        WebGraph.ActionGraph.ShowMessageAction.ErrorAction(_Controller, new cMessageProps() { Header = _Controller.GetWordValue("Error"), Message = _Controller.GetWordValue("LoginError") });
+                        WebGraph.SysActionGraph.ShowMessageAction.ErrorAction(_Controller, new cMessageProps() { Header = _Controller.GetWordValue("Error"), Message = _Controller.GetWordValue("LoginError") });
                     }
                 }
                 else
                 {
-                    WebGraph.ActionGraph.LogInOutAction.Action(_Controller);
-                    WebGraph.ActionGraph.ShowMessageAction.ErrorAction(_Controller, new cMessageProps() { Header = _Controller.GetWordValue("Error"), Message = _Controller.GetWordValue("LoginError2") });
+                    WebGraph.SysActionGraph.LogInOutAction.Action(_Controller);
+                    WebGraph.SysActionGraph.ShowMessageAction.ErrorAction(_Controller, new cMessageProps() { Header = _Controller.GetWordValue("Error"), Message = _Controller.GetWordValue("LoginError2") });
                 }
             }
             else
             {
-                WebGraph.ActionGraph.LogInOutAction.Action(_Controller);
+                WebGraph.SysActionGraph.LogInOutAction.Action(_Controller);
             }
 
         }
@@ -151,7 +151,7 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nLogInOutListener
 		public void ReceiveCheckLoginData(cListenerEvent _ListenerEvent, IController _Controller, cCheckLoginCommandData _ReceivedData)
 		{
 
-            WebGraph.ActionGraph.ResultItemAction.Action(_Controller, new nActionGraph.nActions.nResultItemAction.cResultItemProps()
+            WebGraph.SysActionGraph.ResultItemAction.Action(_Controller, new nActionGraph.nActions.nResultItemAction.cResultItemProps()
             {
                 Item = new { 
                     Name = "Obaaaaaaa"

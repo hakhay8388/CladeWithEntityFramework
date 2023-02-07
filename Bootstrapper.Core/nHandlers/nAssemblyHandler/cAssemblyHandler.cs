@@ -195,5 +195,33 @@ namespace Bootstrapper.Core.nHandlers.nAssemblyHandler
 			}
 			return null;
         }
+
+        public Type GetTypeFromNameInDomainHierarchy(string _TypeName, bool _IsClass, bool _IsAbstract, bool _IsInterface)
+        {
+            for (int i = App.Configuration.ApplicationSettings.DomainNames.Count - 1; i > -1; i--)
+            {
+                List<Type> __AllTypes = GetLoadedApplicationTypes(new List<string>() { App.Configuration.ApplicationSettings.DomainNames[i] });
+                __AllTypes = __AllTypes.Where(__Item => __Item.IsClass == _IsClass && __Item.IsAbstract  == _IsAbstract && __Item.IsInterface == _IsInterface && __Item.Name == _TypeName).ToList();
+                if (__AllTypes.Count > 0)
+                {
+                    return __AllTypes.FirstOrDefault();
+                }
+            }
+            return null;
+        }
+
+        public Type GetTypeFromFullNameInDomainHierarchy(string _TypeFullName, bool _IsClass, bool _IsAbstract, bool _IsInterface)
+        {
+            for (int i = App.Configuration.ApplicationSettings.DomainNames.Count - 1; i > -1; i--)
+            {
+                List<Type> __AllTypes = GetLoadedApplicationTypes(new List<string>() { App.Configuration.ApplicationSettings.DomainNames[i] });
+                __AllTypes = __AllTypes.Where(__Item => __Item.IsClass == _IsClass && __Item.IsAbstract == _IsAbstract && __Item.IsInterface == _IsInterface && __Item.FullName == _TypeFullName).ToList();
+                if (__AllTypes.Count > 0)
+                {
+                    return __AllTypes.FirstOrDefault();
+                }
+            }
+            return null;
+        }
     }
 }

@@ -5,7 +5,9 @@ using Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph;
 using Base.Data.nDatabaseService;
 using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph;
 using Sys.Web.Controllers;
-using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nTestCommand;
+using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph;
+using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph.nActions.nTestAction;
+using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nTestCommand;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nGeneralListener
 {
@@ -19,7 +21,7 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nGeneralListener
 
         public void ReceiveTestData(cListenerEvent _ListenerEvent, IController _Controller, cTestCommandData _ReceivedData)
         {
-            throw new NotImplementedException();
+            WebGraph.ActionGraph<cActionGraph>().TestAction.Action(_Controller, new cTestProps() { Page = 1100, Params = "kjjşlkşk"});
         }
     }
 }

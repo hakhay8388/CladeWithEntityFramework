@@ -69,6 +69,7 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommandIDs
 
             TypeList.Add(this);
         }
+
         public static DataTable Table()
         {
             return Table(TypeList);

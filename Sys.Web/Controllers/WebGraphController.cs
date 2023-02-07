@@ -41,9 +41,9 @@ namespace Sys.Web.Controllers
             WebGraph.CommandGraph.InterpreterCommand(this);
             try
             {
-                WebGraph.ActionGraph.SetServerDateTimeAction.Action(this, new cSetServerDateTimeProps() { ServerDate = App.Handlers.DateTimeHandler.Now });
+                WebGraph.SysActionGraph.SetServerDateTimeAction.Action(this, new cSetServerDateTimeProps() { ServerDate = App.Handlers.DateTimeHandler.Now });
 
-                WebGraph.NotificationManager.StartNotificationBroadCaster(this);
+                WebGraph.SysNotificationManager.StartNotificationBroadCaster(this);
 
                 SignalSessions.ForEach(__Item =>
                 {

@@ -8,7 +8,7 @@ using Sys.Web.nWebGraph.nWebApiGraph.nValidationGraph;
 using Sys.Web.Controllers;
 using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nValidationResultAction;
-using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nTestCommand;
+using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nTestCommand;
 
 namespace Web.Domain.nWebGraph.nWebApiGraph.nValidationGraph.nHayriValidation
 {
@@ -40,7 +40,7 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nValidationGraph.nHayriValidation
                 _ListenerEvent.StopPropogation();
             }
 
-            WebGraph.ActionGraph.ValidationResultAction.Action(_Controller, __ValidationResultProps);
+            WebGraph.SysActionGraph.ValidationResultAction.Action(_Controller, __ValidationResultProps);
         }
 
         

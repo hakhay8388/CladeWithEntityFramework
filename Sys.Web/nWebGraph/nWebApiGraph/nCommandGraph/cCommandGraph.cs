@@ -101,7 +101,7 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph
 										JArray __ResultActions = _Controller.ActionJson;
 										_Controller.SignalSessions = new List<cSignalSessionMatcher>();
 										_Controller.ActionJson = new JArray();
-										WebGraph.ActionGraph.CacheItAction.Action(_Controller, new cCacheItProps() { CacheActionList = __ResultActions });
+										WebGraph.SysActionGraph.CacheItAction.Action(_Controller, new cCacheItProps() { CacheActionList = __ResultActions });
 									}
 
 
@@ -127,12 +127,12 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph
 						//WebGraph.ActionGraph.ShowMessageAction.ErrorAction(_Controller, new cMessageProps() { Header = "Hata", Message = "Bu komut için yetkiniz bulunmuyor!" });
 						if (!__CommandID.MainRoles.Exists(__Item => __Item.ID == RoleIDs.Unlogined.ID) && !_Controller.ClientSession.IsLogined)
 						{
-							WebGraph.ActionGraph.LogInOutAction.Action(_Controller);
+							WebGraph.SysActionGraph.LogInOutAction.Action(_Controller);
 						}
 						else
 						{
 							WebGraph.ErrorMessageManager.ErrorAction(new Exception("NoPermissionAction...."), _Controller, _Controller.GetWordValue("Error"), _Controller.GetWordValue("NoPermission"));
-							WebGraph.ActionGraph.LogInOutAction.Action(_Controller);
+							WebGraph.SysActionGraph.LogInOutAction.Action(_Controller);
 						}
 					}
 				}

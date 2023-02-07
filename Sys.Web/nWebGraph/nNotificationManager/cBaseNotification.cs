@@ -53,7 +53,7 @@ namespace Sys.Web.nWebGraph.nNotificationManager
             {
                 //MicroService.MicroServiceActionGraph.NotificationAction.BroadcastAction(new cMicroServiceNotificationProps(__UserIDList, __NotificationEntity.ID, _NotificationChannel, NotificationType, _NotificationProps));
 
-                WebGraph.ActionGraph.NotificationAction.Action(_Controller, __NotificationActionProps, __Sessions, true);
+                WebGraph.SysActionGraph.NotificationAction.Action(_Controller, __NotificationActionProps, __Sessions, true);
             }
             //todo: bildirim gelmiyorsa eski koda dön
         }

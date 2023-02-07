@@ -11,7 +11,12 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommandIDs
 {
     public class CommandIDs
     {
+        public static ECommandType Test { get; private set; }
 
-        public static ECommandType Test = new ECommandType(nameof(Test), 1, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User });
+
+        public static void Init()
+        {
+            Test = new ECommandType(nameof(Test), 1000, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User });
+        }
     }
 }

@@ -200,7 +200,7 @@ namespace Sys.Web.nWebGraph.nSessionManager
 				List<cSession> __Sessions = SessionItems.Where(__Item => __Item.CreateTime.AddMinutes(30) < DateTime.Now).ToList();
 				if (__Sessions.Count > 0)
 				{
-					WebGraph.ActionGraph.DoReconnectSignalRequestAction.Action(_Controller, __Sessions, true);
+					WebGraph.SysActionGraph.DoReconnectSignalRequestAction.Action(_Controller, __Sessions, true);
 				}
 				SessionItems.RemoveAll(__Item => __Item.CreateTime.AddMinutes(30) < DateTime.Now);
             }

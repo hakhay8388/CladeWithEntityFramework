@@ -32,7 +32,7 @@ var TAdminMainPage = Class(TObject,
         },
         AsyncLoad: function (_Event) {
             var __This = this;
-            __This.HandleSubmit();
+            __This.HandleGetName();
         },
         Destroy: function () {
             TAdminMainPage.BaseObject.Destroy.call(this);
@@ -49,6 +49,22 @@ var TAdminMainPage = Class(TObject,
         }
         ,
         HandleSubmit: function () {
+            var __This = this;
+
+            alert("test");
+            Actions.Test(11, "test", function (_Message) {
+                CommandIDs.TestCommand.RunIfHas(
+                    _Message,
+                    function (_Data) {
+                        __This.setState({
+                            ButtonName: _Data.Params,
+                        });
+                    }
+                );
+            });
+        }
+        ,
+        HandleGetName: function () {
             var __This = this;
 
             Actions.CheckLogin(function (_Message) {

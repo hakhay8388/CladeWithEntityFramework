@@ -130,7 +130,7 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nPermissionListener
 
         public void ReceiveGetMenuListData(cListenerEvent _ListenerEvent, IController _Controller, cGetMenuListCommandData _ReceivedData)
         {
-            WebGraph.ActionGraph.MenuResultAction.Action(_Controller, PrepareMenuResultProps(_Controller, _ReceivedData));
+            WebGraph.SysActionGraph.MenuResultAction.Action(_Controller, PrepareMenuResultProps(_Controller, _ReceivedData));
 
         }
 
@@ -181,7 +181,7 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nPermissionListener
 
         public void ReceiveGetPageListData(cListenerEvent _ListenerEvent, IController _Controller, cGetPageListCommandData _ReceivedData)
         {
-            WebGraph.ActionGraph.PageResultAction.Action(_Controller, PreparePageResultProps(_Controller, _ReceivedData));
+            WebGraph.SysActionGraph.PageResultAction.Action(_Controller, PreparePageResultProps(_Controller, _ReceivedData));
         }
     }
 }

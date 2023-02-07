@@ -9,28 +9,35 @@ using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph;
 using Web.Domain.nWebGraph.nNotificationManager;
 using Web.Domain.nWebGraph.nWebApiGraph.nActionGraph;
 using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph;
+using Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommandIDs;
 using Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph;
 using Web.Domain.nWebGraph.nWebApiGraph.nValidationGraph;
 
 namespace Web.Domain.nWebGraph
 {
+    [Register(typeof(cWebGraph), true, true, true, true, LifeTime.ContainerControlledLifetimeManager)]
     public class cWebGraph : cBaseWebGraph
     {
-        public new cActionGraph ActionGraph { get; set; }
-        public new cNotificationManager NotificationManager { get; set; }
+        public cActionGraph ActionGraph { get { return (cActionGraph)SysActionGraph; } }
+        public new cNotificationManager NotificationManager { get { return (cNotificationManager)SysNotificationManager; } }
 
         public cWebGraph(cApp _App)
             :base(_App)
         {
         }
 
+        public override void Init()
+        {
+            CommandIDs.Init();
+            base.Init();
+        }
+
         protected override void ResolveAll()
         {
             base.ResolveAll();
 
-            ActionGraph = App.Factories.ObjectFactory.ResolveInstance<cActionGraph>();
-            NotificationManager = App.Factories.ObjectFactory.ResolveInstance<cNotificationManager>();
-
+            SysActionGraph = App.Factories.ObjectFactory.ResolveInstance<cActionGraph>();
+            SysNotificationManager = App.Factories.ObjectFactory.ResolveInstance<cNotificationManager>();
         }
     }
 }

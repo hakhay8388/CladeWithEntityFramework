@@ -20,7 +20,7 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nParamListener
         public void ReceiveGetGlobalParamListData(cListenerEvent _ListenerEvent, IController _Controller, cGetGlobalParamListCommandData _ReceivedData)
         {
             cSetGlobalParamListProps __SetGlobalParamListProps = PrepareGetGlobalParamListProps(_Controller, _ReceivedData);
-            WebGraph.ActionGraph.SetGlobalParamListAction.Action(_Controller, __SetGlobalParamListProps);
+            WebGraph.SysActionGraph.SetGlobalParamListAction.Action(_Controller, __SetGlobalParamListProps);
         }
 
         public cSetGlobalParamListProps PrepareGetGlobalParamListProps(IController _Controller, cGetGlobalParamListCommandData _ReceivedData)

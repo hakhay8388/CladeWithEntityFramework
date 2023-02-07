@@ -31,7 +31,7 @@ namespace Sys.Web.nWebGraph.nErrorMessageManager
 
 			if (Params.GlobalParams.BackendDebugMessageShowToUser)
 			{
-				WebGraph.ActionGraph.ShowMessageAction.ErrorAction(_Ex, _Controller,
+				WebGraph.SysActionGraph.ShowMessageAction.ErrorAction(_Ex, _Controller,
 					   new cMessageProps()
 					   {
 						   Header = _Header,
@@ -40,7 +40,7 @@ namespace Sys.Web.nWebGraph.nErrorMessageManager
 			}
 			else
 			{
-				WebGraph.ActionGraph.DebugAlertAction.ErrorAction(_Ex, _Controller,
+				WebGraph.SysActionGraph.DebugAlertAction.ErrorAction(_Ex, _Controller,
 				   new cDebugAlertProps()
 				   {
 					   Header = _Header,
@@ -53,7 +53,7 @@ namespace Sys.Web.nWebGraph.nErrorMessageManager
 		{
 			if (Params.GlobalParams.BackendDebugMessageShowToUser)
 			{
-				WebGraph.ActionGraph.ShowMessageAction.ErrorAction(_Controller,
+				WebGraph.SysActionGraph.ShowMessageAction.ErrorAction(_Controller,
 					   new cMessageProps()
 					   {
 						   Header = _Header,
@@ -62,7 +62,7 @@ namespace Sys.Web.nWebGraph.nErrorMessageManager
 			}
 			else
 			{
-				WebGraph.ActionGraph.DebugAlertAction.ErrorAction(_Controller,
+				WebGraph.SysActionGraph.DebugAlertAction.ErrorAction(_Controller,
 				   new cDebugAlertProps()
 				   {
 					   Header = _Header,

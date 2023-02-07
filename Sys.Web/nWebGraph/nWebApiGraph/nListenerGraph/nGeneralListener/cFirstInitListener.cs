@@ -38,8 +38,8 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nGeneralListener
 
         public void ReceiveFirstInitData(cListenerEvent _ListenerEvent, IController _Controller, cFirstInitCommandData _ReceivedData)
         {
-            WebGraph.ActionGraph.CommandListAction.Action(_Controller);
-            WebGraph.ActionGraph.ActionListAction.Action(_Controller);
+            WebGraph.SysActionGraph.CommandListAction.Action(_Controller);
+            WebGraph.SysActionGraph.ActionListAction.Action(_Controller);
 
             if (string.IsNullOrEmpty(_ReceivedData.LanguageCode))
             {
@@ -69,18 +69,18 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nGeneralListener
                 });
             }
 
-            WebGraph.ActionGraph.LanguageAction.Action(_Controller, new cLanguageProps() { Language = __LanguageItem.LanguageObject, LanguageCode = _ReceivedData.LanguageCode, DefinedLanguages = __DefinedLanguages });
+            WebGraph.SysActionGraph.LanguageAction.Action(_Controller, new cLanguageProps() { Language = __LanguageItem.LanguageObject, LanguageCode = _ReceivedData.LanguageCode, DefinedLanguages = __DefinedLanguages });
 
             cMenuResultProps __MenuResultProps = WebGraph.ListenerGraph.GetListenerByType<cPermissionListener>().PrepareMenuResultProps(_Controller, new cGetMenuListCommandData() { MenuTypeCode = MenuTypes.LeftMenu.Code, RootMenuCode = null});
-            WebGraph.ActionGraph.MenuResultAction.Action(_Controller, __MenuResultProps);
+            WebGraph.SysActionGraph.MenuResultAction.Action(_Controller, __MenuResultProps);
 
             cPageResultProps __PageResultProps = WebGraph.ListenerGraph.GetListenerByType<cPermissionListener>().PreparePageResultProps(_Controller, new cGetPageListCommandData());
-            WebGraph.ActionGraph.PageResultAction.Action(_Controller, __PageResultProps);
+            WebGraph.SysActionGraph.PageResultAction.Action(_Controller, __PageResultProps);
 
             cSetGlobalParamListProps __GlobalParamListResultProps = WebGraph.ListenerGraph.GetListenerByType<cParamListener>().PrepareGetGlobalParamListProps(_Controller, new cGetGlobalParamListCommandData() );
-            WebGraph.ActionGraph.SetGlobalParamListAction.Action(_Controller, __GlobalParamListResultProps);
+            WebGraph.SysActionGraph.SetGlobalParamListAction.Action(_Controller, __GlobalParamListResultProps);
 
-            WebGraph.ActionGraph.SetUserOnClientAction.Action(_Controller);
+            WebGraph.SysActionGraph.SetUserOnClientAction.Action(_Controller);
 
         }
     }

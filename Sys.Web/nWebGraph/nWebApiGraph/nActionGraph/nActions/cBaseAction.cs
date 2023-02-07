@@ -23,7 +23,7 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions
         {
             ActionID = _ActionID;
             WebGraph = _WebGraph;
-            WebGraph.ActionGraph.ActionList.Add(this);
+            WebGraph.SysActionGraph.ActionList.Add(this);
             WebGraph.CommandGraph.ConnectToCommands(this);
         }
 

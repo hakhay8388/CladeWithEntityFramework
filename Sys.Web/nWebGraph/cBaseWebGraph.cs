@@ -14,7 +14,6 @@ using Sys.Web.nWebGraph.nWebApiGraph.nValidationGraph;
 
 namespace Sys.Web.nWebGraph
 {
-    [Register(typeof(cBaseWebGraph), false, true, true, true, LifeTime.ContainerControlledLifetimeManager)]
     public abstract class cBaseWebGraph : cCoreObject
     {
         public cSessionManagerServices SessionManagerServices { get; set; }
@@ -27,18 +26,23 @@ namespace Sys.Web.nWebGraph
         {
             return SessionManagerServices.SessionManager(_Controler.CurrentContext);
         }
-        public cBaseActionGraph ActionGraph { get; set; }
+        public cBaseActionGraph SysActionGraph { get; set; }
         public cCommandGraph CommandGraph { get; set; }
         public cListenerGraph ListenerGraph { get; set; }
         public cValidationGraph ValidationGraph { get; set; }
 
 		public cErrorMessageManager ErrorMessageManager { get; set; }
 
-        public cBaseNotificationManager NotificationManager { get; set; }
+        public cBaseNotificationManager SysNotificationManager { get; set; }
 
         public cBaseWebGraph(cApp _App)
             :base(_App)
         {
+        }
+
+        public TActionGraph ActionGraph<TActionGraph>() where TActionGraph : cBaseActionGraph
+        {
+            return (TActionGraph)SysActionGraph;
         }
 
         protected virtual void ResolveAll()
@@ -56,11 +60,11 @@ namespace Sys.Web.nWebGraph
             ResolveAll();
 
             SessionManagerServices.Init();
-            ActionGraph.Init();
+            SysActionGraph.Init();
             CommandGraph.Init();
             ListenerGraph.Init();
             ValidationGraph.Init();
-            NotificationManager.Init();
+            SysNotificationManager.Init();
 
         }
     }

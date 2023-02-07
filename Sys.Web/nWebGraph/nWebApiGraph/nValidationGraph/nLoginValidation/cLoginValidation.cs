@@ -39,7 +39,7 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nValidationGraph.nSellerRegisterValidat
                 _ListenerEvent.StopPropogation();
             }
 
-            WebGraph.ActionGraph.ValidationResultAction.Action(_Controller, __ValidationResultProps);
+            WebGraph.SysActionGraph.ValidationResultAction.Action(_Controller, __ValidationResultProps);
         }
 	}
 }
