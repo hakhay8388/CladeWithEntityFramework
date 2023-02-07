@@ -35,6 +35,11 @@
     <ProjectReference Include="..\Domain.Boundary\Domain.Boundary.csproj" />
     <ProjectReference Include="..\Domain.Data\Domain.Data.csproj" />
     <ProjectReference Include="..\Sys.Data\Sys.Data.csproj" />
+    <ProjectReference Include="..\Sys.Web\Sys.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="nWebGraph\nComponentManager\nDataSourcesManager\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

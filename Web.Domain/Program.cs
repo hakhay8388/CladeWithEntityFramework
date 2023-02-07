@@ -6,8 +6,8 @@ using Sys.Data.nConfiguration;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Web.Domain;
-using Web.Domain.Controllers;
 using Domain.Data.nConfiguration;
+using Sys.Web.Controllers;
 
 public class Program
 {

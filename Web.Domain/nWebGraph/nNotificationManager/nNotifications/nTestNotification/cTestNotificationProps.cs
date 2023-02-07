@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sys.Web.nWebGraph.nNotificationManager.nNotifications;
+using System;
 using System.Collections.Generic;
 using System.Text;
 

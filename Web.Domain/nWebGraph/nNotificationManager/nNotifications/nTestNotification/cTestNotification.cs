@@ -1,6 +1,6 @@
 ﻿using Bootstrapper.Core.nApplication;
-using Sys.Boundary.nData;
 using Sys.Data.nDataService.nDataManagers;
+using Sys.Web.nWebGraph.nNotificationManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace Web.Domain.nWebGraph.nNotificationManager.nNotifications.nTestNotifica
     public class cTestNotification : cBaseNotification<cTestNotificationProps>
     {
         public cTestNotification(cApp _App, cWebGraph _WebGraph, cNotificationDataManager _NotificationDataManager)
-          : base(ENotificationType.Test, _App, _WebGraph, _NotificationDataManager)
+          : base(NotificationIDs.Test, _App, _WebGraph, _NotificationDataManager)
         {
         }
 

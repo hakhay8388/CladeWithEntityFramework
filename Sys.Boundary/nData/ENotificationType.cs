@@ -7,23 +7,17 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Sys.Boundary.nData
 {
-    public enum ENotificationTypeEnums
-    {
-        None = 0,
-        Test = 1,
-    }
-
     public class ENotificationType : cBaseConstType<ENotificationType>
     {
-        public static ENotificationType None = new ENotificationType(GetVariableName(() => None), (int)ENotificationTypeEnums.None, "None");
-        public static ENotificationType Test = new ENotificationType(GetVariableName(() => Test), (int)ENotificationTypeEnums.Test, "Test");
+        public static ENotificationType None = new ENotificationType(GetVariableName(() => None), 0);
+        public static ENotificationType Sample = new ENotificationType(GetVariableName(() => Sample), 1);
 
 
 
         public static List<ENotificationType> TypeList { get; set; }
 
-        public ENotificationType(string _Code, int _ID, string _Name)
-            : base(_Name, _Code, _ID)
+        public ENotificationType(string _Code, int _ID)
+            : base(_Code, _Code, _ID)
         {
             TypeList = TypeList ?? new List<ENotificationType>();
             TypeList.Add(this);
