@@ -1,15 +1,15 @@
 ﻿using Bootstrapper.Core.nApplication;
-using Sys.Data.nDatabaseService;
 using Sys.Web.Controllers;
 using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph;
 using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nGetGlobalParamListCommand;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nSetGlobalParamListAction;
 
 using Base.Data.nDatabaseService;
+using Sys.Data.nDatabaseService.nParams;
 
 namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nParamListener
 {
-     public class cParamListener : cBaseListener
+    public class cParamListener : cBaseListener
         , IGetGlobalParamListReceiver
     {
         public cParamListener(cApp _App, cBaseWebGraph _WebGraph, IDataService _DataService)

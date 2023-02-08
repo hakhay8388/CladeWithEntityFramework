@@ -4,7 +4,6 @@ using Bootstrapper.Core.nCore;
 using Sys.Web.Controllers;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nDebugAlertAction;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nShowMessageAction;
-using Sys.Data.nDatabaseService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +11,7 @@ using System.Threading.Tasks;
 using Sys.Web.nWebGraph;
 
 using Base.Data.nDatabaseService;
+using Sys.Data.nDatabaseService.nParams;
 
 namespace Sys.Web.nWebGraph.nErrorMessageManager
 {

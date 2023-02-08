@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sys.Data.nDatabaseService
+namespace Sys.Data.nDatabaseService.nParams
 {
     public class cGlobalParams : cCoreObject
     {
@@ -25,7 +25,7 @@ namespace Sys.Data.nDatabaseService
         public List<object> PrivateParamList = null;
 
         public cGlobalParams(cApp _App)
-            :base(_App)
+            : base(_App)
         {
 
         }
@@ -43,7 +43,7 @@ namespace Sys.Data.nDatabaseService
                 try
                 {
                     object __TempValue = Convert.ChangeType(__GlobalParamEntity.Value, __Type);
-                    var __ThisType = this.GetType();
+                    var __ThisType = GetType();
                     __ThisType.SetPropertyValue(this, __GlobalParamEntity.Code, __TempValue);
 
                     GlobalParamList.Add(new

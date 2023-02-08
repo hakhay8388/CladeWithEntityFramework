@@ -26,7 +26,7 @@ using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nGetGlobalParamList
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nLogInOutAction;
 
 
-namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nGeneralListener
+namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nFirstInitListener
 {
      public class cFirstInitListener : cBaseListener
         , IFirstInitReceiver

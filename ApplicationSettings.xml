@@ -13,7 +13,7 @@
 	<TargetHostName>localhost</TargetHostName>
 	<UICultureName>tr-TR</UICultureName>
 	<LogToFile>true</LogToFile>
-	<LogToConsole>true</LogToConsole>
+	<LogToConsole>false</LogToConsole>
 	
 	<ElasticSearchSetting>
 		<LogToElastic>false</LogToElastic>

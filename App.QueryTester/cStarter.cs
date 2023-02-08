@@ -8,13 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
-using Sys.Data.nDatabaseService;
 
 
 using Sys.Boundary.nDefaultValueTypes;
 using System.Xml.Linq;
 using Domain.Data.nDatabaseService;
 using Base.Data.nDatabaseService;
+using Sys.Data.nDatabaseService.nParams;
 
 namespace App.QueryTester
 {

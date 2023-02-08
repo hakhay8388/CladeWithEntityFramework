@@ -44,7 +44,7 @@ class TApp extends Component {
     render() {
         var __This = this;
         return (
-            <div style={{ fontFamily: "Montserrat" }}>
+            <div style={{ fontFamily: "Arial" }}>
                 <React.Suspense fallback={<div className="container">
                     <div className="center">
                         <div className="lds-ripple"><div></div><div></div></div>

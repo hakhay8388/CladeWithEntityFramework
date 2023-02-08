@@ -27,93 +27,12 @@ var cLogInOutCommandListener = Class(
     constructor: function ()
     {
       cLogInOutCommandListener.BaseObject.constructor.call(this);
-
-      this.HashChanged = this.HashChanged.bind(this);
-      this.HashControlFunction(this.HashChanged);
-      //Actions.CheckLogin();
     },
     Destroy: function ()
     {
       cBaseCommandListener.prototype.Destroy.call(this);
-    },
-    HashControlFunction: function (_Function)
-    {
-      if ("onhashchange" in window)
-      {
-        window.onhashchange = function ()
-        {
-          _Function(window.location.hash);
-        };
-      } else
-      {
-        var prevHash = window.location.hash;
-        window.setInterval(function ()
-        {
-          if (window.location.hash != prevHash)
-          {
-            prevHash = window.location.hash;
-            _Function(window.location.hash);
-          }
-        }, 100);
       }
-    },
-    HashChanged: function ()
-    {
-      var __AnyAction = false;
-      var __Url = window.GetUrlParams();
-      var __Params = queryString.parse(__Url);
-      if (__Params.lang)
-      {
-        if (
-          GenericWebGraph.Managers.LanguageManager.ActiveLanguage
-            .LanguageCode != __Params.lang
-        )
-        {
-          __AnyAction = true;
-          GenericWebGraph.Managers.LanguageManager.SetLanguage(
-            __Params.lang
-          );
-        }
-      } else
-      {
-        var __Url = window.GetUrlPage();
-        if (window.App.User == null)
-        {
-          if (
-            __Url != window.Pages.Names.LoginPage &&
-            __Url != window.Pages.Names.ForgotPassword &&
-            __Url != window.Pages.Names.ForgotPasswordConfirm &&
-            __Url != window.Pages.Names.RegisterPage &&
-            __Url != window.Pages.Names.SellerRegisterPage &&
-            __Url != window.Pages.Names.MainPage
-          )
-          {
-            __AnyAction = true;
-            window.App.User = null;
-            window.App.SessionID = null;
-            GenericWebGraph.GoPage(window.Pages.Names.MainPage);
-          }
-        } else
-        {
-          if (
-            __Url == window.Pages.Names.LoginPage ||
-            __Url == window.Pages.Names.ForgotPassword ||
-            __Url == window.Pages.Names.ForgotPasswordConfirm ||
-            __Url == window.Pages.Names.RegisterPage ||
-            __Url == window.Pages.Names.SellerRegisterPage ||
-            __Url == window.Pages.Names.MainPage
-          )
-          {
-            __AnyAction = true;
-            window.GoMainPage();
-          }
-        }
-      }
-      if (!__AnyAction)
-      {
-        WebGraph.ForceUpdateAllWithAsyncLoad(true);
-      }
-    },
+      ,
     Receive_SetUserOnClientCommand: function (_Data)
     {
         window.App.User = _Data.User;
@@ -149,15 +68,17 @@ var cLogInOutCommandListener = Class(
             GenericWebGraph.Managers.LanguageManager.SetLanguage(
                 window.App.User.Language
             );
-            window.App.DynamicLoader.HandleRefresh();
+            window.App.DynamicLoader.InitFirstLoad();
 
         }
-        else if (_Data.LoginState) {
+        else if (_Data.LoginState)
+        {
             GenericWebGraph.CloseAllModals();
             DebugAlert.Show("Logined");
             GenericWebGraph.ManagersWithListener.SignalListerner.HandleConnect();
         }
-        else {
+        else
+        {
             GenericWebGraph.CloseAllModals();
             DebugAlert.Show("Unlogined");
             GenericWebGraph.ManagersWithListener.SignalListerner.HandleDisconnect();
@@ -166,7 +87,7 @@ var cLogInOutCommandListener = Class(
             window.App.SessionID = null;
             GenericWebGraph.MainPage = null;
 
-            window.App.DynamicLoader.HandleRefresh();
+            window.App.DynamicLoader.InitFirstLoad();
         }
 
         /*

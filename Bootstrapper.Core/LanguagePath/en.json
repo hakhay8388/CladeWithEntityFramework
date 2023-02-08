@@ -1,4 +1,20 @@
 {
+    "UnloginedMainPage": {"message": "UnloginedMainPage", "description": ""},
+	"LoginPage": {"message": "LoginPage", "description": ""},
+	"MenuPage": {"message": "MenuPage", "description": ""},
+	"AdminMainPage": {"message": "AdminMainPage", "description": ""},
+	"BatchJobPage": {"message": "BatchJobPage", "description": ""},
+	"ConfigurationPage": {"message": "ConfigurationPage", "description": ""},
+	"LanguagePage": {"message": "LanguagePage", "description": ""},
+	"UserList": {"message": "UserList", "description": ""},
+	"UserMainPage": {"message": "UserMainPage", "description": ""},
+	"DeveloperMainPage": {"message": "DeveloperMainPage", "description": ""},
+	"SharedSessionPage": {"message": "SharedSessionPage", "description": ""},
+	"SystemSettingsPage": {"message": "SystemSettingsPage", "description": ""},
+	"LiveSessionsPage": {"message": "LiveSessionsPage", "description": ""},
+	"UsersMenu": {"message": "UsersMenu", "description": ""},
+	
+	
 	"Hi": {"message": "Hi","description": ""},
 	"Welcome": {"message": "Welcome {0}","description": ""},
 	"UserList": {"message": "User List","description": ""},

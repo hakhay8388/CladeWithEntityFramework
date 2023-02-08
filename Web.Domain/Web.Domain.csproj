@@ -24,8 +24,12 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="nWebGraph\nComponentManager\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="nWebGraph\nComponentManager\**" />
+    <EmbeddedResource Remove="nWebGraph\nComponentManager\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="nWebGraph\nComponentManager\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
@@ -39,7 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="nWebGraph\nComponentManager\nDataSourcesManager\" />
+    <Folder Include="ClientApp\src\Assets\Css\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

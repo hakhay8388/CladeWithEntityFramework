@@ -21,7 +21,7 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nListenerGraph.nGeneralListener
 
         public void ReceiveTestData(cListenerEvent _ListenerEvent, IController _Controller, cTestCommandData _ReceivedData)
         {
-            WebGraph.ActionGraph<cActionGraph>().TestAction.Action(_Controller, new cTestProps() { Page = 1100, Params = "kjjşlkşk"});
+            WebGraph.ActionGraph<cActionGraph>().TestAction.Action(_Controller, new cTestProps() { Page = 1100, Params = "aaaaaaaaaaaaa"});
         }
     }
 }

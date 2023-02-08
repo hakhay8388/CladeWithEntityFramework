@@ -54,13 +54,13 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
             this.InitFirstLoad();
         }
         ,
-        InitFirstLoad: function () {
+        HandleGetLoaders: function (_Initializer)
+        {
             var __LanguageCode = window.GetLanguageCodeFromUrl();
             if (__LanguageCode.length != 2) {
                 __LanguageCode = "";
             }
 
-            var __This = this;
             fetch('/webgraph/webapi', {
                 method: 'POST',
                 headers: {
@@ -76,37 +76,47 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
             })
                 .then(response => response.json())
                 .then(response => {
-                    __This.FirstInitData = response;
-                    var __CommandList = __This.GetCommandByNameInCommandArray(response, "CommandList");
-                    CommandIDs.LoadCommands(__CommandList.Data.CommandList);
-
-                    var __ActionList = __This.GetCommandByNameInCommandArray(response, "ActionList");
-                    ActionIDs.LoadActions(__ActionList.Data.ActionList);
-
-                    GenericWebGraph.Managers = new cManagers();
-
-                    var __Language = __This.GetCommandByNameInCommandArray(response, "Language");
-                    GenericWebGraph.Managers.LanguageManager.HandleSetActiveLanguage(__Language.Data);
-
-                    GenericWebGraph.CommandInterpreter = new cCommandInterpreter();
-                    GenericWebGraph.ActionGraph = new cActionGraph();
-
-                    var __PageResult = __This.GetCommandByNameInCommandArray(response, "PageResult");
-                    Pages.LoadPages(__PageResult.Data);
-
-                    var __SetUserOnClient = __This.GetCommandByNameInCommandArray(response, "SetUserOnClient");
-
-                    window.GenericWebGraph = GenericWebGraph;
-
-                    GenericWebGraph.Init(function () {
-                        GenericWebGraph.CommandInterpreter.InterpretCommand([__SetUserOnClient]);
-                        __This.HandleSetChilds();
-
-                    });
-
+                    _Initializer(response);
                 }).catch(err => {
                     DebugAlert.Show("hata", err);
                 });
+        }
+
+        ,
+        InitFirstLoad: function () {
+            var __This = this;
+            this.HandleGetLoaders(function (response) {
+                __This.FirstInitData = response;
+                var __CommandList = __This.GetCommandByNameInCommandArray(response, "CommandList");
+                CommandIDs.LoadCommands(__CommandList.Data.CommandList);
+
+                var __ActionList = __This.GetCommandByNameInCommandArray(response, "ActionList");
+                ActionIDs.LoadActions(__ActionList.Data.ActionList);
+
+                GenericWebGraph.Managers = new cManagers();
+
+                var __Language = __This.GetCommandByNameInCommandArray(response, "Language");
+                GenericWebGraph.Managers.LanguageManager.HandleSetActiveLanguage(__Language.Data);
+
+                GenericWebGraph.CommandInterpreter = new cCommandInterpreter();
+                GenericWebGraph.ActionGraph = new cActionGraph();
+
+                var __PageResult = __This.GetCommandByNameInCommandArray(response, "PageResult");
+                Pages.LoadPages(__PageResult.Data);
+
+                var __MenuData = __This.GetCommandByNameInCommandArray(response, "MenuResult").Data;
+                __This.MenuItems = __MenuData.MenuItems;
+
+                var __SetUserOnClient = __This.GetCommandByNameInCommandArray(response, "SetUserOnClient");
+
+                window.GenericWebGraph = GenericWebGraph;
+
+                GenericWebGraph.Init(function () {
+                    GenericWebGraph.CommandInterpreter.InterpretCommand([__SetUserOnClient]);
+                    __This.HandleSetChilds();
+
+                });
+            });
 
         }
         ,
@@ -122,14 +132,7 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
               </div>
           });
       }
-      ,
-      HandleRefresh: function () {
-          var __This = this;
-          Pages.ReloadPages(function ()
-          {
-              __This.HandleSetChilds();
-          });
-      }
+     
         ,
       GetCommandByNameInCommandArray: function (_CommandArray, _CommandName)
       {

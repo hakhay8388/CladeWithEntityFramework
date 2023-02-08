@@ -6,6 +6,7 @@ using Bootstrapper.Core.nCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -52,7 +53,28 @@ namespace Base.Data.nDatabaseService
 
         public DbContext GetCoreEFDatabaseContext()
         {
-            return (DbContext)ServiceContext.App.Factories.ObjectFactory.ResolveInstance<TDatabaseContext>();
+            if (Activity.Current != null)
+            {
+                TDatabaseContext __Item = (TDatabaseContext)Activity.Current.GetTagItem("DatabaseContext");
+                if (__Item == null)
+                {
+                    lock (Activity.Current)
+                    {
+                        __Item = (TDatabaseContext)Activity.Current.GetTagItem("DatabaseContext");
+                        if (__Item == null)
+                        {
+                            Console.WriteLine(Activity.Current.Id.ToString());
+                            __Item = (TDatabaseContext)ServiceContext.App.Factories.ObjectFactory.ResolveInstance<TDatabaseContext>();
+                            Activity.Current.SetTag("DatabaseContext", __Item);
+                        }
+                    }
+                }
+                return __Item;
+            }
+            else
+            {
+                return (DbContext)ServiceContext.App.Factories.ObjectFactory.ResolveInstance<TDatabaseContext>();
+            }
         }
 
         public void Save()

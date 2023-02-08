@@ -19,6 +19,7 @@ namespace App.BatchJobService.nBatchJobService
 {
     public class cJob : cCoreObject
     {
+        public Activity CurrentActivity { get; set; }
         public bool Executed = false;
         public bool Finished = false;
         public EBatchJobState JobState { get; set; }
@@ -46,6 +47,8 @@ namespace App.BatchJobService.nBatchJobService
 
         public void Start()
         {
+            CurrentActivity = new Activity(BatchJobEntity.Code);
+            CurrentActivity.Start();
             Finished = false;
             ExecuterThread = new Thread(new ThreadStart(Execute));
             ExecuterThread.Start();
@@ -174,6 +177,7 @@ namespace App.BatchJobService.nBatchJobService
                     Thread.Sleep(10000);
                 }
             }
+            CurrentActivity.Stop();
         }
 
         public void Refresh(cBatchJobEntity _Item)

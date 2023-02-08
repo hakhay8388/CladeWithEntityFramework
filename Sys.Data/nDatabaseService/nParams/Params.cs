@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sys.Data.nDatabaseService
+namespace Sys.Data.nDatabaseService.nParams
 {
     public static class Params
     {

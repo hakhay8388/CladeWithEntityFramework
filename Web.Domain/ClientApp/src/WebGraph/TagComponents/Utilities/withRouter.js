@@ -8,9 +8,9 @@ function withRouter(Component)
 {
   function ComponentWithRouterProp(props) 
   {
-    let location = useLocation();
-    let navigate = useNavigate();
-    let params = useParams();
+    var location = useLocation();
+    var navigate = useNavigate();
+    var params = useParams();
     return (
       <Component
         {...props}

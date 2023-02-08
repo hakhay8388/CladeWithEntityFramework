@@ -40,8 +40,7 @@ var TAdminMainPage = Class(TObject,
         ,
         HandleRedirect: function (_Event)
         {
-            this.props.router.navigate(window.Pages.UserList.Path);
-            //window.GoPage(window.Pages.UserList.Path);
+            window.GoPage(window.Pages.UserList.Path);
         }
         ,
         HandleLogout: function (_Event) {
@@ -50,7 +49,8 @@ var TAdminMainPage = Class(TObject,
         ,
         HandleSubmit: function () {
             var __This = this;
-
+            window.App.ContainerLayout.HandleToggleLeftDrawer();
+            /*
             alert("test");
             Actions.Test(11, "test", function (_Message) {
                 CommandIDs.TestCommand.RunIfHas(
@@ -61,7 +61,7 @@ var TAdminMainPage = Class(TObject,
                         });
                     }
                 );
-            });
+            });*/
         }
         ,
         HandleGetName: function () {

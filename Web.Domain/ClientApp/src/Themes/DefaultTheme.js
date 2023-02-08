@@ -1,6 +1,16 @@
 import { createTheme  } from "@mui/material/styles";
 
 const DefaultTheme = createTheme ({
+    components: {
+        MuiDrawer: {
+            styleOverrides: {
+                paper: {
+                    background: '#1E1F21'
+                }
+            }
+        }
+    }
+        ,
   palette: {
     primary: {
       main: "#ff5757",
@@ -94,7 +104,7 @@ const DefaultTheme = createTheme ({
     }
   },
   typography : {
-    fontFamily: "Montserrat",
+      fontFamily: "Arial",
     button: {
       textTransform: "none",
       textDecoration: "none",
