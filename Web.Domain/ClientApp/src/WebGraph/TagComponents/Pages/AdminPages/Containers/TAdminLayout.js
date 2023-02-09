@@ -23,17 +23,17 @@ var TAdminLayout = Class( TBaseContainerLayout,
     ,
     HandleGetAside: function ()
     {
-        return <TAdminAside {...this.props} />
+        return <TAdminAside/>
     }
     ,
     HandleGetFooter: function ()
     {
-        return <TAdminFooter {...this.props} />
+        return <TAdminFooter/>
     }
     ,
     HandleGetHeader: function ()
     {
-        return <TAdminHeader {...this.props} />;
+        return <TAdminHeader/>;
     }
     ,
     Destroy: function ()

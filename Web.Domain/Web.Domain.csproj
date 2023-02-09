@@ -34,6 +34,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\Assets\Fonts\fontawesome.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ClientApp\src\Assets\Fonts\fontawesome.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Base.Web\Base.Web.csproj" />
     <ProjectReference Include="..\Core.BatchJobService\Core.BatchJobService.csproj" />
     <ProjectReference Include="..\Domain.Boundary\Domain.Boundary.csproj" />
@@ -44,6 +54,7 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\Assets\Css\" />
+    <Folder Include="ClientApp\src\Assets\Fonts\Awesome\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -33,11 +33,11 @@ class TApp extends Component {
     {
         if (window.App.User == null)
         {
-            return <TUnloginedLayout {...this.props} />
+            return <TUnloginedLayout />
         }
         else
         {
-            return <TAdminLayout {...this.props} />
+            return <TAdminLayout />
         }
     }
 

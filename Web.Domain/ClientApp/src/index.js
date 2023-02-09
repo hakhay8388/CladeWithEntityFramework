@@ -1,3 +1,4 @@
+import "./Assets/Fonts/Awesome/css/all.min.css";
 import "./WebGraph/Initializers";
 import "./Themes/Themes.js";
 import "./WebGraph/App";

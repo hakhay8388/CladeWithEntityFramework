@@ -7,8 +7,13 @@ import { CommandIDs } from "../../../../GenericWebController/CommandInterpreter/
 import { withStyles } from "@mui/styles";
 
 import AdminStyles from "../../../../../ScriptStyles/AdminStyles";
-
+import UserStyles from "../../../../../ScriptStyles/UserStyles";
 import TBaseHeader from "../../TBaseHeader";
+import {
+    ListItem, ListItemButton, ListItemIcon, ListItemText,
+    Grid, Typography, Accordion, AccordionDetails, Breadcrumbs, Drawer, Link, AccordionSummary
+} from "@mui/material";
+
 
 var TAdminHeader = Class(TBaseHeader,
   {
@@ -16,8 +21,9 @@ var TAdminHeader = Class(TBaseHeader,
     constructor: function (_Props) {
         TAdminHeader.BaseObject.constructor.call(this, _Props);
       this.state = {
-        ...this.state        
-      };
+          ...this.state,
+        };
+        window.App.Header = this;
     },
     Destroy: function () {
         TAdminHeader.BaseObject.Destroy.call(this);
@@ -25,18 +31,19 @@ var TAdminHeader = Class(TBaseHeader,
     AsyncLoad: function () {
         TAdminHeader.BaseObject.AsyncLoad.call(this);
     },
+
     render() 
     {
       var __This = this;
       const { children, classes, ...attributes } = this.props;
-      return (
-        <div style={{ width: "100%" }}>
-          admin Header
-        </div>
+        return this.HandleWrapWithApp(
+          <div>
+              Admin Header
+          </div>
       );
     },
   },
   {}
 );
 
-export default withStyles(AdminStyles)(TAdminHeader);
+export default withStyles(UserStyles)(TAdminHeader);

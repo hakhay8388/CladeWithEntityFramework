@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+﻿import React, { Suspense } from "react";
 import { Routes, Route} from "react-router-dom";
 import { Class, JSTypeOperator, ObjectTypes } from "../../GenericCoreGraph/ClassFramework/Class";
 import TObject from "../../TagComponents/TObject";
@@ -8,7 +8,7 @@ import classNames from "classnames";
 import DefaultTheme from "../../../Themes/DefaultTheme";
 import {
     ListItem, ListItemButton, ListItemIcon, ListItemText,
-    Grid, Typography, Accordion, AccordionDetails, Breadcrumbs, Drawer, Link, AccordionSummary
+    Grid, Typography, Accordion, AccordionDetails, Breadcrumbs, Drawer, Link, AccordionSummary, Divider
 } from "@mui/material";
 
 
@@ -25,6 +25,8 @@ var TBaseContainerLayout = Class(
                 ...this.state,
                 leftMenu: false,
             };
+            this.MainClickEventList = [];
+            this.DrawWidth = 500;
             window.App.ContainerLayout = this;
         },
         Destroy: function () {
@@ -34,6 +36,17 @@ var TBaseContainerLayout = Class(
             TBaseContainerLayout.BaseObject.AsyncLoad.call(this, _Force);
         }
         ,
+        HandleMainClicked: function (_Event)
+        {
+            if (window.App.Header !== null && (this.state.leftMenu || this.state.rightMenu))
+            {
+                this.setState({
+                    leftMenu: false,
+                    rightMenu: false
+                });
+            }
+        }
+        ,
         HandleOpenLeftDrawer: function () {
             this.setState({ leftMenu: true });
         },
@@ -41,7 +54,9 @@ var TBaseContainerLayout = Class(
             this.setState({ leftMenu: false });
         },
         HandleToggleLeftDrawer: function () {
+            var __Temp = !this.state.leftMenu;
             this.setState({ leftMenu: !this.state.leftMenu });
+            return __Temp;
         }
         ,
         HandleMenuClick: function (_Event, _Item, _Submenu) {
@@ -59,20 +74,31 @@ var TBaseContainerLayout = Class(
             name: "Ara"
             url: "search"*/
 
-            console.log(DefaultTheme.palette.secondary.contrastText);
             var __This = this;
             return window.App.DynamicLoader.MenuItems.map(
                 (_Item, _Index) => {
                     console.log(__This.state.Language[_Item.Name]);
                     if (_Item.MainMenu) {
+
                         return <ListItem key={_Item.Name} disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    {_Index % 2 === 0 ? <MoveToInbox /> : <Mail />}
-                                </ListItemIcon>
-                                <ListItemText primary={__This.state.Language[_Item.Name]} />
+                            <ListItemButton component="a" href="#customized-list">
+                                <ListItemIcon sx={{ fontSize: 20, color: _Item.Active ? "#f44336" : "#73818f" }}><i style={{ color: "#73818f" }} className={_Item.Icon} /></ListItemIcon>
+                                <ListItemText
+                                    sx={{ my: 0 }}
+                                    primary={__This.state.Language[_Item.Name]}
+                                    primaryTypographyProps={{
+                                        fontSize: 14,
+                                        fontWeight: 'medium',
+                                        letterSpacing: 0,
+                                        color: _Item.Active
+                                            ? "#f44336"
+                                            : DefaultTheme.palette.secondary.contrastText,
+                                    }}
+                                />
                             </ListItemButton>
+
                         </ListItem>;
+
                        /* return (
                             <Accordion
                                 style={{
@@ -177,7 +203,7 @@ var TBaseContainerLayout = Class(
                         );*/
                     } else {
 
-                        return <Grid key={_Item.Name}  container style={{ width: "200px" }}>
+                        /*return <Grid key={_Item.Name}  container style={{ width: "200px" }}>
                             <Grid item xs={2}>
                                 <Typography
                                     style={{
@@ -190,7 +216,26 @@ var TBaseContainerLayout = Class(
                                     {__This.state.Language[_Item.Name]}
                                 </Typography>
                             </Grid>
-                        </Grid>
+                        </Grid>*/
+
+                        return <ListItem key={_Item.Name} disablePadding>
+                            <ListItemButton component="a" href="#customized-list">
+                                <ListItemIcon sx={{ fontSize: 20, color: _Item.Active ? "#f44336" : "#73818f" }}><i style={{ color: "#73818f" }} className={_Item.Icon} /></ListItemIcon>
+                                <ListItemText
+                                    sx={{ my: 0 }}
+                                    primary={__This.state.Language[_Item.Name]}
+                                    primaryTypographyProps={{
+                                        fontSize: 14,
+                                        fontWeight: 'medium',
+                                        letterSpacing: 0,
+                                        color: _Item.Active
+                                            ? "#f44336"
+                                            : DefaultTheme.palette.secondary.contrastText,
+                                    }}
+                                />
+                            </ListItemButton>
+
+                        </ListItem>;
 
                         /*return <ListItem key={_Item.Name} disablePadding>
                             <ListItemButton>
@@ -248,7 +293,7 @@ var TBaseContainerLayout = Class(
         ,
         HandleGetRoutes: function (_Lang) {
             var __This = this;
-            var __IsPageExists = Pages.IsPageExists(this.props.router.location.pathname, true);
+            var __IsPageExists = Pages.IsPageExists(window.App.App.props.router.location.pathname, true);
             if (!__IsPageExists) {
                 window.GoMainPage();
             }
@@ -261,7 +306,6 @@ var TBaseContainerLayout = Class(
                             {
                                 return (
                                     <Route
-                                        {...__This.props}
                                         key={_Index}
                                         path={_Lang + "/"}
                                         exact={_Route.Exact}
@@ -273,7 +317,6 @@ var TBaseContainerLayout = Class(
                             else {
                                 return (
                                     <Route
-                                        {...__This.props}
                                         key={_Index}
                                         path={_Lang + _Route.Path}
                                         exact={_Route.Exact}
@@ -296,8 +339,6 @@ var TBaseContainerLayout = Class(
             var __This = this;
             const { classes } = this.props;
 
-            //var __ShowShadow = document.body.classList.contains("sidebar-lg-show");
-            //https://html-css-js.com/css/generator/box-shadow/
 
             return (
                  <Suspense fallback={<div className="container">
@@ -328,17 +369,11 @@ var TBaseContainerLayout = Class(
                             <main onClick={this.HandleMainClicked}>
                                 <div className={classes.container}>
                                     <Drawer
-                                        PaperProps={{
-                                            sx: {
-                                                //backgroundColor: "pink"
-                                            }
-                                        }}
-
                                         sx={{
-                                            width: "300px",
+                                            width: window.Settings.DrawerWidth,
                                             flexShrink: 0,
                                             '& .MuiDrawer-paper': {
-                                                width: "300px",
+                                                width: window.Settings.DrawerWidth,
                                                 boxSizing: 'border-box',
                                             },
                                         }}
@@ -348,7 +383,22 @@ var TBaseContainerLayout = Class(
                                         open={this.state.leftMenu}
                                         //onClose={this.HandleCloseLeftDrawer}
                                         //classes={{ paper: classes.paper }}
-                                       >
+                                    >
+                                        <ListItem key={"MenuHeader"} disablePadding>
+                                            <ListItemButton component="a" href="#customized-list">
+                                                <ListItemIcon sx={{ fontSize: 20 }}>🔥</ListItemIcon>
+                                                <ListItemText
+                                                    sx={{ my: 0 }}
+                                                    primary="Firebash"
+                                                    primaryTypographyProps={{
+                                                        fontSize: 20,
+                                                        fontWeight: 'medium',
+                                                        letterSpacing: 0,
+                                                    }}
+                                                />
+                                            </ListItemButton>
+                                        </ListItem>
+                                        <Divider />
                                         {this.HandleGetMenu()}
                                       </Drawer>
 

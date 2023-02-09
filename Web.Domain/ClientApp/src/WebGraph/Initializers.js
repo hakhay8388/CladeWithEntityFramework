@@ -1,6 +1,9 @@
 import "../WebGraph/Enums/Enums";
 
 
+window.Settings = {};
+window.Settings.DrawerWidth = 300;
+
 
 
 if (!Array.prototype.includes) {
