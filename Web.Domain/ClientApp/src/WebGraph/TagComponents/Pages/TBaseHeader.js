@@ -1,5 +1,5 @@
 import React from "react";
-import {  Class,  JSTypeOperator,  ObjectTypes } from "../../GenericCoreGraph/ClassFramework/Class";
+import { Class, JSTypeOperator, ObjectTypes } from "../../GenericCoreGraph/ClassFramework/Class";
 import TObject from "../TObject";
 import GenericWebGraph from "../../GenericWebController/GenericWebGraph";
 import Actions from "../../GenericWebController/ActionGraph/Actions";
@@ -35,11 +35,10 @@ var TBaseHeader = Class(TObject,
                 UnreadedNotificationCount: window.App.Aside.HandleGetUnreadedCount(),
             });
         },
-        HandleToggleLeftDrawer: function ()
-        {
+        HandleToggleLeftDrawer: function () {
             window.App.ContainerLayout.HandleToggleLeftDrawer();
         },
-        HandleWrapWithApp:function(_Childs) {
+        HandleWrapWithApp: function (_Childs) {
             var __This = this;
             const { children, classes, ...attributes } = this.props;
             return (
@@ -53,7 +52,7 @@ var TBaseHeader = Class(TObject,
                                 width: `calc(100%)`,
                                 marginLeft: 0,
                                 transition: (theme) => theme.transitions.create(['margin', 'width', 'transform'], {
-                                    easing: theme.transitions.easing.easeOut,
+                                    easing: theme.transitions.easing.sharp,
                                     duration: theme.transitions.duration.standard,
                                 })
 
@@ -83,7 +82,7 @@ var TBaseHeader = Class(TObject,
             );
         },
     },
-  {}
+    {}
 );
 
 export default TBaseHeader;

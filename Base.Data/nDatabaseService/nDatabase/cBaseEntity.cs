@@ -2,6 +2,7 @@
 using Bootstrapper.Core.nApplication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Nest;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -62,6 +63,17 @@ namespace Base.Data.nDatabaseService.nDatabase
                 }
             }
         }
+
+        public void LockAndRefresh()
+        {
+            DbContext __DbContext = DataService.GetCoreEFDatabaseContext();
+            string __EntityTableName = typeof(TEntity).Name;
+            __EntityTableName = __EntityTableName.Substring(1, __EntityTableName.Length - 7) + "s";
+
+            FormattableString __FormattableString = $"Select * from {__EntityTableName} with (updlock) where ID = {ID}";
+            __DbContext.Set<TEntity>().FromSqlInterpolated<TEntity>(__FormattableString).FirstOrDefault();
+        }
+
 
         public void Save()
         {

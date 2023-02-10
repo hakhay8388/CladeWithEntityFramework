@@ -1,5 +1,4 @@
 ﻿import GlobalStyles from "./GlobalStyles"
-import DefaultTheme from "../Themes/DefaultTheme"
 
 
 const UnLoginStyles = function(_Theme) {

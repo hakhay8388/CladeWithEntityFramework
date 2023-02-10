@@ -59,11 +59,16 @@ namespace App.QueryTester.cQueryTesters
             try
             {
                 cSysDatabaseContext __DatabaseContext = DataService.GetDatabaseContext<cSysDatabaseContext>();
-                Console.WriteLine("Thread ID_3: " + Thread.CurrentThread.ManagedThreadId);
                 __DatabaseContext.Perform(() =>
                 {
-                    
-                    Task.Delay(1);
+                    cUserEntity __cUserEntity = cUserEntity.GetEntityByID(1);
+                    __cUserEntity.LockAndRefresh();
+
+                    Task.Delay(10000);
+
+                    __cUserEntity.Surname = "DEnemeeeeee";
+                    __cUserEntity.Save();
+
 
                     /*__DatabaseContext.Perform(async () =>
                     {

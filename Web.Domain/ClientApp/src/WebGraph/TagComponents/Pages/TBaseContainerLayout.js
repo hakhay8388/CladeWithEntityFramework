@@ -1,11 +1,10 @@
 ﻿import React, { Suspense } from "react";
-import { Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Class, JSTypeOperator, ObjectTypes } from "../../GenericCoreGraph/ClassFramework/Class";
 import TObject from "../../TagComponents/TObject";
 import GenericWebGraph from "../../GenericWebController/GenericWebGraph";
 import Pages from "../../TagComponents/Pages/Pages";
 import classNames from "classnames";
-import DefaultTheme from "../../../Themes/DefaultTheme";
 import {
     ListItem, ListItemButton, ListItemIcon, ListItemText,
     Grid, Typography, Accordion, AccordionDetails, Breadcrumbs, Drawer, Link, AccordionSummary, Divider
@@ -36,10 +35,8 @@ var TBaseContainerLayout = Class(
             TBaseContainerLayout.BaseObject.AsyncLoad.call(this, _Force);
         }
         ,
-        HandleMainClicked: function (_Event)
-        {
-            if (window.App.Header !== null && (this.state.leftMenu || this.state.rightMenu))
-            {
+        HandleMainClicked: function (_Event) {
+            if (window.App.Header !== null && (this.state.leftMenu || this.state.rightMenu)) {
                 this.setState({
                     leftMenu: false,
                     rightMenu: false
@@ -91,116 +88,116 @@ var TBaseContainerLayout = Class(
                                         fontWeight: 'medium',
                                         letterSpacing: 0,
                                         color: _Item.Active
-                                            ? "#f44336"
-                                            : DefaultTheme.palette.secondary.contrastText,
+                                            ? "primary.main"
+                                            : "text.primary",
                                     }}
                                 />
                             </ListItemButton>
 
                         </ListItem>;
 
-                       /* return (
-                            <Accordion
-                                style={{
-                                    backgroundColor: DefaultTheme.palette.dark.darkAlternative,
-                                }}
-                                className={this.state.expandedMenu && classes.expandedMargin}
-                                elevation={0}
-                                expanded={this.state.expandedMenu === _Item.Name}
-                                onChange={(_Event) => {
-                                    this.HandleChangeExpandedMenu(_Event, _Item.Name);
-                                }}
-                            >
-                                <AccordionSummary
-                                    expandIcon={
-                                        <ExpandMoreIcon
-                                            style={{
-                                                color: DefaultTheme.palette.secondary.contrastText,
-                                            }}
-                                        />
-                                    }
-                                    aria-controls="panel1bh-content"
-                                    id="panel1bh-header"
-                                >
-                                    <Grid container style={{ width: "200px" }}>
-                                        <Grid item xs={2}>
-                                            <i style={{ color: "#73818f" }} className={_Item.Icon} />
-                                        </Grid>
-                                        <Grid item xs={10} style={{ margin: "auto" }}>
-                                            <Typography
-                                                style={{
-                                                    fontSize: "14px",
-                                                    color: DefaultTheme.palette.secondary.contrastText,
-                                                }}
-                                            >
-                                                {this.state.Language[_Item.Name]}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <Grid containe>
-                                        {_Item.SubMenu.map((__SubMenu) => {
-                                            return (
-                                                <Grid item xs={12}>
-                                                    <a
-                                                        className={
-                                                            _Item.Active
-                                                                ? classNames("nav-link", "active")
-                                                                : classNames("nav-link")
-                                                        }
-                                                        style={{
-                                                            backgroundColor:
-                                                                __SubMenu.Active &&
-                                                                DefaultTheme.palette.dark.fourthAlternative,
-                                                        }}
-                                                        href={"#"}
-                                                        onClick={
-                                                            __SubMenu.attributes &&
-                                                                __SubMenu.attributes.onClick
-                                                                ? __SubMenu.attributes.onClick
-                                                                : (_Event) =>
-                                                                    this.HandleMenuClick(
-                                                                        _Event,
-                                                                        __SubMenu,
-                                                                        true
-                                                                    )
-                                                        }
-                                                    >
-                                                        <Grid container style={{ width: "200px" }}>
-                                                            <Grid item xs={2}>
-                                                                <i
-                                                                    style={{
-                                                                        color: __SubMenu.Active
-                                                                            ? "#f44336"
-                                                                            : "#73818f",
-                                                                        fontSize: "13px",
-                                                                    }}
-                                                                    className={__SubMenu.icon}
-                                                                />
-                                                            </Grid>
-                                                            <Grid item xs={10} style={{ margin: "auto" }}>
-                                                                <Typography
-                                                                    style={{
-                                                                        fontSize: "13px",
-                                                                        color: __SubMenu.Active
-                                                                            ? "#f44336"
-                                                                            : DefaultTheme.palette.secondary
-                                                                                .contrastText,
-                                                                    }}
-                                                                >
-                                                                    {this.state.Language[__SubMenu.name]}
-                                                                </Typography>
-                                                            </Grid>
-                                                        </Grid>
-                                                    </a>
-                                                </Grid>
-                                            );
-                                        })}
-                                    </Grid>
-                                </AccordionDetails>
-                            </Accordion>
-                        );*/
+                        /* return (
+                             <Accordion
+                                 style={{
+                                     backgroundColor: DefaultTheme.palette.dark.darkAlternative,
+                                 }}
+                                 className={this.state.expandedMenu && classes.expandedMargin}
+                                 elevation={0}
+                                 expanded={this.state.expandedMenu === _Item.Name}
+                                 onChange={(_Event) => {
+                                     this.HandleChangeExpandedMenu(_Event, _Item.Name);
+                                 }}
+                             >
+                                 <AccordionSummary
+                                     expandIcon={
+                                         <ExpandMoreIcon
+                                             style={{
+                                                 color:"text.primary",
+                                             }}
+                                         />
+                                     }
+                                     aria-controls="panel1bh-content"
+                                     id="panel1bh-header"
+                                 >
+                                     <Grid container style={{ width: "200px" }}>
+                                         <Grid item xs={2}>
+                                             <i style={{ color: "#73818f" }} className={_Item.Icon} />
+                                         </Grid>
+                                         <Grid item xs={10} style={{ margin: "auto" }}>
+                                             <Typography
+                                                 style={{
+                                                     fontSize: "14px",
+                                                     color: "text.primary",
+                                                 }}
+                                             >
+                                                 {this.state.Language[_Item.Name]}
+                                             </Typography>
+                                         </Grid>
+                                     </Grid>
+                                 </AccordionSummary>
+                                 <AccordionDetails>
+                                     <Grid containe>
+                                         {_Item.SubMenu.map((__SubMenu) => {
+                                             return (
+                                                 <Grid item xs={12}>
+                                                     <a
+                                                         className={
+                                                             _Item.Active
+                                                                 ? classNames("nav-link", "active")
+                                                                 : classNames("nav-link")
+                                                         }
+                                                         style={{
+                                                             backgroundColor:
+                                                                 __SubMenu.Active &&
+                                                                 DefaultTheme.palette.dark.fourthAlternative,
+                                                         }}
+                                                         href={"#"}
+                                                         onClick={
+                                                             __SubMenu.attributes &&
+                                                                 __SubMenu.attributes.onClick
+                                                                 ? __SubMenu.attributes.onClick
+                                                                 : (_Event) =>
+                                                                     this.HandleMenuClick(
+                                                                         _Event,
+                                                                         __SubMenu,
+                                                                         true
+                                                                     )
+                                                         }
+                                                     >
+                                                         <Grid container style={{ width: "200px" }}>
+                                                             <Grid item xs={2}>
+                                                                 <i
+                                                                     style={{
+                                                                         color: __SubMenu.Active
+                                                                             ? "#f44336"
+                                                                             : "#73818f",
+                                                                         fontSize: "13px",
+                                                                     }}
+                                                                     className={__SubMenu.icon}
+                                                                 />
+                                                             </Grid>
+                                                             <Grid item xs={10} style={{ margin: "auto" }}>
+                                                                 <Typography
+                                                                     style={{
+                                                                         fontSize: "13px",
+                                                                         color: __SubMenu.Active
+                                                                             ? "#f44336"
+                                                                             : DefaultTheme.palette.secondary
+                                                                                 .contrastText,
+                                                                     }}
+                                                                 >
+                                                                     {this.state.Language[__SubMenu.name]}
+                                                                 </Typography>
+                                                             </Grid>
+                                                         </Grid>
+                                                     </a>
+                                                 </Grid>
+                                             );
+                                         })}
+                                     </Grid>
+                                 </AccordionDetails>
+                             </Accordion>
+                         );*/
                     } else {
 
                         /*return <Grid key={_Item.Name}  container style={{ width: "200px" }}>
@@ -209,8 +206,8 @@ var TBaseContainerLayout = Class(
                                     style={{
                                         fontSize: "14px",
                                         color: _Item.Active
-                                            ? "#f44336"
-                                            : DefaultTheme.palette.secondary.contrastText,
+                                            ? "primary.main"
+                                            : "text.primary",
                                     }}
                                 >
                                     {__This.state.Language[_Item.Name]}
@@ -229,8 +226,8 @@ var TBaseContainerLayout = Class(
                                         fontWeight: 'medium',
                                         letterSpacing: 0,
                                         color: _Item.Active
-                                            ? "#f44336"
-                                            : DefaultTheme.palette.secondary.contrastText,
+                                            ? "primary.main"
+                                            : "text.primary",
                                     }}
                                 />
                             </ListItemButton>
@@ -276,8 +273,8 @@ var TBaseContainerLayout = Class(
                                             style={{
                                                 fontSize: "14px",
                                                 color: _Item.Active
-                                                    ? "#f44336"
-                                                    : DefaultTheme.palette.secondary.contrastText,
+                                                    ? "primary.main"
+                                                    : "text.primary",
                                             }}
                                         >
                                             {this.state.Language[_Item.Name]}
@@ -300,17 +297,15 @@ var TBaseContainerLayout = Class(
             else {
                 return (
                     <Routes>
-                        {Pages.Routes.map((_Route, _Index) =>
-                        {
-                            if (_Route.IsMainPage)
-                            {
+                        {Pages.Routes.map((_Route, _Index) => {
+                            if (_Route.IsMainPage) {
                                 return (
                                     <Route
                                         key={_Index}
                                         path={_Lang + "/"}
                                         exact={_Route.Exact}
                                         name={_Route.Name}
-                                        element={<_Route.Component ownerLayout={__This } />}
+                                        element={<_Route.Component ownerLayout={__This} />}
                                     />
                                 );
                             }
@@ -324,7 +319,7 @@ var TBaseContainerLayout = Class(
                                         element={<_Route.Component ownerLayout={__This} />}
                                     />
                                 );
-                            }                            
+                            }
                         })}
                     </Routes>
                 );
@@ -341,7 +336,7 @@ var TBaseContainerLayout = Class(
 
 
             return (
-                 <Suspense fallback={<div className="container">
+                <Suspense fallback={<div className="container">
                     <div className="center">
                         <div className="lds-ripple"><div></div><div></div></div>
                     </div>
@@ -381,8 +376,8 @@ var TBaseContainerLayout = Class(
                                         anchor={"left"}
                                         id={"leftDrawer"}
                                         open={this.state.leftMenu}
-                                        //onClose={this.HandleCloseLeftDrawer}
-                                        //classes={{ paper: classes.paper }}
+                                    //onClose={this.HandleCloseLeftDrawer}
+                                    //classes={{ paper: classes.paper }}
                                     >
                                         <ListItem key={"MenuHeader"} disablePadding>
                                             <ListItemButton component="a" href="#customized-list">
@@ -400,16 +395,38 @@ var TBaseContainerLayout = Class(
                                         </ListItem>
                                         <Divider />
                                         {this.HandleGetMenu()}
-                                      </Drawer>
+                                    </Drawer>
 
-                                   {/*this.HandleGetRoutes("/" + GenericWebGraph.Managers.LanguageManager.ActiveLanguage.LanguageCode)*/}
-                                   {this.HandleGetRoutes("")}
+                                    <Grid container
+
+                                        sx={[
+                                            {
+                                                width: `calc(100%)`,
+                                                marginLeft: 0,
+                                                transition: (theme) => theme.transitions.create(['margin', 'width', 'transform'], {
+                                                    easing: theme.transitions.easing.sharp,
+                                                    duration: theme.transitions.duration.leavingScreen,
+                                                })
+
+                                            },
+                                            __This.state.leftMenu && {
+                                                marginLeft: `${window.Settings.DrawerWidth}px`,
+                                                width: `calc(100% - ${window.Settings.DrawerWidth}px)`,
+                                            }
+                                        ]}
+                                    >
+                                        <Grid item xs={12}>
+                                            {/*this.HandleGetRoutes("/" + GenericWebGraph.Managers.LanguageManager.ActiveLanguage.LanguageCode)*/}
+                                            {this.HandleGetRoutes("")}
+
+                                        </Grid>
+                                    </Grid>
+
                                 </div>
                             </main>
                         </div>
                         <div
                             style={{
-                                //backgroundColor: DefaultTheme.palette.dark.darkAlternative,
                                 flex: "0 0 50px",
                                 display: "flex",
                                 flexWrap: "wrap",
@@ -426,7 +443,7 @@ var TBaseContainerLayout = Class(
                 </Suspense>
 
 
-               
+
             );
         },
     },

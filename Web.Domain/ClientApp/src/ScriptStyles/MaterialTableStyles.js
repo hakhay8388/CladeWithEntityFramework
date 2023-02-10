@@ -1,19 +1,21 @@
-﻿
-import GlobalStyles from "./GlobalStyles"
+﻿import GlobalStyles from "./GlobalStyles"
 
-const InfoModalStyles = function(_Theme) {
-  var __GlobalStyle = GlobalStyles(_Theme);
-  return {
-    ...__GlobalStyle,
-    dialog: {
-      position: 'absolute',
-      top: 50,
-      margin : '0px !important'
-    }
-  };
-};
+const MaterialTableStyles = (_Theme) => ({
+  ...GlobalStyles(_Theme),
+  title: {
+    fontSize: "20px",
+    fontWeight: 500,
+    [_Theme.breakpoints.only('xs')]: {
+      fontSize: "10px",
+      marginRight: "25px"
+    },
+  },
+  searchAreaStyle :{
+    [_Theme.breakpoints.only('xs')]: {
+      display: "none"
+    },
+  }
+});
 
 
-
-
-export default InfoModalStyles
+export default MaterialTableStyles
