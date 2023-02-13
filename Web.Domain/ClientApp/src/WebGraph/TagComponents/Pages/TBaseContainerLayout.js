@@ -6,12 +6,12 @@ import GenericWebGraph from "../../GenericWebController/GenericWebGraph";
 import Pages from "../../TagComponents/Pages/Pages";
 import classNames from "classnames";
 import {
-    ListItem, ListItemButton, ListItemIcon, ListItemText,
+    ListItem, ListItemButton, ListItemIcon, ListItemText, Box,
     Grid, Typography, Accordion, AccordionDetails, Breadcrumbs, Drawer, Link, AccordionSummary, Divider
 } from "@mui/material";
 
 
-import { MoveToInbox, ExpandMoreIcon, Mail } from "@mui/icons-material";
+import { MoveToInbox, Mail } from "@mui/icons-material";
 
 var TBaseContainerLayout = Class(
     TObject,
@@ -23,6 +23,7 @@ var TBaseContainerLayout = Class(
             this.state = {
                 ...this.state,
                 leftMenu: false,
+                expandedMenu: false,
             };
             this.MainClickEventList = [];
             this.DrawWidth = 500;
@@ -36,12 +37,12 @@ var TBaseContainerLayout = Class(
         }
         ,
         HandleMainClicked: function (_Event) {
-            if (window.App.Header !== null && (this.state.leftMenu || this.state.rightMenu)) {
+           /* if (window.App.Header !== null && (this.state.leftMenu || this.state.rightMenu)) {
                 this.setState({
                     leftMenu: false,
                     rightMenu: false
                 });
-            }
+            }*/
         }
         ,
         HandleOpenLeftDrawer: function () {
@@ -57,11 +58,17 @@ var TBaseContainerLayout = Class(
         }
         ,
         HandleMenuClick: function (_Event, _Item, _Submenu) {
+            alert("aa");
         }
         ,
         HandleChangeExpandedMenu: function (_Event, _Menu) {
             _Event.preventDefault();
             _Event.stopPropagation();
+            this.setState(
+                {
+                    expandedMenu: this.state.expandedMenu === _Menu ? false : _Menu
+                }
+            );
         }
         ,
         HandleGetMenu: function () {
@@ -77,212 +84,113 @@ var TBaseContainerLayout = Class(
                     console.log(__This.state.Language[_Item.Name]);
                     if (_Item.MainMenu) {
 
-                        return <ListItem key={_Item.Name} disablePadding>
-                            <ListItemButton component="a" href="#customized-list">
-                                <ListItemIcon sx={{ fontSize: 20, color: _Item.Active ? "#f44336" : "#73818f" }}><i style={{ color: "#73818f" }} className={_Item.Icon} /></ListItemIcon>
-                                <ListItemText
-                                    sx={{ my: 0 }}
-                                    primary={__This.state.Language[_Item.Name]}
-                                    primaryTypographyProps={{
-                                        fontSize: 14,
-                                        fontWeight: 'medium',
-                                        letterSpacing: 0,
-                                        color: _Item.Active
-                                            ? "primary.main"
-                                            : "text.primary",
-                                    }}
-                                />
-                            </ListItemButton>
+                        return <Box>
+                            <Accordion
+                                className={this.state.expandedMenu && classes.expandedMargin}
+                                elevation={0}
+                                expanded={this.state.expandedMenu === _Item.Name}
+                                onChange={(_Event) => {
+                                    this.HandleChangeExpandedMenu(_Event, _Item.Name);
+                                }}
+                            >
+                                <AccordionSummary
+                                    expandIcon={
+                                        <Mail />
+                                    }
+                                    aria-controls="panel1bh-content"
+                                    id="panel1bh-header"
+                                >
+                                    <Grid container style={{ width: "200px" }}>
+                                        <Grid item xs={2}>
+                                            <i style={{ color: "#73818f" }} className={_Item.Icon} />
+                                        </Grid>
+                                        <Grid item xs={10} style={{ margin: "auto" }}>
+                                            <Typography
+                                                style={{
+                                                    fontSize: "14px",
+                                                }}
+                                            >
+                                                {this.state.Language[_Item.Name]}
+                                            </Typography>
+                                        </Grid>
+                                    </Grid>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <Grid containe>
+                                        {_Item.SubMenu.map((__SubMenu) => {
+                                            return (
+                                                <Grid item xs={12}>
+                                                    <a
+                                                        className={
+                                                            _Item.Active
+                                                                ? classNames("nav-link", "active")
+                                                                : classNames("nav-link")
+                                                        }
+                                                        href={"#"}
+                                                        onClick={
+                                                            __SubMenu.attributes &&
+                                                                __SubMenu.attributes.onClick
+                                                                ? __SubMenu.attributes.onClick
+                                                                : (_Event) =>
+                                                                    this.HandleMenuClick(
+                                                                        _Event,
+                                                                        __SubMenu,
+                                                                        true
+                                                                    )
+                                                        }
+                                                    >
+                                                        <Grid container style={{ width: "200px" }}>
+                                                            <Grid item xs={2}>
+                                                                <i
+                                                                    style={{
+                                                                        color: __SubMenu.Active
+                                                                            ? "#f44336"
+                                                                            : "#73818f",
+                                                                        fontSize: "13px",
+                                                                    }}
+                                                                    className={__SubMenu.icon}
+                                                                />
+                                                            </Grid>
+                                                            <Grid item xs={10} style={{ margin: "auto" }}>
+                                                                <Typography
+                                                                    style={{
+                                                                        fontSize: "13px",
+                                                                    }}
+                                                                >
+                                                                    {this.state.Language[__SubMenu.Name]}
+                                                                </Typography>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </a>
+                                                </Grid>
+                                            );
+                                        })}
+                                    </Grid>
+                                </AccordionDetails>
+                            </Accordion>
 
-                        </ListItem>;
+                            </Box>
 
-                        /* return (
-                             <Accordion
-                                 style={{
-                                     backgroundColor: DefaultTheme.palette.dark.darkAlternative,
-                                 }}
-                                 className={this.state.expandedMenu && classes.expandedMargin}
-                                 elevation={0}
-                                 expanded={this.state.expandedMenu === _Item.Name}
-                                 onChange={(_Event) => {
-                                     this.HandleChangeExpandedMenu(_Event, _Item.Name);
-                                 }}
-                             >
-                                 <AccordionSummary
-                                     expandIcon={
-                                         <ExpandMoreIcon
-                                             style={{
-                                                 color:"text.primary",
-                                             }}
-                                         />
-                                     }
-                                     aria-controls="panel1bh-content"
-                                     id="panel1bh-header"
-                                 >
-                                     <Grid container style={{ width: "200px" }}>
-                                         <Grid item xs={2}>
-                                             <i style={{ color: "#73818f" }} className={_Item.Icon} />
-                                         </Grid>
-                                         <Grid item xs={10} style={{ margin: "auto" }}>
-                                             <Typography
-                                                 style={{
-                                                     fontSize: "14px",
-                                                     color: "text.primary",
-                                                 }}
-                                             >
-                                                 {this.state.Language[_Item.Name]}
-                                             </Typography>
-                                         </Grid>
-                                     </Grid>
-                                 </AccordionSummary>
-                                 <AccordionDetails>
-                                     <Grid containe>
-                                         {_Item.SubMenu.map((__SubMenu) => {
-                                             return (
-                                                 <Grid item xs={12}>
-                                                     <a
-                                                         className={
-                                                             _Item.Active
-                                                                 ? classNames("nav-link", "active")
-                                                                 : classNames("nav-link")
-                                                         }
-                                                         style={{
-                                                             backgroundColor:
-                                                                 __SubMenu.Active &&
-                                                                 DefaultTheme.palette.dark.fourthAlternative,
-                                                         }}
-                                                         href={"#"}
-                                                         onClick={
-                                                             __SubMenu.attributes &&
-                                                                 __SubMenu.attributes.onClick
-                                                                 ? __SubMenu.attributes.onClick
-                                                                 : (_Event) =>
-                                                                     this.HandleMenuClick(
-                                                                         _Event,
-                                                                         __SubMenu,
-                                                                         true
-                                                                     )
-                                                         }
-                                                     >
-                                                         <Grid container style={{ width: "200px" }}>
-                                                             <Grid item xs={2}>
-                                                                 <i
-                                                                     style={{
-                                                                         color: __SubMenu.Active
-                                                                             ? "#f44336"
-                                                                             : "#73818f",
-                                                                         fontSize: "13px",
-                                                                     }}
-                                                                     className={__SubMenu.icon}
-                                                                 />
-                                                             </Grid>
-                                                             <Grid item xs={10} style={{ margin: "auto" }}>
-                                                                 <Typography
-                                                                     style={{
-                                                                         fontSize: "13px",
-                                                                         color: __SubMenu.Active
-                                                                             ? "#f44336"
-                                                                             : DefaultTheme.palette.secondary
-                                                                                 .contrastText,
-                                                                     }}
-                                                                 >
-                                                                     {this.state.Language[__SubMenu.name]}
-                                                                 </Typography>
-                                                             </Grid>
-                                                         </Grid>
-                                                     </a>
-                                                 </Grid>
-                                             );
-                                         })}
-                                     </Grid>
-                                 </AccordionDetails>
-                             </Accordion>
-                         );*/
                     } else {
 
-                        /*return <Grid key={_Item.Name}  container style={{ width: "200px" }}>
-                            <Grid item xs={2}>
-                                <Typography
-                                    style={{
-                                        fontSize: "14px",
-                                        color: _Item.Active
-                                            ? "primary.main"
-                                            : "text.primary",
-                                    }}
-                                >
-                                    {__This.state.Language[_Item.Name]}
-                                </Typography>
-                            </Grid>
-                        </Grid>*/
-
-                        return <ListItem key={_Item.Name} disablePadding>
-                            <ListItemButton component="a" href="#customized-list">
-                                <ListItemIcon sx={{ fontSize: 20, color: _Item.Active ? "#f44336" : "#73818f" }}><i style={{ color: "#73818f" }} className={_Item.Icon} /></ListItemIcon>
+                        return  <ListItem key={_Item.Name} disablePadding>
+                            <ListItemButton selected={_Item.Active} component="a" href={_Item.Url}>
+                                <ListItemIcon sx={{ fontSize: 20, color: (_Item.Active ? "themeLightText.activeColor" : "themeLightText.pasiveColor") }}>
+                                    <i style={{ color: (_Item.Active ? "themeLightText.activeColor" : "themeLightText.pasiveColor") }} className={_Item.Icon} />
+                                </ListItemIcon>
                                 <ListItemText
-                                    sx={{ my: 0 }}
+                                    sx={{ color: (_Item.Active ? "themeLightText.activeColor" : "themeLightText.pasiveColor") }}
                                     primary={__This.state.Language[_Item.Name]}
                                     primaryTypographyProps={{
                                         fontSize: 14,
                                         fontWeight: 'medium',
                                         letterSpacing: 0,
-                                        color: _Item.Active
-                                            ? "primary.main"
-                                            : "text.primary",
                                     }}
                                 />
                             </ListItemButton>
-
                         </ListItem>;
 
-                        /*return <ListItem key={_Item.Name} disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    {_Index % 2 === 0 ? <MoveToInbox /> : <Mail />}
-                                </ListItemIcon>
-                                <ListItemText primary={__This.state.Language[_Item.Name]} />
-                            </ListItemButton>
-                        </ListItem>;*/
-
-                        /*return (
-                            <a
-                                className={
-                                    _Item.Active
-                                        ? classNames("nav-link", "active")
-                                        : classNames("nav-link")
-                                }
-                                style={{
-                                    backgroundColor:
-                                        _Item.Active && DefaultTheme.palette.dark.fourthAlternative,
-                                }}
-                                href={"#"}
-                                onClick={
-                                    _Item.attributes && _Item.attributes.onClick
-                                        ? _Item.attributes.onClick
-                                        : (_Event) => this.HandleMenuClick(_Event, _Item, false)
-                                }
-                            >
-                                <Grid container style={{ width: "200px" }}>
-                                    <Grid item xs={2}>
-                                        <i
-                                            style={{ color: _Item.Active ? "#f44336" : "#73818f" }}
-                                            className={_Item.Icon}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={10} style={{ margin: "auto" }}>
-                                        <Typography
-                                            style={{
-                                                fontSize: "14px",
-                                                color: _Item.Active
-                                                    ? "primary.main"
-                                                    : "text.primary",
-                                            }}
-                                        >
-                                            {this.state.Language[_Item.Name]}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            </a>
-                        );*/
+                        
                     }
                 }
             );
@@ -381,10 +289,9 @@ var TBaseContainerLayout = Class(
                                     >
                                         <ListItem key={"MenuHeader"} disablePadding>
                                             <ListItemButton component="a" href="#customized-list">
-                                                <ListItemIcon sx={{ fontSize: 20 }}>🔥</ListItemIcon>
                                                 <ListItemText
-                                                    sx={{ my: 0 }}
-                                                    primary="Firebash"
+                                                    sx={{ color: "themeLightText.activeColor" }}
+                                                    primary="Menu"
                                                     primaryTypographyProps={{
                                                         fontSize: 20,
                                                         fontWeight: 'medium',
@@ -393,7 +300,7 @@ var TBaseContainerLayout = Class(
                                                 />
                                             </ListItemButton>
                                         </ListItem>
-                                        <Divider />
+                                        <Divider sx={{ borderColor: "themeLightDivider.color" }} />
                                         {this.HandleGetMenu()}
                                     </Drawer>
 

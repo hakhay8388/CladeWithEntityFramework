@@ -7,6 +7,7 @@ const GlobalStyles = function(_Theme) {
       Grow: {
           flexGrow: 1,
       }
+      ,
   };
 };
 
