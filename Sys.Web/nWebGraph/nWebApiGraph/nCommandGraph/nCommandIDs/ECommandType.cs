@@ -16,13 +16,14 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommandIDs
 
 
         public static ECommandType FirstInit = new ECommandType(GetVariableName(() => FirstInit), 1, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User });
-        public static ECommandType GetCommandList = new ECommandType(GetVariableName(() => GetCommandList), 2, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User });
-        public static ECommandType GetActionList = new ECommandType(GetVariableName(() => GetActionList), 3, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User });
-        public static ECommandType SetLanguage = new ECommandType(GetVariableName(() => SetLanguage), 4, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User });
+        public static ECommandType Reinit = new ECommandType(GetVariableName(() => Reinit), 2, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User });
+        public static ECommandType GetCommandList = new ECommandType(GetVariableName(() => GetCommandList), 3, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User });
+        public static ECommandType GetActionList = new ECommandType(GetVariableName(() => GetActionList), 4, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User });
+        public static ECommandType SetLanguage = new ECommandType(GetVariableName(() => SetLanguage), 5, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User });
 
-        public static ECommandType MessageResult = new ECommandType(GetVariableName(() => MessageResult), 5, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User });
-        public static ECommandType GetEnumVariableList = new ECommandType(GetVariableName(() => GetEnumVariableList), 6, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User }, true);
-        public static ECommandType GetServerDateTime = new ECommandType(GetVariableName(() => GetServerDateTime), 7, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User });
+        public static ECommandType MessageResult = new ECommandType(GetVariableName(() => MessageResult), 6, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User });
+        public static ECommandType GetEnumVariableList = new ECommandType(GetVariableName(() => GetEnumVariableList), 7, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User }, true);
+        public static ECommandType GetServerDateTime = new ECommandType(GetVariableName(() => GetServerDateTime), 8, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User });
 
 
         public static ECommandType Login = new ECommandType(GetVariableName(() => Login), 10, "", true, new List<RoleIDs>() { RoleIDs.Unlogined }, _DoFlowCheck: true);

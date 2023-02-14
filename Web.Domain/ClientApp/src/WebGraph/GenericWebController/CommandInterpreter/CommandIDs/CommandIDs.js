@@ -23,6 +23,14 @@ var CommandIDs_Class = Class(
         },
       LoadCommands: function (_CommandList)
       {
+          for (var i = 0; i < this.CommandIDList.Count();i++)
+          {
+              var __Item = this.CommandIDList.GetItem(i);
+              delete this[__Item.CommandName + "Command"];
+          }
+
+          this.CommandIDList = new cListForBase();
+
           var ECommandID = cCommandID;
           for (var i = 0; i < _CommandList.length; i++) {
               var __Eval =

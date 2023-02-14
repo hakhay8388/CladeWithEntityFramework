@@ -37,6 +37,18 @@ var TMessageBox = Class(TBaseDialogModal,
             window.App.MessageBox = this;
         }
         ,
+        componentDidMount: function ()
+        {
+            console.log("TMessageBox -> componentDidMount : working");
+            try {
+                TMessageBox.BaseObject.componentDidMount.call(this);
+            }
+            catch (Ex) {
+                console.log("TMessageBox -> componentDidMount : Error");
+                console.log(Ex); 
+            }
+        }
+        ,
         Destroy: function () {
             TMessageBox.BaseObject.Destroy.call(this);
         }
@@ -256,7 +268,7 @@ var TMessageBox = Class(TBaseDialogModal,
                 return (<div></div>);
             }
             return (
-                !this.Message ? (<div></div>) :
+                !this.Message ? (<div>hayri</div>) :
                     <Dialog maxWidth={"sm"} fullWidth={!this.state.IsFullScreen} open={this.state.open} onClose={() => { this.HandleOnCloseReaction() }} classes={{ paper: classes.dialog }}>
                         <DialogTitle style={{ backgroundColor: this.HandleTypeBackgroundColorByStyle(this.state.modalTitleType) }}>
                             <Typography sx={{ color: this.HandleTitleColorByStyle(this.state.modalTitleType), fontWeight: "bold" }} >

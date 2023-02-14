@@ -24,12 +24,13 @@ using Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nParamListener;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nSetGlobalParamListAction;
 using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nGetGlobalParamListCommand;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nLogInOutAction;
-
+using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nReinitCommand;
 
 namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nFirstInitListener
 {
      public class cFirstInitListener : cBaseListener
         , IFirstInitReceiver
+        , IReinitReceiver
     {
         public cFirstInitListener(cApp _App, cBaseWebGraph _WebGraph, IDataService _DataService)
                : base(_App, _WebGraph, _DataService)
@@ -82,6 +83,50 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nFirstInitListener
 
             WebGraph.SysActionGraph.SetUserOnClientAction.Action(_Controller);
 
+        }
+
+        public void ReceiveReinitData(cListenerEvent _ListenerEvent, IController _Controller, cReinitCommandData _ReceivedData)
+        {
+            if (string.IsNullOrEmpty(_ReceivedData.LanguageCode))
+            {
+                if (_Controller.ClientSession.IsLogined)
+                {
+                    _ReceivedData.LanguageCode = _Controller.ClientSession.Language;
+                }
+                else
+                {
+                    _ReceivedData.LanguageCode = App.Handlers.LanguageHandler.LanguageNameList[0].Code;
+                }
+            }
+            cLanguageItem __LanguageItem = App.Handlers.LanguageHandler.GetLanguageByCode(_ReceivedData.LanguageCode);
+            List<string> __DefinedLanguages = new List<string>();
+            foreach (KeyValuePair<string, cLanguageItem> __LanguageItemDictionary in App.Handlers.LanguageHandler.LanguageList)
+            {
+                __DefinedLanguages.Add(__LanguageItemDictionary.Key);
+            }
+
+            if (_Controller.ClientSession.IsLogined)
+            {
+                cSysDatabaseContext __DatabaseContext = DataService.GetDatabaseContext<cSysDatabaseContext>();
+                __DatabaseContext.Perform(() =>
+                {
+                    _Controller.ClientSession.User.Language = _ReceivedData.LanguageCode;
+                    __DatabaseContext.SaveChanges();
+                });
+            }
+
+            WebGraph.SysActionGraph.LanguageAction.Action(_Controller, new cLanguageProps() { Language = __LanguageItem.LanguageObject, LanguageCode = _ReceivedData.LanguageCode, DefinedLanguages = __DefinedLanguages });
+
+            cMenuResultProps __MenuResultProps = WebGraph.ListenerGraph.GetListenerByType<cPermissionListener>().PrepareMenuResultProps(_Controller, new cGetMenuListCommandData() { MenuTypeCode = MenuTypes.LeftMenu.Code, RootMenuCode = null });
+            WebGraph.SysActionGraph.MenuResultAction.Action(_Controller, __MenuResultProps);
+
+            cPageResultProps __PageResultProps = WebGraph.ListenerGraph.GetListenerByType<cPermissionListener>().PreparePageResultProps(_Controller, new cGetPageListCommandData());
+            WebGraph.SysActionGraph.PageResultAction.Action(_Controller, __PageResultProps);
+
+            cSetGlobalParamListProps __GlobalParamListResultProps = WebGraph.ListenerGraph.GetListenerByType<cParamListener>().PrepareGetGlobalParamListProps(_Controller, new cGetGlobalParamListCommandData());
+            WebGraph.SysActionGraph.SetGlobalParamListAction.Action(_Controller, __GlobalParamListResultProps);
+
+            WebGraph.SysActionGraph.SetUserOnClientAction.Action(_Controller);
         }
     }
 }

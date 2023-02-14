@@ -47,7 +47,7 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActionIDs
 		public static EActionType DoCheckLoginRequest = new EActionType(GetVariableName(() => DoCheckLoginRequest), 39, "", true);
 		public static EActionType ValidationResult = new EActionType(GetVariableName(() => ValidationResult), 40, "", true);
         public static EActionType PageResult = new EActionType(GetVariableName(() => PageResult), 41, "", true);
-        public static EActionType MenuResult = new EActionType(GetVariableName(() => MenuResult), 41, "", true);
+        public static EActionType MenuResult = new EActionType(GetVariableName(() => MenuResult), 42, "", true);
 
 
         public static EActionType ModalOpen = new EActionType(GetVariableName(() => ModalOpen), 100, "", true);

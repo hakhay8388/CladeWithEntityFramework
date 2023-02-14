@@ -7,7 +7,7 @@ export const DebugAlert = function ()
 window.DebugAlert = DebugAlert;
 
 DebugAlert.Enabled = false;
-DebugAlert.WriteConsole = false;
+DebugAlert.WriteConsole = true;
 
 DebugAlert.Show = function (String_Msg, _Ex)
 {

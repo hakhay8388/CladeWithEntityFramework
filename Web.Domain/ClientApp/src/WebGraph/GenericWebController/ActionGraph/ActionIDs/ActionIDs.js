@@ -14,6 +14,16 @@ var ActionIDs_Class = Class(Component,
       }
         ,
       LoadActions: function (_ActionList) {
+
+
+          for (var i = 0; i < this.ActionIDList.Count(); i++)
+          {
+              var __Item = this.ActionIDList.GetItem(i);
+              delete this[__Item.Name + "Action"];
+          }
+
+          this.ActionIDList.Clear();
+
           var EActionID = cActionID;
           for (var i = 0; i < _ActionList.length; i++) {
               var __Parameters = "[";

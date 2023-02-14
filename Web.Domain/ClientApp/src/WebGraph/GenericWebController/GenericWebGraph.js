@@ -9,28 +9,106 @@ import {
   cListForBase,
 } from "../GenericCoreGraph/ClassFramework/Class";
 import Actions from "./ActionGraph/Actions";
-import { CommandIDs } from "../GenericWebController/CommandInterpreter/CommandIDs/CommandIDs";
 import { WebGraph } from "../../WebGraph/GenericCoreGraph/WebGraph/WebGraph";
+
+import { CommandIDs } from "../GenericWebController/CommandInterpreter/CommandIDs/CommandIDs"
+import { ActionIDs } from "../GenericWebController/ActionGraph/ActionIDs/ActionIDs";
+
+import cManagers from "../GenericWebController/Managers/cManagers";
+import { cCommandInterpreter } from "../GenericWebController/CommandInterpreter/cCommandInterpreter";
+import cActionGraph from "../GenericWebController/ActionGraph/cActionGraph";
 import moment from "moment";
 
 function GenericWebGraph() { }
 
 GenericWebGraph.Init = function (_OnComplete) {
-    import("../GenericWebController/ManagersWithListener/cManagersWithListener")
-        .then((_Event1) => {
-            var cManagersWithListener = _Event1.default;
-            import("../GenericWebController/CommandListenerGraph/cCommandListenerGraph")
-                .then((_Event2) => {
-                    var cCommandListenerGraph = _Event2.default;
-                    GenericWebGraph.ManagersWithListener = new cManagersWithListener();
-                    GenericWebGraph.CommandListenerGraph = new cCommandListenerGraph();
-                    if (JSTypeOperator.IsFunction(_OnComplete))
-                    {
-                        _OnComplete();
-                    }                    
-                });
-        });
+
+    GenericWebGraph.HandleGetLoaders(function (_ResponseData)
+    {
+
+        var __CommandList = GenericWebGraph.GetCommandByNameInCommandArray(_ResponseData, "CommandList");
+        CommandIDs.LoadCommands(__CommandList.Data.CommandList);
+
+        var __ActionList = GenericWebGraph.GetCommandByNameInCommandArray(_ResponseData, "ActionList");
+        ActionIDs.LoadActions(__ActionList.Data.ActionList);
+
+        GenericWebGraph.Managers = new cManagers();
+
+        var __Language = GenericWebGraph.GetCommandByNameInCommandArray(_ResponseData, "Language");
+        GenericWebGraph.Managers.LanguageManager.HandleSetActiveLanguage(__Language.Data);
+
+
+
+        GenericWebGraph.CommandInterpreter = new cCommandInterpreter();
+        GenericWebGraph.ActionGraph = new cActionGraph();
+
+        import("../GenericWebController/ManagersWithListener/cManagersWithListener")
+            .then((_Event1) => {
+                var cManagersWithListener = _Event1.default;
+                import("../GenericWebController/CommandListenerGraph/cCommandListenerGraph")
+                    .then((_Event2) => {
+                        var cCommandListenerGraph = _Event2.default;
+                        GenericWebGraph.ManagersWithListener = new cManagersWithListener();
+                        GenericWebGraph.CommandListenerGraph = new cCommandListenerGraph();
+
+                        var __SetUserOnClient = GenericWebGraph.GetCommandByNameInCommandArray(_ResponseData, "SetUserOnClient");
+                        GenericWebGraph.CommandInterpreter.InterpretCommand([__SetUserOnClient]);
+
+                        var __SetGlobalParamList = GenericWebGraph.GetCommandByNameInCommandArray(_ResponseData, "SetGlobalParamList");
+                        GenericWebGraph.CommandInterpreter.InterpretCommand([__SetGlobalParamList]);
+
+                        var __PageResult = GenericWebGraph.GetCommandByNameInCommandArray(_ResponseData, "PageResult");
+                        GenericWebGraph.CommandInterpreter.InterpretCommand([__PageResult]);
+
+                        var __MenuResult = GenericWebGraph.GetCommandByNameInCommandArray(_ResponseData, "MenuResult");
+                        GenericWebGraph.CommandInterpreter.InterpretCommand([__MenuResult]);
+
+                        if (JSTypeOperator.IsFunction(_OnComplete)) {
+                            _OnComplete();
+                        }
+                    });
+            });
+
+    });
 };
+
+ 
+GenericWebGraph.GetCommandByNameInCommandArray = function (_CommandArray, _CommandName) {
+    for (var i = 0; i < _CommandArray.length; i++) {
+        if (_CommandArray[i].ActionID.Code === _CommandName) {
+            return _CommandArray[i];
+        }
+    }
+}
+
+
+GenericWebGraph.HandleGetLoaders = function (_Initializer)
+{
+    var __LanguageCode = window.GetLanguageCodeFromUrl();
+    if (__LanguageCode.length != 2) {
+        __LanguageCode = "";
+    }
+
+    fetch('/webgraph/webapi', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            CID: 1,
+            Data: {
+                LanguageCode: __LanguageCode
+            }
+        })
+    })
+        .then(response => response.json())
+        .then(response => {
+            _Initializer(response);
+        }).catch(err => {
+            DebugAlert.Show("hata", err);
+        });
+}
 
 GenericWebGraph.ObjectList = function () {
   var __Temp = WebGraph.GetInstancesByBaseClass(ObjectTypes.TBaseDialogModal);

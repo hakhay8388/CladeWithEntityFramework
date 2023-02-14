@@ -2,6 +2,8 @@ import "./Assets/Fonts/Awesome/css/all.min.css";
 import "./WebGraph/Initializers";
 import "./Themes/Themes.js";
 import "./WebGraph/App";
+import { WebGraph } from "./WebGraph/GenericCoreGraph/WebGraph/WebGraph";
+import GenericWebGraph from "./WebGraph/GenericWebController/GenericWebGraph";
 
 import React from "react";
 import { createRoot } from 'react-dom/client';
@@ -12,14 +14,23 @@ import TApp from "./WebGraph/TagComponents/TApp";
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 
-const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
-const rootElement = document.getElementById('root');
-const root = createRoot(rootElement);
 
-root.render(
-    <BrowserRouter basename={baseUrl}>
-        <TApp />
-    </BrowserRouter>);
+WebGraph.Init();
+GenericWebGraph.Init(() => {
+
+    const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
+    const rootElement = document.getElementById('root');
+    const root = createRoot(rootElement);
+
+    root.render(<div>Test</div>
+        /*<BrowserRouter basename={baseUrl}>
+            <TApp />
+        </BrowserRouter>*/);
+
+
+});
+
+
 
 
 

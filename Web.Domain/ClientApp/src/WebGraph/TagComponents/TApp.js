@@ -21,7 +21,6 @@ class TApp extends Component {
         this.state = {
             ...this.state,
         };
-        WebGraph.Init();
     }
 
 

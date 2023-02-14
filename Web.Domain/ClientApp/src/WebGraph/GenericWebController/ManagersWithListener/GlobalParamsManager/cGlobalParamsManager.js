@@ -16,7 +16,6 @@ var cGlobalParamsManager = Class(cBaseManagersWithListener
         ,
         constructor: function () {
             cGlobalParamsManager.BaseObject.constructor.call(this);
-            this.HandleLoadParams();
         }
         ,
         Receive_SetGlobalParamListCommand: function (_Data) {
@@ -26,14 +25,6 @@ var cGlobalParamsManager = Class(cBaseManagersWithListener
             }
 
             DebugAlert.WriteConsole = window.App.GlobalParams.FrontEndDebugMessage;
-        }
-        ,
-        HandleLoadParams() {
-
-            var __Params = window.App.DynamicLoader.GetCommandByNameInCommandArray(window.App.DynamicLoader.FirstInitData, "SetGlobalParamList");
-
-            this.Receive_SetGlobalParamListCommand(__Params.Data);
-
         }
         ,
         Destroy: function () {

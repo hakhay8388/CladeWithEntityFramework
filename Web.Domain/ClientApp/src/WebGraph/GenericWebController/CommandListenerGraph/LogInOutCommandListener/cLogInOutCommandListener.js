@@ -68,17 +68,15 @@ var cLogInOutCommandListener = Class(
             GenericWebGraph.Managers.LanguageManager.SetLanguage(
                 window.App.User.Language
             );
-            window.App.DynamicLoader.InitFirstLoad();
+            window.App.DynamicLoader.HandleRefresh();
 
         }
-        else if (_Data.LoginState)
-        {
+        else if (_Data.LoginState) {
             GenericWebGraph.CloseAllModals();
             DebugAlert.Show("Logined");
             GenericWebGraph.ManagersWithListener.SignalListerner.HandleConnect();
         }
-        else
-        {
+        else {
             GenericWebGraph.CloseAllModals();
             DebugAlert.Show("Unlogined");
             GenericWebGraph.ManagersWithListener.SignalListerner.HandleDisconnect();
@@ -87,7 +85,7 @@ var cLogInOutCommandListener = Class(
             window.App.SessionID = null;
             GenericWebGraph.MainPage = null;
 
-            window.App.DynamicLoader.InitFirstLoad();
+            window.App.DynamicLoader.HandleRefresh();
         }
 
         /*

@@ -10,8 +10,10 @@ import {
     Grid, Typography, Accordion, AccordionDetails, Breadcrumbs, Drawer, Link, AccordionSummary, Divider
 } from "@mui/material";
 
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 
-import { MoveToInbox, Mail } from "@mui/icons-material";
+
+import { MoveToInbox, ExpandMoreIcon, Mail } from "@mui/icons-material";
 
 var TBaseContainerLayout = Class(
     TObject,
@@ -22,8 +24,7 @@ var TBaseContainerLayout = Class(
 
             this.state = {
                 ...this.state,
-                leftMenu: false,
-                expandedMenu: false,
+                leftMenu: false
             };
             this.MainClickEventList = [];
             this.DrawWidth = 500;
@@ -37,12 +38,12 @@ var TBaseContainerLayout = Class(
         }
         ,
         HandleMainClicked: function (_Event) {
-           /* if (window.App.Header !== null && (this.state.leftMenu || this.state.rightMenu)) {
-                this.setState({
-                    leftMenu: false,
-                    rightMenu: false
-                });
-            }*/
+            /* if (window.App.Header !== null && (this.state.leftMenu || this.state.rightMenu)) {
+                 this.setState({
+                     leftMenu: false,
+                     rightMenu: false
+                 });
+             }*/
         }
         ,
         HandleOpenLeftDrawer: function () {
@@ -64,11 +65,6 @@ var TBaseContainerLayout = Class(
         HandleChangeExpandedMenu: function (_Event, _Menu) {
             _Event.preventDefault();
             _Event.stopPropagation();
-            this.setState(
-                {
-                    expandedMenu: this.state.expandedMenu === _Menu ? false : _Menu
-                }
-            );
         }
         ,
         HandleGetMenu: function () {
@@ -81,108 +77,85 @@ var TBaseContainerLayout = Class(
             var __This = this;
             return window.App.DynamicLoader.MenuItems.map(
                 (_Item, _Index) => {
-                    console.log(__This.state.Language[_Item.Name]);
+
                     if (_Item.MainMenu) {
+                        if (!JSTypeOperator.IsDefined(__This.state["Open_" + _Item.Name])) {
+                            __This.state["Open_" + _Item.Name] = false;
+                        }
 
-                        return <Box>
-                            <Accordion
-                                className={this.state.expandedMenu && classes.expandedMargin}
-                                elevation={0}
-                                expanded={this.state.expandedMenu === _Item.Name}
-                                onChange={(_Event) => {
-                                    this.HandleChangeExpandedMenu(_Event, _Item.Name);
-                                }}
-                            >
-                                <AccordionSummary
-                                    expandIcon={
-                                        <Mail />
-                                    }
-                                    aria-controls="panel1bh-content"
-                                    id="panel1bh-header"
-                                >
-                                    <Grid container style={{ width: "200px" }}>
-                                        <Grid item xs={2}>
-                                            <i style={{ color: "#73818f" }} className={_Item.Icon} />
-                                        </Grid>
-                                        <Grid item xs={10} style={{ margin: "auto" }}>
-                                            <Typography
-                                                style={{
-                                                    fontSize: "14px",
-                                                }}
-                                            >
-                                                {this.state.Language[_Item.Name]}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <Grid containe>
-                                        {_Item.SubMenu.map((__SubMenu) => {
-                                            return (
-                                                <Grid item xs={12}>
-                                                    <a
-                                                        className={
-                                                            _Item.Active
-                                                                ? classNames("nav-link", "active")
-                                                                : classNames("nav-link")
-                                                        }
-                                                        href={"#"}
-                                                        onClick={
-                                                            __SubMenu.attributes &&
-                                                                __SubMenu.attributes.onClick
-                                                                ? __SubMenu.attributes.onClick
-                                                                : (_Event) =>
-                                                                    this.HandleMenuClick(
-                                                                        _Event,
-                                                                        __SubMenu,
-                                                                        true
-                                                                    )
-                                                        }
-                                                    >
-                                                        <Grid container style={{ width: "200px" }}>
-                                                            <Grid item xs={2}>
-                                                                <i
-                                                                    style={{
-                                                                        color: __SubMenu.Active
-                                                                            ? "#f44336"
-                                                                            : "#73818f",
-                                                                        fontSize: "13px",
-                                                                    }}
-                                                                    className={__SubMenu.icon}
-                                                                />
-                                                            </Grid>
-                                                            <Grid item xs={10} style={{ margin: "auto" }}>
-                                                                <Typography
-                                                                    style={{
-                                                                        fontSize: "13px",
-                                                                    }}
-                                                                >
-                                                                    {this.state.Language[__SubMenu.Name]}
-                                                                </Typography>
-                                                            </Grid>
-                                                        </Grid>
-                                                    </a>
-                                                </Grid>
-                                            );
-                                        })}
-                                    </Grid>
-                                </AccordionDetails>
-                            </Accordion>
+                        return <Box key={"MenuBox_" + _Item.Name}>
+                            <ListItem key={_Item.Name} disablePadding sx={{ padding: "5px" }}>
+                                <ListItemButton onClick={function (_Event) {
+                                    var __Temp = !__This.state["Open_" + _Item.Name];
 
-                            </Box>
+                                    __This.setState({
+                                        ["Open_" + _Item.Name]: __Temp
+                                    });
+
+                                }}>
+                                    <ListItemIcon sx={{ fontSize: 20, color: (_Item.Active ? "themeLightText.activeColor" : "themeLightText.pasiveColor") }}>
+                                        <i className={_Item.Icon} />
+                                    </ListItemIcon>
+                                    <ListItemText
+
+                                        sx={{ color: (_Item.Active ? "themeLightText.activeColor" : "themeLightText.pasiveColor") }}
+                                        primary={__This.state.Language[_Item.Name]}
+                                        primaryTypographyProps={{
+                                            fontSize: 16,
+                                            fontWeight: 'medium',
+                                            letterSpacing: 0,
+                                        }}
+                                    />
+                                    <KeyboardArrowDown
+                                        key={"KeyboardArrowDown" + _Item.Name}
+                                        sx={{
+                                            color: (_Item.Active ? "themeLightText.activeColor" : "themeLightText.pasiveColor"),
+                                            mr: -1,
+                                            opacity: 1,
+                                            transform: __This.state["Open_" + _Item.Name] ? 'rotate(0deg)' : 'rotate(90deg)',
+                                            transition: '0.2s',
+                                        }}
+                                    />
+                                </ListItemButton>
+                            </ListItem>
+
+                            {__This.state["Open_" + _Item.Name] &&
+                                _Item.SubMenu.map((__SubMenu) => (
+                                    <ListItem key={_Item.Name} disablePadding sx={{ paddingLeft: "25px" }}>
+                                        <ListItemButton
+                                            onClick={function (_Event) {
+                                                window.GoPage(__SubMenu.Url);
+                                            }}
+                                            key={__SubMenu.Name}
+                                            sx={{ py: 0, minHeight: 32, color: 'rgba(255,255,255,.8)' }}
+                                        >
+                                            <ListItemIcon sx={{ color: 'inherit' }}>
+                                                <i className={__SubMenu.Icon} />
+                                            </ListItemIcon>
+                                            <ListItemText
+                                                primary={__This.state.Language[__SubMenu.Name]}
+                                                primaryTypographyProps={{ fontSize: 14, fontWeight: 'medium' }}
+                                            />
+                                        </ListItemButton>
+                                    </ListItem>
+                                ))}
+                        </Box>
 
                     } else {
 
-                        return  <ListItem key={_Item.Name} disablePadding>
-                            <ListItemButton selected={_Item.Active} component="a" href={_Item.Url}>
+                        return <ListItem key={_Item.Name} disablePadding sx={{ padding: "5px" }}>
+                            <ListItemButton selected={_Item.Active}
+                                onClick={function (_Event) {
+                                    window.GoPage(_Item.Url);
+                                }}                            >
                                 <ListItemIcon sx={{ fontSize: 20, color: (_Item.Active ? "themeLightText.activeColor" : "themeLightText.pasiveColor") }}>
-                                    <i style={{ color: (_Item.Active ? "themeLightText.activeColor" : "themeLightText.pasiveColor") }} className={_Item.Icon} />
+                                    <i className={_Item.Icon} />
                                 </ListItemIcon>
                                 <ListItemText
                                     sx={{ color: (_Item.Active ? "themeLightText.activeColor" : "themeLightText.pasiveColor") }}
                                     primary={__This.state.Language[_Item.Name]}
                                     primaryTypographyProps={{
-                                        fontSize: 14,
+                                        fontSize: 16,
                                         fontWeight: 'medium',
                                         letterSpacing: 0,
                                     }}
@@ -190,7 +163,7 @@ var TBaseContainerLayout = Class(
                             </ListItemButton>
                         </ListItem>;
 
-                        
+
                     }
                 }
             );
@@ -217,7 +190,8 @@ var TBaseContainerLayout = Class(
                                     />
                                 );
                             }
-                            else {
+                        })}
+                        {Pages.Routes.map((_Route, _Index) => {
                                 return (
                                     <Route
                                         key={_Index}
@@ -227,12 +201,14 @@ var TBaseContainerLayout = Class(
                                         element={<_Route.Component ownerLayout={__This} />}
                                     />
                                 );
-                            }
                         })}
                     </Routes>
                 );
             }
         },
+        HandleGetModals: function(){
+        }
+        ,
         /*,
         shouldComponentUpdate(nextProps, nextState)
         {
@@ -269,6 +245,7 @@ var TBaseContainerLayout = Class(
                                 overflowX: "hidden",
                             }}
                         >
+                            {__This.HandleGetModals()}
                             <main onClick={this.HandleMainClicked}>
                                 <div className={classes.container}>
                                     <Drawer
@@ -288,7 +265,7 @@ var TBaseContainerLayout = Class(
                                     //classes={{ paper: classes.paper }}
                                     >
                                         <ListItem key={"MenuHeader"} disablePadding>
-                                            <ListItemButton component="a" href="#customized-list">
+                                            <ListItemButton>
                                                 <ListItemText
                                                     sx={{ color: "themeLightText.activeColor" }}
                                                     primary="Menu"
@@ -322,11 +299,13 @@ var TBaseContainerLayout = Class(
                                             }
                                         ]}
                                     >
-                                        <Grid item xs={12}>
-                                            {/*this.HandleGetRoutes("/" + GenericWebGraph.Managers.LanguageManager.ActiveLanguage.LanguageCode)*/}
-                                            {this.HandleGetRoutes("")}
+                                        <Suspense>
+                                            <Grid item xs={12}>
+                                                {/*this.HandleGetRoutes("/" + GenericWebGraph.Managers.LanguageManager.ActiveLanguage.LanguageCode)*/}
+                                                {this.HandleGetRoutes("")}
 
-                                        </Grid>
+                                            </Grid>
+                                        </Suspense>
                                     </Grid>
 
                                 </div>

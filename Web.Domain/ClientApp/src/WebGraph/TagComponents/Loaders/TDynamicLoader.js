@@ -7,7 +7,7 @@ import { DebugAlert, Class, Interface, Abstract, ObjectTypes, JSTypeOperator } f
 import cBaseObject from "../../GenericCoreGraph/BaseObject/cBaseObject";
 
 //import TObject from "../../WebGraph/TagComponents/TObject"
-//import Actions from "../../WebGraph/GenericWebController/ActionGraph/Actions"
+import Actions from "../../GenericWebController/ActionGraph/Actions"
 import { CommandIDs } from "../../GenericWebController/CommandInterpreter/CommandIDs/CommandIDs"
 import { ActionIDs } from "../../GenericWebController/ActionGraph/ActionIDs/ActionIDs";
 //import { WebGraph } from "../../WebGraph/GenericCoreGraph/WebGraph/WebGraph"
@@ -87,6 +87,8 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
             var __This = this;
             this.HandleGetLoaders(function (response) {
                 __This.FirstInitData = response;
+
+
                 var __CommandList = __This.GetCommandByNameInCommandArray(response, "CommandList");
                 CommandIDs.LoadCommands(__CommandList.Data.CommandList);
 
@@ -97,6 +99,8 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
 
                 var __Language = __This.GetCommandByNameInCommandArray(response, "Language");
                 GenericWebGraph.Managers.LanguageManager.HandleSetActiveLanguage(__Language.Data);
+
+
 
                 GenericWebGraph.CommandInterpreter = new cCommandInterpreter();
                 GenericWebGraph.ActionGraph = new cActionGraph();
@@ -120,19 +124,25 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
 
         }
         ,
-      HandleSetChilds: function ()
-      {
-          var __This = this;
-          this.setState({
-              innerChilds: <div>
-                      <TMessageBox />
-                      <THotSpotMessage />
-                      <TGlobalLoading />
-                  {__This.props.getInnerChilds()}
-              </div>
-          });
-      }
-     
+        HandleSetChilds: function () {
+            var __This = this;
+            this.setState({
+                innerChilds: <div>
+                    <TMessageBox />
+                    <THotSpotMessage />
+                    <TGlobalLoading />
+                    {__This.props.getInnerChilds()}
+                </div>
+            });
+        }
+        ,
+        HandleRefresh: function (_Data)
+        {
+            var __This = this;
+            Pages.ReloadPages(function () {
+                __This.HandleSetChilds();
+            });
+        }     
         ,
       GetCommandByNameInCommandArray: function (_CommandArray, _CommandName)
       {
@@ -153,7 +163,7 @@ var TDynamicLoader = Class(cBaseObject, //TObject,
     render()
     {
         return (<div>
-            {this.state.innerChilds }
+            {this.state.innerChilds}
         </div>
             
       );

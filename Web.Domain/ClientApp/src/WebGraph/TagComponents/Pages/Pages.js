@@ -13,35 +13,6 @@ import { CommandIDs } from "../../GenericWebController/CommandInterpreter/Comman
 
 const Pages = {};
 window.Pages = Pages;
-Pages.Routes = [];
-
-Pages.GetRouteString = function (_Item, _UsePageName) {
-    var __Result = "";
-    if (_UsePageName) {
-        __Result = _Item.Path;
-        if (__Result.startsWith("/")) {
-            __Result = __Result.substring(1);
-        }
-    }
-
-    if (_Item.SubParamName && JSTypeOperator.IsArray(_Item.SubParamName)) {
-        for (var i = 0; i < _Item.SubParamName.length; i++) {
-            __Result += "/:" + _Item.SubParamName;
-        }
-        return __Result;
-    }
-    return __Result;
-};
-
-Pages.GetRoutePureName = function (_Item)
-{
-    var __Result = "";
-    __Result = _Item.Path;
-    if (__Result.startsWith("/")) {
-        __Result = __Result.substring(1);
-    }
-    return __Result;
-};
 
 Pages.LoadPages = function (_Pages, _CallbackFunction) {
 
@@ -83,36 +54,5 @@ Pages.LoadPages = function (_Pages, _CallbackFunction) {
         _CallbackFunction();
     }
 }
-
-Pages.ReloadPages = function (_CallbackFunction) {
-    Actions.GetPageList(function (_Message) {
-        CommandIDs.PageResultCommand.RunIfHas(_Message, function (_Data) {
-            Pages.LoadPages(_Data, _CallbackFunction);
-        });
-    });
-}
-Pages.IsPageExists = function (_PageName, _ControlOnlyRootPage)
-{
-    if (_PageName == "/" || _PageName == "") {
-      return true;
-    }
-  
-    if (!_PageName.startsWith("/")) {
-      _PageName = "/" + _PageName;
-    }
-  
-    if (_ControlOnlyRootPage) {
-      var __PageNameList = _PageName.split("/");
-      _PageName = "/" + __PageNameList[1];
-    }
-    var __Found = Pages.Routes.find((__Item) => __Item.PurePath == _PageName);
-    if (__Found == undefined) {
-      if (__PageNameList.length > 2 && __PageNameList[1].length == 2) {
-        _PageName = "/" + __PageNameList[2];
-      }
-      __Found = Pages.Routes.find((__Item) => __Item.PurePath == _PageName);
-    }
-    return JSTypeOperator.IsDefined(__Found) && __Found;
-};
 
 export default Pages;
