@@ -11,22 +11,23 @@ import { CommandIDs } from "../../CommandInterpreter/CommandIDs/CommandIDs"
 import queryString from 'query-string';
 
 
-var cPageListener = Class(cBaseManagersWithListener
+var cPageManager = Class(cBaseManagersWithListener
     , CommandInterfaces.IPageResultCommandReceiver
     ,
     {
-        ObjectType: ObjectTypes.Get("cPageListener")
+        ObjectType: ObjectTypes.Get("cPageManager")
         ,
         constructor: function () {
-            cPageListener.BaseObject.constructor.call(this);
+            cPageManager.BaseObject.constructor.call(this);
             this.Routes = [];
+            window.PageManager = this;
         }
         ,
         Destroy: function () {
-            cPageListener.BaseObject.Destroy.call(this);
+            cPageManager.BaseObject.Destroy.call(this);
         }
         ,
-        HandleLoadPages: function (_Pages) {
+        LoadPages: function (_Pages) {
 
             var __This = this;
             window.Pages = {};
@@ -37,7 +38,7 @@ var cPageListener = Class(cBaseManagersWithListener
                 window.Pages[_Item.Name] = _Item;
 
                 __This.Routes.push({
-                    Path: "/" + __This.HandleGetRouteString(_Item, true),
+                    Path: "/" + __This.GetRouteString(_Item, true),
                     PurePath: "/" + _Item.Path,
                     IsMainPage: _Item.IsMainPage,
                     //Name: GenericWebGraph.Managers.LanguageManager.ActiveLanguage[_Item.Name],
@@ -59,7 +60,7 @@ var cPageListener = Class(cBaseManagersWithListener
             });
         }
         ,
-        HandleGetRouteString: function (_Item, _UsePageName)
+        GetRouteString: function (_Item, _UsePageName)
         {
             var __Result = "";
             if (_UsePageName) {
@@ -77,7 +78,7 @@ var cPageListener = Class(cBaseManagersWithListener
             }
             return __Result;
         },
-        HandleGetRoutePureName: function (_Item)
+        GetRoutePureName: function (_Item)
         {
             var __Result = "";
             __Result = _Item.Path;
@@ -87,7 +88,7 @@ var cPageListener = Class(cBaseManagersWithListener
             return __Result;
         }
         ,
-        HandleIsPageExists: function (_PageName, _ControlOnlyRootPage)
+        IsPageExists: function (_PageName, _ControlOnlyRootPage)
         {
             if (_PageName == "/" || _PageName == "") {
                 return true;
@@ -113,11 +114,11 @@ var cPageListener = Class(cBaseManagersWithListener
         ,
         Receive_PageResultCommand: function (_Data)
         {
-            this.HandleLoadPages(_Data);
+            this.LoadPages(_Data);
         }
     }, {});
 
-export default cPageListener
+export default cPageManager
 
 
 

@@ -127,12 +127,12 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph
 						//WebGraph.ActionGraph.ShowMessageAction.ErrorAction(_Controller, new cMessageProps() { Header = "Hata", Message = "Bu komut için yetkiniz bulunmuyor!" });
 						if (!__CommandID.MainRoles.Exists(__Item => __Item.ID == RoleIDs.Unlogined.ID) && !_Controller.ClientSession.IsLogined)
 						{
-							WebGraph.SysActionGraph.LogInOutAction.Action(_Controller);
+							WebGraph.SysActionGraph.ReinitAction.Action(_Controller);
 						}
 						else
 						{
 							WebGraph.ErrorMessageManager.ErrorAction(new Exception("NoPermissionAction...."), _Controller, _Controller.GetWordValue("Error"), _Controller.GetWordValue("NoPermission"));
-							WebGraph.SysActionGraph.LogInOutAction.Action(_Controller);
+							WebGraph.SysActionGraph.ReinitAction.Action(_Controller);
 						}
 					}
 				}

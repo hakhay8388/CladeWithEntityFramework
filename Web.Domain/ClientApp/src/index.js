@@ -22,20 +22,12 @@ GenericWebGraph.Init(() => {
     const rootElement = document.getElementById('root');
     const root = createRoot(rootElement);
 
-    root.render(<div>Test</div>
-        /*<BrowserRouter basename={baseUrl}>
+    root.render(<BrowserRouter basename={baseUrl}>
             <TApp />
-        </BrowserRouter>*/);
+        </BrowserRouter>);
 
 
 });
-
-
-
-
-
-
-
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

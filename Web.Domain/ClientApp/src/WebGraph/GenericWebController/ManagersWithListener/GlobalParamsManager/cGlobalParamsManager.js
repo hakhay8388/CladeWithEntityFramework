@@ -16,6 +16,7 @@ var cGlobalParamsManager = Class(cBaseManagersWithListener
         ,
         constructor: function () {
             cGlobalParamsManager.BaseObject.constructor.call(this);
+            window.GlobalParamsManager = this;
         }
         ,
         Receive_SetGlobalParamListCommand: function (_Data) {

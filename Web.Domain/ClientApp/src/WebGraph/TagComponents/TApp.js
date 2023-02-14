@@ -6,9 +6,15 @@ import { WebGraph } from "../GenericCoreGraph/WebGraph/WebGraph";
 
 import Button from '@mui/material/Button';
 
-const TDynamicLoader = React.lazy(() => import("./Loaders/TDynamicLoader"));
+
 const TUnloginedLayout = React.lazy(() => import("./Pages/UnloginedPages/Containers/TUnloginedLayout"));
 const TAdminLayout = React.lazy(() => import("./Pages/AdminPages/Containers/TAdminLayout"));
+
+
+const TMessageBox = React.lazy(() => import("./Listeners/TMessageBox"));
+const THotSpotMessage = React.lazy(() => import("./Listeners/THotSpotMessage"));
+const TGlobalLoading = React.lazy(() => import("./Utilities/TGlobalLoading"));
+
 
 class TApp extends Component {
     constructor(_Props) {
@@ -50,11 +56,10 @@ class TApp extends Component {
                     </div>
                 </div>}>
                     <ThemeProvider theme={__This.GetTheme()}>
-                        <TDynamicLoader getInnerChilds={() => {
-                            return <div>
-                                {__This.GetRoleLayout()}
-                            </div>
-                        }} />
+                        <TMessageBox />
+                        <THotSpotMessage />
+                        <TGlobalLoading />
+                        {__This.GetRoleLayout()}
                     </ThemeProvider>
                 </React.Suspense>
             </div>

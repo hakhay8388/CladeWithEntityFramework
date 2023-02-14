@@ -29,7 +29,7 @@ var cSignalListerner = Class(cBaseManagersWithListener
             this.PeriodicControlHandle = setTimeout(function () {
                 __This.HandlePeriodicControl();
             }, 5000);
-
+            window.SignalListerner = this;
         }
         ,
         HandleAddSignalEvent : function (_Function) {

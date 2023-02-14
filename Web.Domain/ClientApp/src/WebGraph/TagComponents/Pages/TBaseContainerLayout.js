@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import { Class, JSTypeOperator, ObjectTypes } from "../../GenericCoreGraph/ClassFramework/Class";
 import TObject from "../../TagComponents/TObject";
 import GenericWebGraph from "../../GenericWebController/GenericWebGraph";
-import Pages from "../../TagComponents/Pages/Pages";
 import classNames from "classnames";
 import {
     ListItem, ListItemButton, ListItemIcon, ListItemText, Box,
@@ -12,8 +11,6 @@ import {
 
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 
-
-import { MoveToInbox, ExpandMoreIcon, Mail } from "@mui/icons-material";
 
 var TBaseContainerLayout = Class(
     TObject,
@@ -75,7 +72,7 @@ var TBaseContainerLayout = Class(
             url: "search"*/
 
             var __This = this;
-            return window.App.DynamicLoader.MenuItems.map(
+            return window.MenuManager.MenuItems.map(
                 (_Item, _Index) => {
 
                     if (_Item.MainMenu) {
@@ -171,14 +168,14 @@ var TBaseContainerLayout = Class(
         ,
         HandleGetRoutes: function (_Lang) {
             var __This = this;
-            var __IsPageExists = Pages.IsPageExists(window.App.App.props.router.location.pathname, true);
+            var __IsPageExists = window.PageManager.IsPageExists(window.App.App.props.router.location.pathname, true);
             if (!__IsPageExists) {
                 window.GoMainPage();
             }
             else {
                 return (
                     <Routes>
-                        {Pages.Routes.map((_Route, _Index) => {
+                        {window.PageManager.Routes.map((_Route, _Index) => {
                             if (_Route.IsMainPage) {
                                 return (
                                     <Route
@@ -191,7 +188,7 @@ var TBaseContainerLayout = Class(
                                 );
                             }
                         })}
-                        {Pages.Routes.map((_Route, _Index) => {
+                        {window.PageManager.Routes.map((_Route, _Index) => {
                                 return (
                                     <Route
                                         key={_Index}
@@ -299,7 +296,11 @@ var TBaseContainerLayout = Class(
                                             }
                                         ]}
                                     >
-                                        <Suspense>
+                                        <Suspense fallback={<div className="container">
+                                            <div className="center">
+                                                <div className="lds-ripple"><div></div><div></div></div>
+                                            </div>
+                                        </div>}>
                                             <Grid item xs={12}>
                                                 {/*this.HandleGetRoutes("/" + GenericWebGraph.Managers.LanguageManager.ActiveLanguage.LanguageCode)*/}
                                                 {this.HandleGetRoutes("")}

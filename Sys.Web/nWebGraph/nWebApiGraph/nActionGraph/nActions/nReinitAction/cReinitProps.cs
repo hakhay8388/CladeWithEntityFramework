@@ -8,10 +8,9 @@ using Newtonsoft.Json.Linq;
 
 namespace Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nLogInOutAction
 {
-    public class cLogInOutProps : cBaseProps
+    public class cReinitProps : cBaseProps
     {
         public virtual bool LoginState { get; set; }
         public virtual string SessionID { get; set; }
-        public virtual dynamic User { get; set; }
     }
 }

@@ -17,7 +17,8 @@ var cNotificationManager = Class(cBaseManagersWithListener, CommandInterfaces.IN
     {
       cNotificationManager.BaseObject.constructor.call(this);
       this.ChannelList = new cListForBase();
-      this.UnReadedChannelList = new cListForBase();
+        this.UnReadedChannelList = new cListForBase();
+        window.NotificationManager = this;
     }
     ,
     HandleLoadNotifications: function ()

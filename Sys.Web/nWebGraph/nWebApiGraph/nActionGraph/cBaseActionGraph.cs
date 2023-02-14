@@ -5,7 +5,6 @@ using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nCacheItAction;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nCommandListAction;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nDataSourceRefreshAction;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nDebugAlertAction;
-using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nDoCheckLoginRequestAction;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nDoReconnectSignalRequestAction;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nForceLogoutAction;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nForceUpdateAction;
@@ -51,7 +50,7 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nActionGraph
 
         public cCommandListAction CommandListAction { get; set; }
         public cActionListAction ActionListAction { get; set; }
-        public cLogInOutAction LogInOutAction { get; set; }
+        public cReinitAction ReinitAction { get; set; }
         public cForceLogoutAction ForceLogoutAction { get; set; }
         public cSetStateAction SetStateAction { get; set; }
         public cSetVariableAction SetVariableAction { get; set; }
@@ -84,7 +83,6 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nActionGraph
 
 		public cDebugAlertAction DebugAlertAction { get; set; }
 
-		public cDoCheckLoginRequestAction DoCheckLoginRequestAction { get; set; }
 		public cValidationResultAction ValidationResultAction { get; set; }
 
         public cPageResultAction PageResultAction { get; set; }

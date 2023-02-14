@@ -12,8 +12,9 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActionIDs
 
         public static List<EActionType> TypeList { get; set; }
 
-        public static EActionType SuccessResult = new EActionType(GetVariableName(() => SuccessResult), 1, "", true);
-        public static EActionType CacheIt = new EActionType(GetVariableName(() => CacheIt), 2, "", true);
+        public static EActionType Reinit = new EActionType(GetVariableName(() => Reinit), 1, "", true);
+        public static EActionType SuccessResult = new EActionType(GetVariableName(() => SuccessResult), 2, "", true);
+        public static EActionType CacheIt = new EActionType(GetVariableName(() => CacheIt), 3, "", true);
 
 		public static EActionType CommandList = new EActionType(GetVariableName(() => CommandList), 10, "", true);
         public static EActionType ActionList = new EActionType(GetVariableName(() => ActionList), 11, "", true);
@@ -24,7 +25,7 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActionIDs
         public static EActionType SpamFilter = new EActionType(GetVariableName(() => SpamFilter), 16, "", true);
         public static EActionType SetState = new EActionType(GetVariableName(() => SetState), 17, "", true);
         public static EActionType SetVariable = new EActionType(GetVariableName(() => SetVariable), 18, "", true);
-        public static EActionType LogInOut = new EActionType(GetVariableName(() => LogInOut), 19, "", true);
+        
         
         
         public static EActionType ShowMessage = new EActionType(GetVariableName(() => ShowMessage), 20, "", true);
@@ -44,7 +45,7 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActionIDs
 		public static EActionType ForceUpdate = new EActionType(GetVariableName(() => ForceUpdate), 35, "", true);
 		public static EActionType DoReconnectSignalRequest = new EActionType(GetVariableName(() => DoReconnectSignalRequest), 37, "", true);
 		public static EActionType DebugAlert= new EActionType(GetVariableName(() => DebugAlert), 38, "", true);
-		public static EActionType DoCheckLoginRequest = new EActionType(GetVariableName(() => DoCheckLoginRequest), 39, "", true);
+		//public static EActionType DoCheckLoginRequest = new EActionType(GetVariableName(() => DoCheckLoginRequest), 39, "", true);
 		public static EActionType ValidationResult = new EActionType(GetVariableName(() => ValidationResult), 40, "", true);
         public static EActionType PageResult = new EActionType(GetVariableName(() => PageResult), 41, "", true);
         public static EActionType MenuResult = new EActionType(GetVariableName(() => MenuResult), 42, "", true);

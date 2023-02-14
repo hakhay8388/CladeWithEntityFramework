@@ -20,6 +20,7 @@ var cMenuManager = Class(cBaseManagersWithListener
         constructor: function () {
             cMenuManager.BaseObject.constructor.call(this);
             this.MenuItems = [];
+            window.MenuManager = this;
         }
         ,
         Destroy: function () {
