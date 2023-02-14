@@ -9,7 +9,7 @@ import React from "react";
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from "react-router-dom";
 
-import TApp from "./WebGraph/TagComponents/TApp";
+//import TApp from "./WebGraph/TagComponents/TApp";
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
@@ -22,9 +22,16 @@ GenericWebGraph.Init(() => {
     const rootElement = document.getElementById('root');
     const root = createRoot(rootElement);
 
-    root.render(<BrowserRouter basename={baseUrl}>
-            <TApp />
-        </BrowserRouter>);
+    import("./WebGraph/TagComponents/TApp")
+        .then((_Event1) => {
+            var TApp = _Event1.default;
+            root.render(<BrowserRouter basename={baseUrl}>
+                <TApp />
+            </BrowserRouter>);
+        });
+
+
+   
 
 
 });

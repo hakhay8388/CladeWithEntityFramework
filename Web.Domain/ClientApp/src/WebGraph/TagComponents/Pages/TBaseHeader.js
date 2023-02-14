@@ -47,7 +47,7 @@ var TBaseHeader = Class(TObject,
                         id="pageheader"
                         position="static"
                         color="default"
-                        sx={[
+                       /* sx={[
                             {
                                 width: `calc(100%)`,
                                 marginLeft: 0,
@@ -61,7 +61,7 @@ var TBaseHeader = Class(TObject,
                                 marginLeft: `${window.Settings.DrawerWidth}px`,
                                 width: `calc(100% - ${window.Settings.DrawerWidth}px)`,
                             }
-                        ]}
+                        ]}*/
                     >
                         <Toolbar>
                             <div>

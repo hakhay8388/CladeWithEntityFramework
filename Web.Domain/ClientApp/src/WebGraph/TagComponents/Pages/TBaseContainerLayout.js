@@ -67,10 +67,6 @@ var TBaseContainerLayout = Class(
         HandleGetMenu: function () {
             const { classes } = this.props;
 
-            /*icon: "fas fa-search"
-            name: "Ara"
-            url: "search"*/
-
             var __This = this;
             return window.MenuManager.MenuItems.map(
                 (_Item, _Index) => {
@@ -203,9 +199,6 @@ var TBaseContainerLayout = Class(
                 );
             }
         },
-        HandleGetModals: function(){
-        }
-        ,
         /*,
         shouldComponentUpdate(nextProps, nextState)
         {
@@ -236,13 +229,12 @@ var TBaseContainerLayout = Class(
                         </div>
                         <div
                             style={{
-                                marginTop: "76px",
+                                marginTop: window.Settings.HeaderHeight + "px",
                                 flexDirection: "row",
                                 flexGrow: 1,
                                 overflowX: "hidden",
                             }}
                         >
-                            {__This.HandleGetModals()}
                             <main onClick={this.HandleMainClicked}>
                                 <div className={classes.container}>
                                     <Drawer
@@ -252,6 +244,7 @@ var TBaseContainerLayout = Class(
                                             '& .MuiDrawer-paper': {
                                                 width: window.Settings.DrawerWidth,
                                                 boxSizing: 'border-box',
+                                                marginTop: window.Settings.HeaderHeight + "px",
                                             },
                                         }}
                                         variant="persistent"
@@ -280,7 +273,7 @@ var TBaseContainerLayout = Class(
 
                                     <Grid container
 
-                                        sx={[
+                                        /*sx={[
                                             {
                                                 width: `calc(100%)`,
                                                 marginLeft: 0,
@@ -294,14 +287,14 @@ var TBaseContainerLayout = Class(
                                                 marginLeft: `${window.Settings.DrawerWidth}px`,
                                                 width: `calc(100% - ${window.Settings.DrawerWidth}px)`,
                                             }
-                                        ]}
+                                        ]}*/
                                     >
                                         <Suspense fallback={<div className="container">
                                             <div className="center">
                                                 <div className="lds-ripple"><div></div><div></div></div>
                                             </div>
                                         </div>}>
-                                            <Grid item xs={12}>
+                                            <Grid item xs={12} sx={{ padding : "10px" }}>
                                                 {/*this.HandleGetRoutes("/" + GenericWebGraph.Managers.LanguageManager.ActiveLanguage.LanguageCode)*/}
                                                 {this.HandleGetRoutes("")}
 

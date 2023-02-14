@@ -3,6 +3,7 @@ import "../WebGraph/Enums/Enums";
 
 window.Settings = {};
 window.Settings.DrawerWidth = 300;
+window.Settings.HeaderHeight = 64;
 
 
 

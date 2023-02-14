@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { Class, JSTypeOperator, ObjectTypes } from "../GenericCoreGraph/ClassFramework/Class";
 import withRouter from "./Utilities/withRouter";
 import TLoading from "./Utilities/TLoading";
 import { ThemeProvider } from "@mui/material/styles";
 import { WebGraph } from "../GenericCoreGraph/WebGraph/WebGraph";
+import TObject from "./TObject";
 
 import Button from '@mui/material/Button';
 
@@ -16,56 +18,59 @@ const THotSpotMessage = React.lazy(() => import("./Listeners/THotSpotMessage"));
 const TGlobalLoading = React.lazy(() => import("./Utilities/TGlobalLoading"));
 
 
-class TApp extends Component {
-    constructor(_Props) {
-        super();
 
-        this.GetTheme = this.GetTheme.bind(this);
-        this.GetRoleLayout = this.GetRoleLayout.bind(this);
-
-        window.App.App = this;
-        this.state = {
-            ...this.state,
-        };
-    }
-
-
-    GetTheme() {
-        return window.Themes.DefaultTheme;
-    }
-
-    GetRoleLayout()
+var TApp = Class(TObject,
     {
-        if (window.App.User == null)
-        {
-            return <TUnloginedLayout />
+        ObjectType: ObjectTypes.Get("TApp")
+        ,
+        constructor: function (_Props) {
+            TApp.BaseObject.constructor.call(this, _Props);
+            this.state =
+            {
+                ...this.state,
+            }
+            window.App.App = this;
         }
-        else
-        {
-            return <TAdminLayout />
+        ,
+        Destroy: function () {
+            TApp.BaseObject.Destroy.call(this);
         }
-    }
-
-    render() {
-        var __This = this;
-        return (
-            <div style={{ fontFamily: "Arial" }}>
-                <React.Suspense fallback={<div className="container">
-                    <div className="center">
-                        <div className="lds-ripple"><div></div><div></div></div>
-                    </div>
-                </div>}>
-                    <ThemeProvider theme={__This.GetTheme()}>
-                        <TMessageBox />
-                        <THotSpotMessage />
-                        <TGlobalLoading />
-                        {__This.GetRoleLayout()}
-                    </ThemeProvider>
-                </React.Suspense>
-            </div>
-        );
-    }
-}
+        ,
+        HandleGetTheme()
+        {
+            return window.Themes.DefaultTheme;
+        }
+        ,
+        HandleGetRoleLayout()
+        {
+            if (window.App.User == null) {
+                return <TUnloginedLayout />
+            }
+            else {
+                console.log(window.App.User);
+                return <TAdminLayout />
+            }
+        }
+        ,
+        render: function () {
+            var __This = this;
+            return (
+                <div style={{ fontFamily: "Arial" }}>
+                    <React.Suspense fallback={<div className="container">
+                        <div className="center">
+                            <div className="lds-ripple"><div></div><div></div></div>
+                        </div>
+                    </div>}>
+                        <ThemeProvider theme={__This.HandleGetTheme()}>
+                            <TMessageBox />
+                            <THotSpotMessage />
+                            <TGlobalLoading />
+                            {__This.HandleGetRoleLayout()}
+                        </ThemeProvider>
+                    </React.Suspense>
+                </div>
+            );
+        }
+    }, {});
 
 export default withRouter(TApp)
-
