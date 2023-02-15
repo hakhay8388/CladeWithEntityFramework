@@ -28,10 +28,6 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 
         public void Init()
         {
-            Type __PageIDType =  App.Handlers.AssemblyHandler.GetTypeFromBaseInDomainHierarchy<PageIDs>();
-
-            __PageIDType.GetMethod("Init").Invoke(null, null);
-
             cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code);
 			string __TotalString = GetTotalString<PageIDs>(PageIDs.TypeList);
 			string __StringCheckSum = App.Handlers.StringHandler.ComputeHashAsHex(__TotalString);

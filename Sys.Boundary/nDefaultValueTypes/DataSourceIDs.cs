@@ -11,21 +11,20 @@ namespace Sys.Boundary.nDefaultValueTypes
     {
         public static List<DataSourceIDs> TypeList { get; set; }
 
-        public static DataSourceIDs UserList_CustomQuery = new DataSourceIDs(GetVariableName(() => UserList_CustomQuery), "TUserList_CustomQuery", "UserList_CustomQuery", 6, true);
-
-		
-
+        public static DataSourceIDs UserList_CustomQuery = new DataSourceIDs(GetVariableName(() => UserList_CustomQuery), "TUserList_CustomQuery", "UserList_CustomQuery", 6, new List<RoleIDs>() { RoleIDs.Admin });
 
 		public string ClientComponentName { get; set; }
         public bool IsPublic { get; set; }
 
-        public DataSourceIDs(string _Code, string _ClientComponentName, string _Name, int _ID, bool _IsPublic = false)
+        public List<RoleIDs> MainRoles { get; set; }
+
+        public DataSourceIDs(string _Code, string _ClientComponentName, string _Name, int _ID, List<RoleIDs> _MainRoles)
             : base(_Name, _Code, _ID)
         {
             TypeList = TypeList ?? new List<DataSourceIDs>();
             TypeList.Add(this);
             ClientComponentName = _ClientComponentName;
-            IsPublic = _IsPublic;
+            MainRoles = _MainRoles;
         }
         public static DataTable Table()
         {

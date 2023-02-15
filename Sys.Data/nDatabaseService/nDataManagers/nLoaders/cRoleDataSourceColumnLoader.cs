@@ -34,15 +34,12 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 			AddAdminRoleDataSourceColumns();
 			AddUserRoleDataSourceColumns();
 			AddDeveloperRoleDataSourceColumns();
-
 		}
 
 
         public void AddAdminRoleDataSourceColumns()
-        { 
-			List<DataSourceIDs> __DataSources = new List<DataSourceIDs>();
-
-            __DataSources.Add(DataSourceIDs.UserList_CustomQuery);
+        {
+            List<DataSourceIDs> __DataSources = DataSourceIDs.TypeList.Where(__Item => __Item.MainRoles.Any(__Item => __Item.Code == RoleIDs.Admin.Code)).ToList();
 
 			cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Admin");
 			string __TotalString = GetTotalString<DataSourceIDs>(__DataSources);
@@ -58,15 +55,14 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 
 				ChecksumDataManager.CreateCheckSumIfNotExists(LoaderID.Code + "_Admin", __StringCheckSum);
 			}
-
 		} 
 
 
         public void AddUserRoleDataSourceColumns()
         {
-			List<DataSourceIDs> __DataSources = new List<DataSourceIDs>();
+            List<DataSourceIDs> __DataSources = DataSourceIDs.TypeList.Where(__Item => __Item.MainRoles.Any(__Item => __Item.Code == RoleIDs.User.Code)).ToList();
 
-			cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Customer");
+            cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Customer");
 			string __TotalString = GetTotalString<DataSourceIDs>(__DataSources);
 			string __StringCheckSum = App.Handlers.StringHandler.ComputeHashAsHex(__TotalString);
 
@@ -83,9 +79,9 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 		}
 		public void AddDeveloperRoleDataSourceColumns()
 		{
-			List<DataSourceIDs> __DataSources = new List<DataSourceIDs>();
+            List<DataSourceIDs> __DataSources = DataSourceIDs.TypeList.Where(__Item => __Item.MainRoles.Any(__Item => __Item.Code == RoleIDs.Developer.Code)).ToList();
 
-			cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Developer");
+            cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Developer");
 			string __TotalString = GetTotalString<DataSourceIDs>(__DataSources);
 			string __StringCheckSum = App.Handlers.StringHandler.ComputeHashAsHex(__TotalString);
 

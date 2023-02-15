@@ -25,9 +25,6 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 
         public void Init()
         {
-            Type __RoleIDType = App.Handlers.AssemblyHandler.GetTypeFromBaseInDomainHierarchy<RoleIDs>();
-            __RoleIDType.GetMethod("Init").Invoke(null, null);
-
             cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code);
             string __TotalString = GetTotalString<RoleIDs>(RoleIDs.TypeList);
             string __StringCheckSum = App.Handlers.StringHandler.ComputeHashAsHex(__TotalString);

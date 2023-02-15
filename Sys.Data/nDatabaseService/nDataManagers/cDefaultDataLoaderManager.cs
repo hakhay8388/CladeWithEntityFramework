@@ -4,6 +4,7 @@ using Base.FileData;
 using Bootstrapper.Boundary.nCore.nObjectLifeTime;
 using Bootstrapper.Core.nApplication.nStarter;
 using Bootstrapper.Core.nAttributes;
+using Sys.Boundary.nDefaultValueTypes;
 using Sys.Data.nDatabaseService;
 using Sys.Data.nDataService.nDataManagers.nLoaders;
 
@@ -61,6 +62,24 @@ namespace Sys.Data.nDataService.nDataManagers
 
         public void Load()
         {
+            Type __Type = App.Handlers.AssemblyHandler.GetTypeFromBaseInDomainHierarchy<DefaultGlobalParamsIDs>();
+            __Type.GetMethod("Init").Invoke(null, null);
+
+            __Type = App.Handlers.AssemblyHandler.GetTypeFromBaseInDomainHierarchy<RoleIDs>();
+            __Type.GetMethod("Init").Invoke(null, null);
+
+            __Type = App.Handlers.AssemblyHandler.GetTypeFromBaseInDomainHierarchy<DataSourceIDs>();
+            __Type.GetMethod("Init").Invoke(null, null);
+
+            __Type = App.Handlers.AssemblyHandler.GetTypeFromBaseInDomainHierarchy<MenuIDs>();
+            __Type.GetMethod("Init").Invoke(null, null);
+
+            __Type = App.Handlers.AssemblyHandler.GetTypeFromBaseInDomainHierarchy<PageIDs>();
+            __Type.GetMethod("Init").Invoke(null, null);
+
+
+
+
             cSysDatabaseContext __DatabaseContext = DataService.GetDatabaseContext<cSysDatabaseContext>();
 
 

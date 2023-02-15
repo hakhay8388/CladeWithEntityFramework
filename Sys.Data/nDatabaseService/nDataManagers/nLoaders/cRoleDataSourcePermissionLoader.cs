@@ -59,10 +59,15 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 
 
         public void AddAdminPages()
-        { 
-			List<cRoleDataSourcePermissionCheckSum> __RoleDataSourcePermissionCheckSumList = new List<cRoleDataSourcePermissionCheckSum>();
+        {
+            List<DataSourceIDs> __DataSources = DataSourceIDs.TypeList.Where(__Item => __Item.MainRoles.Any(__Item => __Item.Code == RoleIDs.Admin.Code)).ToList();
 
-			__RoleDataSourcePermissionCheckSumList.Add(new cRoleDataSourcePermissionCheckSum(DataSourceIDs.UserList_CustomQuery, true, true, true, false)); 
+            List<cRoleDataSourcePermissionCheckSum> __RoleDataSourcePermissionCheckSumList = new List<cRoleDataSourcePermissionCheckSum>();
+
+            foreach (DataSourceIDs __DataSourceItem in __DataSources)
+			{
+                __RoleDataSourcePermissionCheckSumList.Add(new cRoleDataSourcePermissionCheckSum(__DataSourceItem, true, true, true, false));
+            }
 
 			cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Admin");
 			string __TotalString = GetTotalString<cRoleDataSourcePermissionCheckSum>(__RoleDataSourcePermissionCheckSumList);
@@ -83,10 +88,17 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 
         public void AddUserPages()
         {
-			List<cRoleDataSourcePermissionCheckSum> __RoleDataSourcePermissionCheckSumList = new List<cRoleDataSourcePermissionCheckSum>();
+            List<DataSourceIDs> __DataSources = DataSourceIDs.TypeList.Where(__Item => __Item.MainRoles.Any(__Item => __Item.Code == RoleIDs.User.Code)).ToList();
+
+            List<cRoleDataSourcePermissionCheckSum> __RoleDataSourcePermissionCheckSumList = new List<cRoleDataSourcePermissionCheckSum>();
+
+            foreach (DataSourceIDs __DataSourceItem in __DataSources)
+            {
+                __RoleDataSourcePermissionCheckSumList.Add(new cRoleDataSourcePermissionCheckSum(__DataSourceItem, true, true, true, false));
+            }
 
 
-			cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Customer");
+            cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_User");
 			string __TotalString = GetTotalString<cRoleDataSourcePermissionCheckSum>(__RoleDataSourcePermissionCheckSumList);
 			string __StringCheckSum = App.Handlers.StringHandler.ComputeHashAsHex(__TotalString);
 
@@ -98,15 +110,22 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 					DataSourceDataManager.AddDataSourceToRole(__Role, __Item.DataSourceID, __Item.CanCreate, __Item.CanRead, __Item.CanUpdate, __Item.CanDelete);
 				}
 
-				ChecksumDataManager.CreateCheckSumIfNotExists(LoaderID.Code + "_Customer", __StringCheckSum);
+				ChecksumDataManager.CreateCheckSumIfNotExists(LoaderID.Code + "_User", __StringCheckSum);
 			}
 
 		}
 		public void AddDeveloperPages()
 		{
-			List<cRoleDataSourcePermissionCheckSum> __RoleDataSourcePermissionCheckSumList = new List<cRoleDataSourcePermissionCheckSum>();
+            List<DataSourceIDs> __DataSources = DataSourceIDs.TypeList.Where(__Item => __Item.MainRoles.Any(__Item => __Item.Code == RoleIDs.Developer.Code)).ToList();
 
-			cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Developer");
+            List<cRoleDataSourcePermissionCheckSum> __RoleDataSourcePermissionCheckSumList = new List<cRoleDataSourcePermissionCheckSum>();
+
+            foreach (DataSourceIDs __DataSourceItem in __DataSources)
+            {
+                __RoleDataSourcePermissionCheckSumList.Add(new cRoleDataSourcePermissionCheckSum(__DataSourceItem, true, true, true, false));
+            }
+
+            cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_User");
 			string __TotalString = GetTotalString<cRoleDataSourcePermissionCheckSum>(__RoleDataSourcePermissionCheckSumList);
 			string __StringCheckSum = App.Handlers.StringHandler.ComputeHashAsHex(__TotalString);
 
@@ -118,7 +137,7 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 					DataSourceDataManager.AddDataSourceToRole(__Role, __Item.DataSourceID, __Item.CanCreate, __Item.CanRead, __Item.CanUpdate, __Item.CanDelete);
 				}
 
-				ChecksumDataManager.CreateCheckSumIfNotExists(LoaderID.Code + "_Developer", __StringCheckSum);
+				ChecksumDataManager.CreateCheckSumIfNotExists(LoaderID.Code + "_User", __StringCheckSum);
 			}
 
 		}
