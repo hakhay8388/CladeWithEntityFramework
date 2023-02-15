@@ -45,15 +45,7 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 
         public void AddAdminMenus()
         {
-
-			List<MenuIDs> __Menus = new List<MenuIDs>();
-
-			__Menus.Add(MenuIDs.AdminMainPage);
-			__Menus.Add(MenuIDs.BatchJobPage);
-			__Menus.Add(MenuIDs.ConfigurationPage);
-			__Menus.Add(MenuIDs.UserList);
-			__Menus.Add(MenuIDs.UsersMenu);
-			__Menus.Add(MenuIDs.LanguagePage);			
+            List<MenuIDs> __Menus = MenuIDs.TypeList.Where(__Item => __Item.MainRoles.Any(__Item => __Item.Code == RoleIDs.Admin.Code)).ToList();
 
 
 			cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Admin");
@@ -76,10 +68,7 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 
         public void AddUserMenus()
         {
-
-			List<MenuIDs> __Menus = new List<MenuIDs>();
-
-			__Menus.Add(MenuIDs.UserMainPage);
+            List<MenuIDs> __Menus = MenuIDs.TypeList.Where(__Item => __Item.MainRoles.Any(__Item => __Item.Code == RoleIDs.User.Code)).ToList();
 
 
 			cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Customer");
@@ -100,16 +89,11 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 		public void AddDeveloperMenus()
 		{
 
-			List<MenuIDs> __Menus = new List<MenuIDs>();
-
-			__Menus.Add(MenuIDs.DeveloperMainPage);
-			__Menus.Add(MenuIDs.SharedSessionPage);
-			__Menus.Add(MenuIDs.SystemSettingsPage);
-			__Menus.Add(MenuIDs.LiveSessionsPage);
+            List<MenuIDs> __Menus = MenuIDs.TypeList.Where(__Item => __Item.MainRoles.Any(__Item => __Item.Code == RoleIDs.Developer.Code)).ToList();
 
 
 
-			cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Developer");
+            cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Developer");
 			string __TotalString = GetTotalString<MenuIDs>(__Menus);
 			string __StringCheckSum = App.Handlers.StringHandler.ComputeHashAsHex(__TotalString);
 

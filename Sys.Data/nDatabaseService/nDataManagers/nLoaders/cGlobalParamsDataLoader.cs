@@ -27,6 +27,9 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 
         public override void Init()
         {
+            Type __DefaultGlobalParamsIDType = App.Handlers.AssemblyHandler.GetTypeFromBaseInDomainHierarchy<DefaultGlobalParamsIDs>();
+            __DefaultGlobalParamsIDType.GetMethod("Init").Invoke(null, null);
+
             ////////////// Customer //////////////////
 
             cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code);

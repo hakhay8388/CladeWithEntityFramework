@@ -12,7 +12,6 @@ namespace Sys.Boundary.nDefaultValueTypes
         public static List<DefaultGlobalParamsIDs> TypeList { get; set; }
 
 
-        public static DefaultGlobalParamsIDs TestParm1 = new DefaultGlobalParamsIDs(GetVariableName(() => TestParm1), "TestParm1", 1, "test value", 1, false);
         public static DefaultGlobalParamsIDs FrontEndDebugMessage = new DefaultGlobalParamsIDs(GetVariableName(() => FrontEndDebugMessage), "FrontEndDebugMessage", 2, false, 29, false);
         public static DefaultGlobalParamsIDs BackendDebugMessageShowToUser = new DefaultGlobalParamsIDs(GetVariableName(() => BackendDebugMessageShowToUser), "BackendDebugMessageShowToUser", 3, false, 30, false);
 

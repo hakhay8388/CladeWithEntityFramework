@@ -31,7 +31,10 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 
         public void Init()
         {
-			cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code);
+            Type __MenuIDType = App.Handlers.AssemblyHandler.GetTypeFromBaseInDomainHierarchy<MenuIDs>();
+            __MenuIDType.GetMethod("Init").Invoke(null, null);
+
+            cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code);
 			string __TotalString = GetTotalString<MenuIDs>(MenuIDs.TypeList);
 			string __StringCheckSum = App.Handlers.StringHandler.ComputeHashAsHex(__TotalString);
 
