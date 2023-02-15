@@ -138,14 +138,14 @@ namespace Sys.Data.nDataService.nDataManagers
 
         public List<cMenuEntity> GetMenuByUser(cUserEntity _User, string _MenuTypeCode, string _RootMenuCode, bool _IncludePages = false)
         {
-            return GetMenuByUserQuery(_User, _MenuTypeCode, _RootMenuCode, _IncludePages).ToList(); ;
+            return GetMenuByUserQuery(_User, _MenuTypeCode, _RootMenuCode, _IncludePages).OrderBy(__Item => __Item.SortValue).ToList();
         }
 
 
         public List<dynamic> GetMenuByActorToDynamicList(cUserEntity _User, string _MenuTypeCode, string _RootMenuCode, bool _IncludePages, Action<dynamic> _Action = null)
         {
-            IQueryable<cMenuEntity> __Query = GetMenuByUserQuery(_User, _MenuTypeCode, _RootMenuCode, _IncludePages);
-            return __Query.Select(__Item => new 
+            IQueryable<cMenuEntity> __Query = GetMenuByUserQuery(_User, _MenuTypeCode, _RootMenuCode, _IncludePages).OrderBy(__Item => __Item.SortValue);
+            return __Query.Select(__Item => new
             {
                 ID = __Item.ID,
                 Name = __Item.Name,
@@ -159,8 +159,7 @@ namespace Sys.Data.nDataService.nDataManagers
             .ToDynamicObjectList(_Action);
         }
 
-
-
+        
         
 
 

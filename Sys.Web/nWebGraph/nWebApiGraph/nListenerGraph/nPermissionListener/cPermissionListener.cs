@@ -15,7 +15,7 @@ using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nPageResultAction;
 using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph;
 using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nGetMenuListCommand;
 using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nGetPageListCommand;
-
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 
 namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nPermissionListener
 {
@@ -90,40 +90,33 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nPermissionListener
             }
             else
             {
+                List<MenuIDs> __MenuIDs = MenuIDs.TypeList.Where(__Item => __Item.MainRoles.Any(__Item => __Item.Code == RoleIDs.Unlogined.Code)).ToList();
 
-                foreach (MenuIDs __MenuEntity in MenuIDs.TypeList)
+
+                foreach (MenuIDs __MenuEntity in __MenuIDs)
                 {
-                    if (__MenuEntity.UnloginedPage)
+                    if (__MenuEntity.IsMainMenu)
                     {
-                        if (__MenuEntity.IsMainMenu)
+                        __PageResultProps.MenuItems.Add(new cMenuItem()
                         {
-                            __PageResultProps.MenuItems.Add(new cMenuItem()
-                            {
-                                Url = "menupage/" + __MenuEntity.Code,
-                                Icon = __MenuEntity.Icon,
-                                Name = __MenuEntity.Name
-                            });
-                        }
-                        else
+                            Url = "menupage/" + __MenuEntity.Code,
+                            Icon = __MenuEntity.Icon,
+                            Name = __MenuEntity.Name
+                        });
+                    }
+                    else
+                    {
+                        PageIDs __PageID = PageIDs.GetByCode(__MenuEntity.Code, PageIDs.UnloginedMainPage);
+                        __PageResultProps.MenuItems.Add(new cMenuItem()
                         {
-                            PageIDs __PageID = PageIDs.GetByCode(__MenuEntity.Code, PageIDs.UnloginedMainPage);
-                            __PageResultProps.MenuItems.Add(new cMenuItem()
-                            {
-                                //url = __PageID.Code == PageIDs.MainPage.Code ? "global" : __PageID.Url,
-                                Url = __PageID.Url,
-                                Icon = __MenuEntity.Icon,
-                                Name = __MenuEntity.Name
-                            });
-                        }
-
-
-
-
-
+                            //url = __PageID.Code == PageIDs.MainPage.Code ? "global" : __PageID.Url,
+                            Url = __PageID.Url,
+                            Icon = __MenuEntity.Icon,
+                            Name = __MenuEntity.Name
+                        });
                     }
                 }
             }
-
 
             return __PageResultProps;
         }
@@ -159,21 +152,19 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph.nPermissionListener
             }
             else
             {
+                List<PageIDs> __Pages = PageIDs.TypeList.Where(__Item => __Item.MainRoles.Any(__Item => __Item.Code == RoleIDs.Unlogined.Code)).ToList();
 
-                foreach (PageIDs __Page in PageIDs.TypeList)
+                for (int i = 0; i < __Pages.Count; i++)
                 {
-                    if (__Page.UnloginedPage)
+                    __PageResultProps.PagesItems.Add(new cPageItem()
                     {
-                        __PageResultProps.PagesItems.Add(new cPageItem()
-                        {
-                            Path = __Page.Url,
-                            Name = __Page.Name,
-                            OriginalCode = __Page.OriginalCode,
-                            SubParamName = PageIDs.GetByCode(__Page.Code, PageIDs.UnloginedMainPage).SubParamName,
-                            Component = __Page.Component,
-                            IsMainPage = __Page.IsUnloginedMainPage
-                        });
-                    }
+                        Path = __Pages[i].Url,
+                        Name = __Pages[i].Name,
+                        OriginalCode = __Pages[i].OriginalCode,
+                        SubParamName = PageIDs.GetByCode(__Pages[i].Code, PageIDs.UnloginedMainPage).SubParamName,
+                        Component = __Pages[i].Component,
+                        IsMainPage = i == 0
+                    });
                 }
             }
             return __PageResultProps;

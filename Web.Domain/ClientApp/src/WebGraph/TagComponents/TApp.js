@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 
 const TUnloginedLayout = React.lazy(() => import("./Pages/UnloginedPages/Containers/TUnloginedLayout"));
 const TAdminLayout = React.lazy(() => import("./Pages/AdminPages/Containers/TAdminLayout"));
+const TUserLayout = React.lazy(() => import("./Pages/UserPages/Containers/TUserLayout"));
 
 
 const TMessageBox = React.lazy(() => import("./Listeners/TMessageBox"));
@@ -23,7 +24,8 @@ var TApp = Class(TObject,
     {
         ObjectType: ObjectTypes.Get("TApp")
         ,
-        constructor: function (_Props) {
+        constructor: function (_Props)
+        {
             TApp.BaseObject.constructor.call(this, _Props);
             this.state =
             {
@@ -32,7 +34,8 @@ var TApp = Class(TObject,
             window.App.App = this;
         }
         ,
-        Destroy: function () {
+        Destroy: function ()
+        {
             TApp.BaseObject.Destroy.call(this);
         }
         ,
@@ -43,16 +46,33 @@ var TApp = Class(TObject,
         ,
         HandleGetRoleLayout()
         {
-            if (window.App.User == null) {
+            if (window.App.User == null)
+            {
                 return <TUnloginedLayout />
             }
-            else {
+            else
+            {
+                var __Found = window.App.User.Roles.find(__Item => __Item.MainCode == "Admin");
+                if (JSTypeOperator.IsDefined(__Found) && __Found != null)
+                {
+                    return <TAdminLayout />
+                }
+                else
+                {
+                    __Found = window.App.User.Roles.find(__Item => __Item.MainCode == "User");
+                    if (JSTypeOperator.IsDefined(__Found) && __Found != null)
+                    {
+                        return <TUserLayout />
+                    }
+
+                }
                 console.log(window.App.User);
-                return <TAdminLayout />
+
             }
         }
         ,
-        render: function () {
+        render: function ()
+        {
             var __This = this;
             return (
                 <div style={{ fontFamily: "Arial" }}>

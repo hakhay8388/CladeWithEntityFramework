@@ -55,6 +55,7 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 			__Menus.Add(MenuIDs.UsersMenu);
 			__Menus.Add(MenuIDs.LanguagePage);			
 
+
 			cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Admin");
 			string __TotalString = GetTotalString<MenuIDs>(__Menus);
 			string __StringCheckSum = App.Handlers.StringHandler.ComputeHashAsHex(__TotalString);

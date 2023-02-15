@@ -25,9 +25,9 @@ namespace Sys.Data.nDataService.nDataManagers
 
         public void CreateRuleByCodeAndNameIfNotExists(RoleIDs _RoleID)
         {
-            CreateRuleByCodeAndNameIfNotExists(_RoleID.Name, _RoleID.Code);
+            CreateRuleByCodeAndNameIfNotExists(_RoleID.Name, _RoleID.MainCode, _RoleID.Code);
         }
-        public void CreateRuleByCodeAndNameIfNotExists(string _Name, string _Code)
+        public void CreateRuleByCodeAndNameIfNotExists(string _Name, string _MainCode, string _Code)
         {
             cRoleEntity __RoleEntity = GetRoleByCode(_Code);
             if (__RoleEntity == null)
@@ -35,7 +35,8 @@ namespace Sys.Data.nDataService.nDataManagers
                 __RoleEntity = cRoleEntity.Add(new cRoleEntity()
                 {
                     Name = _Name,
-                    Code = _Code
+                    Code = _Code,
+                    MainCode = _MainCode,
                 });
                 __RoleEntity.Save();
             }

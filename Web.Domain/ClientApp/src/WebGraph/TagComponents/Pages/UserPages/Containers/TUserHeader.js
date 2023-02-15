@@ -38,7 +38,7 @@ var TUserHeader = Class(TBaseHeader,
       const { children, classes, ...attributes } = this.props;
         return this.HandleWrapWithApp(
           <div>
-              Admin Header
+              User Header
           </div>
       );
     },

@@ -11,6 +11,7 @@ namespace Sys.Data.nDatabaseService.nSystemEntities
     {
         public string Name { get; set; }
 
+        public string MainCode { get; set; }
         public string Code { get; set; }
 
         public List<cRoleMenuMapEntity> Menus { get; set; }

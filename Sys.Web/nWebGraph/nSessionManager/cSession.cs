@@ -90,7 +90,7 @@ namespace Sys.Web.nWebGraph.nSessionManager
                 List<cRoleEntity> __ActorRoles = User.Roles.ToList();
                 for (int i = 0; i < _CommandID.MainRoles.Count; i++)
                 {
-                    if (__ActorRoles.Exists(__Item => __Item.Code == _CommandID.MainRoles[i].Code))
+                    if (__ActorRoles.Exists(__Item => __Item.Code == _CommandID.MainRoles[i].MainCode))
                     {
                         return true;
                     }

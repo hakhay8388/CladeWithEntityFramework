@@ -3,7 +3,7 @@ import { DebugAlert, Class, Interface, Abstract, ObjectTypes, JSTypeOperator } f
 import TBaseContainerLayout from "../../TBaseContainerLayout"
 
 import { withStyles } from "@mui/styles";
-import AdminStyles from "../../../../../ScriptStyles/AdminStyles";
+import UserStyles from "../../../../../ScriptStyles/UserStyles";
 
 
 const TUserAside = React.lazy(() => import('./TUserAside'));
@@ -41,6 +41,6 @@ var TUserLayout = Class(TBaseContainerLayout,
         }
     }, {});
 
-export default withStyles(AdminStyles)(TUserLayout);
+export default withStyles(UserStyles)(TUserLayout);
 
 

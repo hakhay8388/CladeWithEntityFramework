@@ -32,5 +32,5 @@
 	<LogWebHooksEnabled>true</LogWebHooksEnabled>
 	<LogIntegrationsEnabled>true</LogIntegrationsEnabled>
 	<RequestPerformanceLogPath>true</RequestPerformanceLogPath>
-	<DatabaseConnectionString>Server=127.0.0.1;Port=5432;Database=myDataBase;User Id=postgres;Password=123456;</DatabaseConnectionString>
+	<DatabaseConnectionString>Server=127.0.0.1;Port=5432;Database=myDataBase2;User Id=postgres;Password=123456;</DatabaseConnectionString>
 </cApplicationSettings>

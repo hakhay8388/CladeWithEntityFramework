@@ -14,34 +14,34 @@ namespace Sys.Boundary.nDefaultValueTypes
 
         //////////// Global Pages ////////////
 
-        public static MenuIDs UnloginedMainPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => UnloginedMainPage), "fas fa-home", 0, true);
-        public static MenuIDs LoginPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => LoginPage), "cui-list", 20, true);
+        public static MenuIDs UnloginedMainPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => UnloginedMainPage), "fas fa-home", 0, new List<RoleIDs>() { RoleIDs.Unlogined });
+        public static MenuIDs LoginPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => LoginPage), "cui-list", 20, new List<RoleIDs>() { RoleIDs.Unlogined });
         ///////////////////////////////////////
 
         //////////// Customer Pages ////////////
 
-        public static MenuIDs UserMainPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => UserMainPage), "fas fa-home", 11, false);
+        public static MenuIDs UserMainPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => UserMainPage), "fas fa-home", 11, new List<RoleIDs>() { RoleIDs.User });
 
         ///////////////////////////////////////
 
         //////////// Admin Pages ////////////
 
-        public static MenuIDs AdminMainPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => AdminMainPage), "fas fa-home", 5, false);
-        public static MenuIDs BatchJobPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => BatchJobPage), "fas fa-network-wired", 100, false);
-        public static MenuIDs ConfigurationPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => ConfigurationPage), "fas fa-cogs", 100, false);
-        public static MenuIDs LanguagePage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => LanguagePage), "fas fa-language", 102, false);
+        public static MenuIDs AdminMainPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => AdminMainPage), "fas fa-home", 5, new List<RoleIDs>() { RoleIDs.Admin });
+        public static MenuIDs BatchJobPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => BatchJobPage), "fas fa-network-wired", 100, new List<RoleIDs>() { RoleIDs.Admin });
+        public static MenuIDs ConfigurationPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => ConfigurationPage), "fas fa-cogs", 100, new List<RoleIDs>() { RoleIDs.Admin });
+        public static MenuIDs LanguagePage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => LanguagePage), "fas fa-language", 102, new List<RoleIDs>() { RoleIDs.Admin });
         
-        public static MenuIDs UsersMenu = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => UsersMenu),  "fas fa-users", 100, false);
-        public static MenuIDs UserList = new MenuIDs(MenuIDs.UsersMenu, MenuTypes.CenterMenu, GetVariableName(() => UserList), "fas fa-users", 22, false);
+        public static MenuIDs UsersMenu = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => UsersMenu),  "fas fa-users", 100, new List<RoleIDs>() { RoleIDs.Admin });
+        public static MenuIDs UserList = new MenuIDs(MenuIDs.UsersMenu, MenuTypes.CenterMenu, GetVariableName(() => UserList), "fas fa-users", 22, new List<RoleIDs>() { RoleIDs.Admin });
 
         ///////////////////////////////////////
 
 
         //////////// Developer Menus ////////////
-        public static MenuIDs DeveloperMainPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => DeveloperMainPage), "fas fa-home", 11, false);
-        public static MenuIDs SharedSessionPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => SharedSessionPage), "fas fa-terminal", 11, false);
-        public static MenuIDs SystemSettingsPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => SystemSettingsPage), "fas fa-terminal", 11, false);
-        public static MenuIDs LiveSessionsPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => LiveSessionsPage), "fas fa-terminal", 11, false);
+        public static MenuIDs DeveloperMainPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => DeveloperMainPage), "fas fa-home", 11, new List<RoleIDs>() { RoleIDs.Developer });
+        public static MenuIDs SharedSessionPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => SharedSessionPage), "fas fa-terminal", 11, new List<RoleIDs>() { RoleIDs.Developer });
+        public static MenuIDs SystemSettingsPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => SystemSettingsPage), "fas fa-terminal", 11, new List<RoleIDs>() { RoleIDs.Developer });
+        public static MenuIDs LiveSessionsPage = new MenuIDs(null, MenuTypes.LeftMenu, GetVariableName(() => LiveSessionsPage), "fas fa-terminal", 11, new List<RoleIDs>() { RoleIDs.Developer });
 
         ///////////////////////////////////////
 
@@ -64,10 +64,10 @@ namespace Sys.Boundary.nDefaultValueTypes
 			}
 		}
 
-		public bool UnloginedPage { get; set; }
+        public List<RoleIDs> MainRoles { get; set; }
 
 
-        public MenuIDs(MenuIDs _RootMenu, MenuTypes _MenuType, string _Code, string _Icon, int _SortValue, bool _UnloginedPage)
+        public MenuIDs(MenuIDs _RootMenu, MenuTypes _MenuType, string _Code, string _Icon, int _SortValue, List<RoleIDs> _MainRoles)
             : base(_Code, _Code, _SortValue)
         {
             TypeList = TypeList ?? new List<MenuIDs>();
@@ -75,7 +75,7 @@ namespace Sys.Boundary.nDefaultValueTypes
             RootMenu = _RootMenu;
             MenuType = _MenuType;
             Icon = _Icon;
-            UnloginedPage = _UnloginedPage;
+            MainRoles = _MainRoles;
         }
         public static DataTable Table()
         {

@@ -29,6 +29,7 @@ var TUnloginedMainPage = Class(TObject,
             ...this.state,
             ButtonEnabled: true,
             UserName: "admin@admin.com",
+            //UserName: "user@user.com",
             Password: "1",
             StaySession: true
         };

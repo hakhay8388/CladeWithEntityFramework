@@ -18,6 +18,8 @@ import { withStyles } from "@mui/styles";
 import GlobalStyles from "../../../../ScriptStyles/GlobalStyles";
 import classNames from "classnames";
 
+import { Grid, Button, CircularProgress } from "@mui/material";
+
 var TUserMainPage = Class(TObject,
   {
       ObjectType: ObjectTypes.Get("TUserMainPage"),
@@ -33,14 +35,29 @@ var TUserMainPage = Class(TObject,
       Destroy: function () {
           TUserMainPage.BaseObject.Destroy.call(this);
       }
+      ,
+      HandleLogout: function (_Event)
+      {
+          Actions.Logout();
+      }
     ,
     render() {
       const { classes } = this.props;
 
       return (
-          <div>
-              User Page Main
-        </div>
+          <Grid container>
+              <Grid item>
+                  <Button
+                      fullWidth
+                      variant="contained"
+                      color="secondary"
+                      onClick={this.HandleLogout}
+                      block="true"
+                  >
+                      {this.state.Language.Logout}
+                  </Button>
+              </Grid>
+          </Grid>
       )
     },
   },

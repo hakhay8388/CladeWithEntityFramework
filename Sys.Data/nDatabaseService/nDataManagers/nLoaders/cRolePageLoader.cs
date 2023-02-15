@@ -42,8 +42,9 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 
 
         public void AddAdminPages()
-        { 
-			List<PageIDs> __Pages = new List<PageIDs>();
+        {
+            List<PageIDs> __Pages = PageIDs.TypeList.Where(__Item => __Item.MainRoles.Any(__Item => __Item.Code == RoleIDs.Admin.Code)).ToList();
+            /*List<PageIDs> __Pages = new List<PageIDs>();
 
 			__Pages.Add(PageIDs.AdminMainPage);
 			__Pages.Add(PageIDs.BatchJobPage);
@@ -51,10 +52,10 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 			__Pages.Add(PageIDs.MenuPage);
 
 			__Pages.Add(PageIDs.LanguagePage);
-			__Pages.Add(PageIDs.UserList);
-			
+			__Pages.Add(PageIDs.UserList);*/
 
-			cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Admin");
+
+            cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Admin");
 			string __TotalString = GetTotalString<PageIDs>(__Pages);
 			string __StringCheckSum = App.Handlers.StringHandler.ComputeHashAsHex(__TotalString);
 
@@ -74,13 +75,14 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
         
 
         public void AddUserPages()
-        { 
-			List<PageIDs> __Pages = new List<PageIDs>();
+        {
+            List<PageIDs> __Pages = PageIDs.TypeList.Where(__Item => __Item.MainRoles.Any(__Item => __Item.Code == RoleIDs.User.Code)).ToList();
+            //List<PageIDs> __Pages = new List<PageIDs>();
 
-			__Pages.Add(PageIDs.UserMainPage);
+            //__Pages.Add(PageIDs.UserMainPage);
 
 
-			cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Customer");
+            cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_User");
 			string __TotalString = GetTotalString<PageIDs>(__Pages);
 			string __StringCheckSum = App.Handlers.StringHandler.ComputeHashAsHex(__TotalString);
 
@@ -92,17 +94,17 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 					AddPageToRole(__Role, PageDataManager.GetPageByUrl(__Pages[i].Url));
 				}
 
-				ChecksumDataManager.CreateCheckSumIfNotExists(LoaderID.Code + "_Customer", __StringCheckSum);
+				ChecksumDataManager.CreateCheckSumIfNotExists(LoaderID.Code + "_User", __StringCheckSum);
 			}
 		}
 		public void AddDeveloperPages()
 		{
-			List<PageIDs> __Pages = new List<PageIDs>();
+			List<PageIDs> __Pages = PageIDs.TypeList.Where(__Item => __Item.MainRoles.Any(__Item => __Item.Code == RoleIDs.Developer.Code)).ToList();
 
-			__Pages.Add(PageIDs.DeveloperMainPage);
+			/*__Pages.Add(PageIDs.DeveloperMainPage);
 			__Pages.Add(PageIDs.SharedSessionPage);
 			__Pages.Add(PageIDs.LiveSessionsPage);
-			__Pages.Add(PageIDs.SystemSettingsPage);
+			__Pages.Add(PageIDs.SystemSettingsPage);*/
 
 
 			cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Developer");

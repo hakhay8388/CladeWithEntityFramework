@@ -93,9 +93,12 @@ namespace Sys.Data.nDataService.nDataManagers
         {
             IQueryable<cPageEntity> __Query = cPageEntity.Get();
 
-                __Query = __Query.Where(__Item => __Item.Roles.Any(
-                    __Item => __Item.ID == _User.ID)
-                );
+            __Query = __Query.Where(__Item => __Item.Roles.Any(
+                    __Item => __Item.Users.Any(
+                        __Item => __Item.ID == _User.ID
+                    )
+                )
+            );
 
             return __Query;
         }

@@ -12,15 +12,17 @@ namespace Sys.Boundary.nDefaultValueTypes
 
         public static List<RoleIDs> TypeList { get; set; }
 
-        public static RoleIDs Admin = new RoleIDs(GetVariableName(() => Admin), "Admin", 1);
-        public static RoleIDs User = new RoleIDs(GetVariableName(() => User), "User", 2);
-		public static RoleIDs Unlogined = new RoleIDs(GetVariableName(() => Unlogined), "Unlogined", 3);
-        public static RoleIDs Developer = new RoleIDs(GetVariableName(() => Developer), "Developer", 4);
+        public static RoleIDs Admin = new RoleIDs(GetVariableName(() => Admin), GetVariableName(() => Admin), 1);
+        public static RoleIDs User = new RoleIDs(GetVariableName(() => User), GetVariableName(() => User), 2);
+		public static RoleIDs Unlogined = new RoleIDs(GetVariableName(() => Unlogined), GetVariableName(() => Unlogined), 3);
+        public static RoleIDs Developer = new RoleIDs(GetVariableName(() => Developer), GetVariableName(() => Developer), 4);
 
 
-        public RoleIDs(string _Code, string _Name, int _ID)
-            : base(_Name, _Code, _ID)
+        public string MainCode { get; set; }
+        public RoleIDs(string _MainCode, string _Code, int _ID)
+            : base(_Code, _Code, _ID)
         {
+            MainCode = _MainCode;
             TypeList = TypeList ?? new List<RoleIDs>();
             TypeList.Add(this);
         }

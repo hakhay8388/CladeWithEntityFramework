@@ -5,7 +5,7 @@ import TObject from "../../../TObject";
 import Actions from "../../../../GenericWebController/ActionGraph/Actions";
 import { CommandIDs } from "../../../../GenericWebController/CommandInterpreter/CommandIDs/CommandIDs";
 import GenericWebGraph from "../../../../GenericWebController/GenericWebGraph";
-import AdminStyles from "../../../../../ScriptStyles/AdminStyles";
+import UserStyles from "../../../../../ScriptStyles/UserStyles";
 import {withStyles} from "@mui/styles";
 
 import TBaseFooter from "../../TBaseFooter";
@@ -27,7 +27,7 @@ var TUserFooter = Class(TBaseFooter,
 
       return (
         <div style={{ width: "100%" }}>
-          admin footer
+          User footer
         </div>
       );
     },
@@ -36,4 +36,4 @@ var TUserFooter = Class(TBaseFooter,
 );
 
 
-export default withStyles(AdminStyles)(TUserFooter);
+export default withStyles(UserStyles)(TUserFooter);
