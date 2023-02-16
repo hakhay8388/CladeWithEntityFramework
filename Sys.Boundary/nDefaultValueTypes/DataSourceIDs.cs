@@ -11,7 +11,7 @@ namespace Sys.Boundary.nDefaultValueTypes
     {
         public static List<DataSourceIDs> TypeList { get; set; }
 
-        public static DataSourceIDs UserList_CustomQuery = new DataSourceIDs(GetVariableName(() => UserList_CustomQuery), "TUserList_CustomQuery", "UserList_CustomQuery", 6, new List<RoleIDs>() { RoleIDs.Admin });
+        public static DataSourceIDs UserList = new DataSourceIDs(GetVariableName(() => UserList), "TUserList", "UserList", 6, new List<RoleIDs>() { RoleIDs.Admin });
 
 		public string ClientComponentName { get; set; }
         public bool IsPublic { get; set; }

@@ -87,7 +87,7 @@ namespace Base.Data.nDatabaseService
             return (TCastDatabaseContext)GetCoreEFDatabaseContext();
         }
 
-        public void ComponentLoad()
+        /*public void ComponentLoad()
         {
             try
             {
@@ -103,7 +103,7 @@ namespace Base.Data.nDatabaseService
             {
                 App.Loggers.CoreLogger.LogError(_Ex);
             }
-        }
+        }*/
 
         public void LoadDomainDefaultData()
         {

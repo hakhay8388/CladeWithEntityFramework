@@ -14,22 +14,26 @@ using Sys.Boundary.nDefaultValueTypes;
 using Domain.Data.nDatabaseService;
 using Base.Data.nDatabaseService;
 using Sys.Data.nDatabaseService.nParams;
+using Sys.Web.nWebGraph;
 
 namespace Web.Domain
 {
     public class cStarter : cCoreObject, IStarter
     {
         public IDataService DataService { get; set; }
-        public cStarter(cApp _App, IDataService _DataService)
+
+        public cBaseWebGraph WebGraph { get; set; }
+        public cStarter(cApp _App, IDataService _DataService, cBaseWebGraph _WebGraph)
             : base(_App)
         {
             DataService = _DataService;
+            WebGraph = _WebGraph;
         }
 
         public void Start(cApp _App)
         {
             DataService.Migrate();
-            DataService.ComponentLoad();
+            WebGraph.ComponentManager.Load();
             if (App.Configuration.LoadSysDefaultDataOnStart) DataService.LoadSysDefaultData();
             if (App.Configuration.LoadDomainDefaultDataOnStart) DataService.LoadDomainDefaultData();
             if (App.Configuration.LoadBatchJobOnStart) DataService.LoadBatchJob();

@@ -17,6 +17,9 @@ import { CommandIDs } from "../../../GenericWebController/CommandInterpreter/Com
 import { withStyles } from "@mui/styles";
 import GlobalStyles from "../../../../ScriptStyles/GlobalStyles";
 import classNames from "classnames";
+import TDataTable from "../../DataSourcedComponent/TDataTable";
+
+
 
 var TUserListPage = Class(TObject,
     {
@@ -39,7 +42,11 @@ var TUserListPage = Class(TObject,
 
             return (
                 <div>
-                    User List Main
+                    <TDataTable
+                        title={this.state.Language.UserList}
+                        datasource={"TUserList"}
+                        options={{}}
+                    />
                 </div>
             )
         },

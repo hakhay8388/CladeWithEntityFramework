@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager;
 
-namespace Core.GenericWebScaffold.nWebGraph.nComponentManager.nDataSourcesManager
+namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
 {
     public class cDataSourceManager : cCoreObject
     {

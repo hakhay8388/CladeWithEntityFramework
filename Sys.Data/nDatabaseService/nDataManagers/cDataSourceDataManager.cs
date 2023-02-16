@@ -22,9 +22,14 @@ namespace Sys.Data.nDataService.nDataManagers
 
         public List<cDataSourceColumnEntity> GetDataSourceColumnsByRoleAndDataSourceID(List<cRoleEntity> _RoleList, DataSourceIDs _DataSourceID)
         {
-            List<cDataSourceColumnEntity> __Result = cDataSourceColumnEntity.Get(
+
+            var __Temp = cDataSourceColumnEntity.Get(__Item => __Item.DataSourceID == _DataSourceID.ID && __Item.Roles.Any()).ToList();
+
+            return cDataSourceColumnEntity.Get(__Item => __Item.DataSourceID == _DataSourceID.ID && __Item.Roles.Any(__Item => _RoleList.Contains(__Item))).ToList();
+
+            /*List<cDataSourceColumnEntity> __Result = cDataSourceColumnEntity.Get(
               __Item => __Item.DataSourceCode == _DataSourceID.Code && __Item.Roles.Any(__Item => __Item.ID == _RoleList.Average(__Item => __Item.ID))
-          ).ToList();
+          ).ToList();*/
 
             /*IQueryable<cRoleDataSourceColumnMapEntity> __Query = null;
             foreach (cRoleEntity __RoleEntity in _RoleList)
@@ -46,10 +51,10 @@ namespace Sys.Data.nDataService.nDataManagers
             List<cDataSourceColumnEntity> __Result = cDataSourceColumnEntity.Get(__Item => __Item.DataSourceCode == _DataSourceID.Code)
                 .Intersect(__Query.Select(__Item => __Item.DataSourceColumn)).ToList();*/
 
-            return __Result;
+            //return __Result;
         }
 
-        public List<cDataSourceColumnEntity> GetDataSourceColumns(DataSourceIDs _DataSourceID)
+        public List<cDataSourceColumnEntity> GetDataSourceColumns (DataSourceIDs _DataSourceID)
         {
             return  cDataSourceColumnEntity.Get(__Item => __Item.DataSourceCode == _DataSourceID.Code).ToList();
         }
@@ -70,7 +75,7 @@ namespace Sys.Data.nDataService.nDataManagers
 
         public cDataSourceColumnEntity GetColumnByColumnNameInDataSource(DataSourceIDs _DataSourceID, string _ColumnName)
         {
-            return cDataSourceColumnEntity.Get(__Item => __Item.ColumnName == _ColumnName && __Item.DataSourceCode == _DataSourceID.Code).First();
+            return cDataSourceColumnEntity.Get(__Item => __Item.ColumnName == _ColumnName && __Item.DataSourceCode == _DataSourceID.Code).FirstOrDefault();
         }
 
         public void AddColumnToDataSource(DataSourceIDs _DataSourceID, string _ColumnName)
@@ -111,7 +116,9 @@ namespace Sys.Data.nDataService.nDataManagers
 
         public List<cDataSourcePermissionEntity> GetDataSourceInRoleByDataSourceID(List<cRoleEntity> _RoleList, DataSourceIDs _DataSourceIDs)
         {
-            List<cDataSourcePermissionEntity> __Result = new List<cDataSourcePermissionEntity>();
+            return cDataSourcePermissionEntity.Get(__Item => __Item.DataSourceID == _DataSourceIDs.ID && __Item.Roles.Any(__Item => _RoleList.Contains(__Item))).ToList();
+
+            /*List<cDataSourcePermissionEntity> __Result = new List<cDataSourcePermissionEntity>();
             foreach (cRoleEntity __Item in _RoleList)
             {
                 cDataSourcePermissionEntity __Permission = GetDataSourceInRoleByDataSourceID(__Item, _DataSourceIDs);
@@ -120,7 +127,7 @@ namespace Sys.Data.nDataService.nDataManagers
                     __Result.Add(__Permission);
                 }
             }
-            return __Result;
+            return __Result;*/
         }
 
         public cDataSourcePermissionEntity GetDataSourceInRoleByDataSourceID(cRoleEntity _Role, DataSourceIDs _DataSourceIDs)
@@ -128,8 +135,10 @@ namespace Sys.Data.nDataService.nDataManagers
             return cDataSourcePermissionEntity.Get(__Item => __Item.DataSourceID == _DataSourceIDs.ID && __Item.Roles.Any(__Item => __Item.ID == _Role.ID)).FirstOrDefault();
         }
 
+
         public void AddDataSourceColumnToRole(cRoleEntity _Role, DataSourceIDs _DataSourceID, cDataSourceColumnEntity _Column)
         {
+            hayrii
             /*if (!IsDataSourceColumnExistsInRole(_Role, _DataSourceID, _Column))
             {
                 _Role.Da Add(new cRoleDataSourceColumnMapEntity()

@@ -50,7 +50,7 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 				cRoleEntity __Role = RoleDataManager.GetRoleByCode(RoleIDs.Admin.Code);
 				for (int i = 0; i < __DataSources.Count; i++)
 				{
-					DataSourceDataManager.AddAllDatasourceColumnToRole(__Role, __DataSources[i]);
+					DataSourceDataManager.AddAllDatasourceColumnToRole(__Role, __DataSources[i]);/////////////////
 				}
 
 				ChecksumDataManager.CreateCheckSumIfNotExists(LoaderID.Code + "_Admin", __StringCheckSum);
@@ -62,7 +62,7 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
         {
             List<DataSourceIDs> __DataSources = DataSourceIDs.TypeList.Where(__Item => __Item.MainRoles.Any(__Item => __Item.Code == RoleIDs.User.Code)).ToList();
 
-            cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Customer");
+            cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_User");
 			string __TotalString = GetTotalString<DataSourceIDs>(__DataSources);
 			string __StringCheckSum = App.Handlers.StringHandler.ComputeHashAsHex(__TotalString);
 
@@ -74,7 +74,7 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
 					DataSourceDataManager.AddAllDatasourceColumnToRole(__Role, __DataSources[i]);
 				}
 
-				ChecksumDataManager.CreateCheckSumIfNotExists(LoaderID.Code + "_Customer", __StringCheckSum);
+				ChecksumDataManager.CreateCheckSumIfNotExists(LoaderID.Code + "_User", __StringCheckSum);
 			}
 		}
 		public void AddDeveloperRoleDataSourceColumns()

@@ -23,6 +23,7 @@
     <ProjectReference Include="..\Domain.Boundary\Domain.Boundary.csproj" />
     <ProjectReference Include="..\Domain.Data\Domain.Data.csproj" />
     <ProjectReference Include="..\Sys.Data\Sys.Data.csproj" />
+    <ProjectReference Include="..\Sys.Web\Sys.Web.csproj" />
   </ItemGroup>
 
 </Project>

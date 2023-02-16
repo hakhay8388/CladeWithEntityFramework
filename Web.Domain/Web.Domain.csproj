@@ -55,6 +55,7 @@
   <ItemGroup>
     <Folder Include="ClientApp\src\Assets\Css\" />
     <Folder Include="ClientApp\src\Assets\Fonts\Awesome\" />
+    <Folder Include="ClientApp\src\WebGraph\TagComponents\Components\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

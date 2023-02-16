@@ -10,7 +10,6 @@ using Bootstrapper.Boundary.nCore.nObjectLifeTime;
 using Bootstrapper.Core.nApplication;
 using Base.FileData;
 using Sys.Data.nDatabaseService;
-using Core.GenericWebScaffold.nWebGraph.nComponentManager.nDataSourcesManager;
 
 
 namespace Sys.Web.nWebGraph.nComponentManager
@@ -24,15 +23,12 @@ namespace Sys.Web.nWebGraph.nComponentManager
         public IDataService DataService { get; set; }
         public IFileDateService FileDataService { get; set; }
 
-        public cComponentManager(cApp _App, cDataServiceContext _CoreServiceContext, IDataService _DataService, IFileDateService _FileDataService
-            , cDataSourceManager _DataSourceManager
-            )
+        public cComponentManager(cApp _App, cDataServiceContext _CoreServiceContext, IDataService _DataService, IFileDateService _FileDataService)
             : base(_App)
         {
             CoreServiceContext = _CoreServiceContext;
             DataService = _DataService;
             FileDataService = _FileDataService;
-            DataSourceManager = _DataSourceManager;
         }
 
         public override void Init()

@@ -18,7 +18,9 @@
     <ProjectReference Include="..\Base.Data\Base.Data.csproj" />
     <ProjectReference Include="..\Core.BatchJobService\Core.BatchJobService.csproj" />
     <ProjectReference Include="..\Domain.Data\Domain.Data.csproj" />
+    <ProjectReference Include="..\Sys.Boundary\Sys.Boundary.csproj" />
     <ProjectReference Include="..\Sys.Data\Sys.Data.csproj" />
+    <ProjectReference Include="..\Sys.Web\Sys.Web.csproj" />
   </ItemGroup>
 
 </Project>

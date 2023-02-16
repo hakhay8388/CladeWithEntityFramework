@@ -14,7 +14,7 @@ namespace Base.Data.nDatabaseService
         public DbContext GetCoreEFDatabaseContext();
         public void Save();
         public void Migrate();
-        public void ComponentLoad();
+        //public void ComponentLoad();
         public void LoadDomainDefaultData();
         public void LoadSysDefaultData();
         public void LoadBatchJob();

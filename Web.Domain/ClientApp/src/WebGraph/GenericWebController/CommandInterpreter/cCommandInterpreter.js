@@ -4,12 +4,14 @@ import { CommandIDs } from "./CommandIDs/CommandIDs"
 import cBaseObject from "../../GenericCoreGraph/BaseObject/cBaseObject"
 import cBaseCommand from "../CommandInterpreter/Commands/cBaseCommand"
 
-const CommandInterfacesClass = function () {
+const CommandInterfacesClass = function ()
+{
 }
 
 export const CommandInterfaces = new CommandInterfacesClass();
 
-const CommandClassesClass = function () {
+const CommandClassesClass = function ()
+{
 }
 
 export const CommandClasses = new CommandClassesClass();
@@ -20,7 +22,8 @@ export const cCommandInterpreter = Class(cBaseObject,
         ObjectType: ObjectTypes.Get("cCommandInterpreter")
         , CommandList: null
         ,
-        constructor: function () {
+        constructor: function ()
+        {
             cCommandInterpreter.BaseObject.constructor.call(this);
             this.CommandList = new cList(ObjectTypes.cBaseCommand);
             this.CreateCommandsObjectTypes();
@@ -29,12 +32,15 @@ export const cCommandInterpreter = Class(cBaseObject,
             this.InitializeCommand();
         }
         ,
-        HandleClearCommands: function () {
-            if (this.CommandList != null) {
+        HandleClearCommands: function ()
+        {
+            if (this.CommandList != null)
+            {
                 var EThis = this;
                 var ECommandInterfaces = CommandInterfaces;
                 var __Count = this.CommandList.Count();
-                for (var i = 0; i < __Count; i++) {
+                for (var i = 0; i < __Count; i++)
+                {
                     var __Item = this.CommandList.GetItem(i);
                     var __CoreName = __Item.Command.CommandName;
 
@@ -60,11 +66,13 @@ export const cCommandInterpreter = Class(cBaseObject,
             }
         }
         ,
-        InitializeCommand: function () {
+        InitializeCommand: function ()
+        {
             var ECommandClasses = CommandClasses;
             var EThis = this;
             var __Count = CommandIDs.CommandIDList.Count();
-            for (var i = 0; i < __Count; i++) {
+            for (var i = 0; i < __Count; i++)
+            {
                 var __CoreName = CommandIDs.CommandIDList.GetItem(i).CommandName;
 
                 eval("var __TempFunction = function() { " +
@@ -76,9 +84,12 @@ export const cCommandInterpreter = Class(cBaseObject,
 
         }
         ,
-        ConnectToCommands: function (_Object) {
-            for (var __Properties in _Object) {
-                if (__Properties.match(/I[a-zA-Z]*CommandReceiver/)) {
+        ConnectToCommands: function (_Object)
+        {
+            for (var __Properties in _Object)
+            {
+                if (__Properties.match(/I[a-zA-Z]*CommandReceiver/))
+                {
                     var __TepString = __Properties.replace(/CommandReceiver/, "");
                     __TepString = __TepString.substring(1, __TepString.length);
                     var __Eval = "this." + __TepString + "Command.Connect(_Object);";
@@ -87,9 +98,12 @@ export const cCommandInterpreter = Class(cBaseObject,
             }
         }
         ,
-        DisconnectToCommands: function (_Object) {
-            for (var __Properties in _Object) {
-                if (__Properties.match(/I[a-zA-Z]*CommandReceiver/)) {
+        DisconnectToCommands: function (_Object)
+        {
+            for (var __Properties in _Object)
+            {
+                if (__Properties.match(/I[a-zA-Z]*CommandReceiver/))
+                {
                     var __TepString = __Properties.replace(/CommandReceiver/, "");
                     __TepString = __TepString.substring(1, __TepString.length);
                     var __Eval = "this." + __TepString + "Command.Disconnect(_Object);";
@@ -98,7 +112,8 @@ export const cCommandInterpreter = Class(cBaseObject,
             }
         }
         ,
-        Destroy: function () {
+        Destroy: function ()
+        {
             this.CommandList.Destroy();
             this.cLoginCommand.Destroy();
 
@@ -108,13 +123,16 @@ export const cCommandInterpreter = Class(cBaseObject,
             cBaseObject.prototype.Destroy.call(this);
         }
         ,
-        AddCommand: function (_Command) {
+        AddCommand: function (_Command)
+        {
             this.CommandList.Add(_Command);
         }
         ,
-        CreateCommandsObjectTypes: function () {
+        CreateCommandsObjectTypes: function ()
+        {
             var __Count = CommandIDs.CommandIDList.Count();
-            for (var i = 0; i < __Count; i++) {
+            for (var i = 0; i < __Count; i++)
+            {
                 GlobalEval.call(this, "var aa = function() { " +
 
 
@@ -132,7 +150,8 @@ export const cCommandInterpreter = Class(cBaseObject,
             }
         }
         ,
-        CreateCommandReceivers: function () {
+        CreateCommandReceivers: function ()
+        {
 
             var EClass = Class;
             var EInterface = Interface;
@@ -141,7 +160,8 @@ export const cCommandInterpreter = Class(cBaseObject,
             var ECommandInterfaces = CommandInterfaces;
 
             var __Count = CommandIDs.CommandIDList.Count();
-            for (var i = 0; i < __Count; i++) {
+            for (var i = 0; i < __Count; i++)
+            {
                 var __CoreName = CommandIDs.CommandIDList.GetItem(i).CommandName;
                 var __EvalString =
                     "module.exports.I" + __CoreName + "CommandReceiver = EClass(EInterface," +
@@ -155,7 +175,8 @@ export const cCommandInterpreter = Class(cBaseObject,
             }
         }
         ,
-        CreateCommands: function () {
+        CreateCommands: function ()
+        {
             var EClass = Class;
             var EInterface = Interface;
             var EObjType = cObjType;
@@ -168,7 +189,8 @@ export const cCommandInterpreter = Class(cBaseObject,
             var ECommandClasses = CommandClasses;
 
             var __Count = CommandIDs.CommandIDList.Count();
-            for (var i = 0; i < __Count; i++) {
+            for (var i = 0; i < __Count; i++)
+            {
                 var __CoreName = CommandIDs.CommandIDList.GetItem(i).CommandName;
                 var __EvalString =
 
@@ -188,18 +210,25 @@ export const cCommandInterpreter = Class(cBaseObject,
             }
         }
         ,
-        RemoveCommand: function (_Command) {
+        RemoveCommand: function (_Command)
+        {
             this.CommandList.Remove(_Command);
         }
         ,
-        InterpretCommand: function (_MsgObject) {
-            for (var j = 0; j < _MsgObject.length; j++) {
+        InterpretCommand: function (_MsgObject)
+        {
+            for (var j = 0; j < _MsgObject.length; j++)
+            {
                 var __Count = this.CommandList.Count();
-                for (var i = 0; i < __Count; i++) {
+                for (var i = 0; i < __Count; i++)
+                {
                     var __Item = this.CommandList.GetItem(i);
-                    if (__Item.Command.CommandID == _MsgObject[j].ActionID.ID) {
-                        if (__Item.Enabled) {
-                            if (_MsgObject.ActionProps) {
+                    if (__Item.Command.CommandID == _MsgObject[j].ActionID.ID)
+                    {
+                        if (__Item.Enabled)
+                        {
+                            if (_MsgObject.ActionProps)
+                            {
                                 _MsgObject[j].Data.ActionProps = _MsgObject.ActionProps;
                             }
                             __Item.Run(_MsgObject[j].Data);

@@ -1,9 +1,11 @@
-﻿using Bootstrapper.Boundary.nCore.nObjectLifeTime;
+﻿using Base.Data.nDatabaseService;
+using Bootstrapper.Boundary.nCore.nObjectLifeTime;
 using Bootstrapper.Core.nApplication;
 using Bootstrapper.Core.nAttributes;
 using Bootstrapper.Core.nCore;
 using Microsoft.AspNetCore.Http;
 using Sys.Web.Controllers;
+using Sys.Web.nWebGraph.nComponentManager;
 using Sys.Web.nWebGraph.nErrorMessageManager;
 using Sys.Web.nWebGraph.nNotificationManager;
 using Sys.Web.nWebGraph.nSessionManager;
@@ -35,6 +37,8 @@ namespace Sys.Web.nWebGraph
 
         public cBaseNotificationManager SysNotificationManager { get; set; }
 
+        public cComponentManager ComponentManager { get; set; }
+
         public cBaseWebGraph(cApp _App)
             :base(_App)
         {
@@ -52,6 +56,7 @@ namespace Sys.Web.nWebGraph
             ListenerGraph = App.Factories.ObjectFactory.ResolveInstance<cListenerGraph>();
             ValidationGraph = App.Factories.ObjectFactory.ResolveInstance<cValidationGraph>();
             ErrorMessageManager = App.Factories.ObjectFactory.ResolveInstance<cErrorMessageManager>();
+            ComponentManager = (cComponentManager)App.Factories.ObjectFactory.ResolveInstance<IComponentLoader>();
         }
 
 
@@ -64,6 +69,7 @@ namespace Sys.Web.nWebGraph
             CommandGraph.Init();
             ListenerGraph.Init();
             ValidationGraph.Init();
+            ComponentManager.Init();
             SysNotificationManager.Init();
 
         }
