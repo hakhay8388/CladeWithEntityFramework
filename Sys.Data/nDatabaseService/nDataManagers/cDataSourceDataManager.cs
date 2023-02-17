@@ -138,16 +138,11 @@ namespace Sys.Data.nDataService.nDataManagers
 
         public void AddDataSourceColumnToRole(cRoleEntity _Role, DataSourceIDs _DataSourceID, cDataSourceColumnEntity _Column)
         {
-            hayrii
-            /*if (!IsDataSourceColumnExistsInRole(_Role, _DataSourceID, _Column))
+            if (!IsDataSourceColumnExistsInRole(_Role, _DataSourceID, _Column))
             {
-                _Role.Da Add(new cRoleDataSourceColumnMapEntity()
-                {
-                    Role = _Role,
-                    DataSourceColumn = _Column
-                });
+                _Role.DataSourceColumns.Add(_Column);
                 _Role.Save();
-            }*/
+            }
         }
 
 
