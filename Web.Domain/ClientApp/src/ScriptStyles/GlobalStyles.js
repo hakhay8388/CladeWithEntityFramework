@@ -8,6 +8,13 @@ const GlobalStyles = function(_Theme) {
           flexGrow: 1,
       }
       ,
+
+      BoxCenterStyle:
+      {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+      },
   };
 };
 

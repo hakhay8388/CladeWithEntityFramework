@@ -45,8 +45,8 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommandIDs
         public static ECommandType DataSource_Create = new ECommandType(GetVariableName(() => DataSource_Create), 101, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.User, RoleIDs.Developer });
         public static ECommandType DataSource_Update = new ECommandType(GetVariableName(() => DataSource_Update), 102, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.User, RoleIDs.Developer });
         public static ECommandType DataSource_Delete = new ECommandType(GetVariableName(() => DataSource_Delete), 103, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.User, RoleIDs.Developer });
-        public static ECommandType DataSource_GetMetaData = new ECommandType(GetVariableName(() => DataSource_GetMetaData), 104, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.User, RoleIDs.Developer });
-        public static ECommandType DataSource_GetSettings = new ECommandType(GetVariableName(() => DataSource_GetSettings), 105, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.User, RoleIDs.Developer });
+
+        public static ECommandType DataSource_GetMetaAndSettings = new ECommandType(GetVariableName(() => DataSource_GetMetaAndSettings), 105, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.User, RoleIDs.Developer });
         /// <summary>
         /// //
         /// </summary>

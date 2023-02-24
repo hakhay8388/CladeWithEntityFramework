@@ -35,5 +35,21 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph
             TListenerType __Listener = (TListenerType)ListenerList.Where(__Item => typeof(TListenerType).IsAssignableFrom(__Item.GetType())).FirstOrDefault();
             return __Listener;
         }
+
+
+        public List<TListenerType> GetListenerByBaseType<TListenerType>()
+           where TListenerType : IBaseListener
+        {
+            List<cBaseListener> __Listener = ListenerList.Where(__Item => typeof(TListenerType).IsAssignableFrom(__Item.GetType())).ToList();
+
+            List<TListenerType> __Result = new List<TListenerType>();
+
+            foreach (IBaseListener __Item in __Listener)
+            {
+                __Result.Add((TListenerType)__Item);
+            }
+
+            return __Result;
+        }
     }
 }

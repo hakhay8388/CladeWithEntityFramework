@@ -36,6 +36,8 @@ using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nMenuResultAction;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nResultItemAction;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nSetUserOnClientAction;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nNotificationAction;
+using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nDataSourcePermissionResultAction;
+using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nDataSourceMetadataResultAction;
 
 namespace Sys.Web.nWebGraph.nWebApiGraph.nActionGraph
 {
@@ -93,6 +95,10 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nActionGraph
 
         public cSetUserOnClientAction SetUserOnClientAction { get; set; } 
         public cNotificationAction NotificationAction { get; set; }
+
+        public  cDataSourcePermissionResultAction DataSourcePermissionResultAction { get; set; }
+
+        public cDataSourceMetadataResultAction DataSourceMetadataResultAction { get; set; }
 
         public cBaseActionGraph(cApp _App, cBaseWebGraph _WebGraph)
             : base(_App)

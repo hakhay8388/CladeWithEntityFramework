@@ -15,7 +15,7 @@ using Base.Data.nDatabaseService;
 
 namespace Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph
 {
-    public class cBaseListener : cCoreObject
+    public class cBaseListener : cCoreObject, IBaseListener
     {
         public cBaseWebGraph WebGraph { get; set; }
 

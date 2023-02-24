@@ -12,18 +12,21 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
     public class cDataSourceManager : cCoreObject
     {
         List<IDataSource> DataSourceList { get; set; }
+        cBaseWebGraph WebGraph { get; set; }
 
-        public cDataSourceManager(cApp _App)
+        public cDataSourceManager(cApp _App, cBaseWebGraph _WebGraph)
                 : base(_App)
         {
             DataSourceList = new List<IDataSource>();
+            WebGraph = _WebGraph;
         }
       
 
 		public override void Init()
 		{
+            //DataSourceList = WebGraph.ListenerGraph.GetListenerByBaseType<IDataSource>();
 
-			List<Type> __DataSources = App.Handlers.AssemblyHandler.GetTypesFromBaseInterface<IDataSource>();
+            List<Type> __DataSources = App.Handlers.AssemblyHandler.GetTypesFromBaseInterface<IDataSource>();
 			__DataSources.ForEach(__Type =>
 			{
 				IDataSource __DataSource = (IDataSource)App.Factories.ObjectFactory.ResolveInstance(__Type);

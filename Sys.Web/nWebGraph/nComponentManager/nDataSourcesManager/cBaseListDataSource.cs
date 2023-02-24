@@ -13,13 +13,14 @@ using Sys.Web.nWebGraph;
 using Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager;
 using Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager.nDataSources;
 using Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager.nDataSources.nDataSourceFieldTypes.nValueTypes;
+using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nDataSourceMetadataResultAction;
+using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nDataSourcePermissionResultAction;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nResultItemAction;
 using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nResultListAction;
 using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph;
 using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nDataSource_CreateCommand;
 using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nDataSource_DeleteCommand;
-using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nDataSource_GetMetaDataCommand;
-using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nDataSource_GetSettingsCommand;
+using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nDataSource_GetMetaAndSettingsCommand;
 using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nDataSource_ReadCommand;
 using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nDataSource_UpdateCommand;
 using Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph;
@@ -31,7 +32,7 @@ using System.Threading.Tasks;
 
 namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
 {
-    public abstract class cBaseListDataSource<TEntity, TBaseDataSourceReadOptions> : cBaseListener, IDataSource
+    public abstract class cBaseListDataSource<TEntity, TBaseDataSourceReadOptions> : cCoreObject, IDataSource
         where TEntity : cBaseEntityType
     {
         public DataSourceIDs DataSourceID { get; set; }
@@ -49,7 +50,7 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
             , IDataService _DataService
             , cDataSourceDataManager _DataSourceDataManager
             )
-            : base(_App, _WebGraph, _DataService)
+            : base(_App)
         {
             DataSourceID = _DataSourceID;
             DataService = _DataService;
@@ -171,7 +172,7 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
             {
                 if (__Item.LookUpDataSource != null && typeof(ILookupDataSource).IsAssignableFrom(__Item.LookUpDataSource.GetType()))
                 {
-                    __Item.LookUpDataSource = ((ILookupDataSource)__Item.LookUpDataSource).ToLookUpObject(null, _Controller, null);
+                    __Item.LookUpDataSource = ((ILookupDataSource)__Item.LookUpDataSource).ToLookUpObject(null, _Controller);
                 }
             });
 
@@ -226,21 +227,7 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
 
         public void ReceiveDataSource_ReadData(cListenerEvent _ListenerEvent, IController _Controller, cDataSource_ReadCommandData _ReceivedData)
         {
-            throw new NotImplementedException();
-        }
-
-        public void ReceiveDataSource_GetSettingsData(cListenerEvent _ListenerEvent, IController _Controller, cDataSource_GetSettingsCommandData _ReceivedData)
-        {
-
-            if (_Controller.ClientSession.IsLogined)
-            {
-                List<cDataSourcePermissionEntity> __Permissions = DataSourceDataManager.GetDataSourceInRoleByDataSourceID(_Controller.ClientSession.User.Roles.ToList(), DataSourceID);
-                WebGraph.SysActionGraph.ResultListAction.Action(_Controller, new nWebApiGraph.nActionGraph.nActions.nResultListAction.cResultListProps() { ResultList = __Permissions, Page = 1, Total = __Permissions.Count });
-            }
-            else
-            {
-                WebGraph.SysActionGraph.ReinitAction.Action(_Controller);
-            }
+           
         }
 
         public void ReceiveDataSource_CreateData(cListenerEvent _ListenerEvent, IController _Controller, cDataSource_CreateCommandData _ReceivedData)
@@ -258,10 +245,15 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
             throw new NotImplementedException();
         }
 
-        public void ReceiveDataSource_GetMetaDataData(cListenerEvent _ListenerEvent, IController _Controller, cDataSource_GetMetaDataCommandData _ReceivedData)
+        public void ReceiveDataSource_GetMetaAndSettingsData(cListenerEvent _ListenerEvent, IController _Controller, cDataSource_GetMetaAndSettingsCommandData _ReceivedData)
         {
             if (_Controller.ClientSession.IsLogined)
             {
+                List<cDataSourcePermissionEntity> __Permissions = DataSourceDataManager.GetDataSourceInRoleByDataSourceID(_Controller.ClientSession.User.Roles.ToList(), DataSourceID);
+                WebGraph.SysActionGraph.DataSourcePermissionResultAction.Action(_Controller, new cDataSourcePermissionResultProps() { ResultList = __Permissions });
+
+
+
                 List<cBaseDataSourceObject> __Result = GetFieldListForMyPermission(_Controller);
 
                 __Result.ForEach(__Item =>
@@ -269,18 +261,15 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
                     /*
                     ----Visible False Column İsmini setlenecek
                     */
-                    __Item.Title =
-                        _Controller.GetWordValue((__Item.Title.IsNullOrEmpty() ? __Item.FieldName : __Item.Title));
+                    __Item.Title = _Controller.GetWordValue((__Item.Title.IsNullOrEmpty() ? __Item.FieldName : __Item.Title));
                 });
                 __Result = __Result.OrderBy(__Item => __Item.OrderFromLeft).ToList();
 
-                WebGraph.SysActionGraph.ResultListAction.Action(_Controller,
-                    new nWebApiGraph.nActionGraph.nActions.nResultListAction.cResultListProps()
-                    { ResultList = __Result, Page = 1, Total = __Result.Count });
+                WebGraph.SysActionGraph.DataSourceMetadataResultAction.Action(_Controller, new cDataSourceMetadataResultProps() { ResultList = __Result });
 
                 List<int> __PageSizes = GetPageSizes();
-                WebGraph.SysActionGraph.ResultItemAction.Action(_Controller,
-                    new cResultItemProps() { Item = new { PageSizes = __PageSizes } });
+                WebGraph.SysActionGraph.ResultItemAction.Action(_Controller, new cResultItemProps() { Item = new { PageSizes = __PageSizes } });
+
             }
             else
             {

@@ -41,6 +41,18 @@
 	"Exit": {"message": "Çıkış","description": ""},
 	"Add": {"message": "Ekle","description": ""},
 	"DoYouWantToExit": {"message": "Oturumu kapatmak istediğinizden emin misiniz?","description": ""},
+	
+	"UpdateDate": {"message": "Güncellenme Tarihi","description": ""},
+	"CreateDate": {"message": "Oluşturma Tarihi","description": ""},
+	"Language": {"message": "Dil","description": ""},
+	"Email": {"message": "E-Posta","description": ""},
+	"Name": {"message": "İsim","description": ""},
+	"Surname": {"message": "Soyisim","description": ""},
+	"StateText": {"message": "Durum","description": ""},
+	"RoleCode": {"message": "Rol","description": ""},
+	
+	"TotalRecord": {"message": "toplam {0} kayıt","description": ""},
+	"MoreThan": {"message": "{0}'den fazla","description": ""},
 
 }
 	

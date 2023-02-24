@@ -69,8 +69,8 @@ namespace Sys.Web.nWebGraph
             CommandGraph.Init();
             ListenerGraph.Init();
             ValidationGraph.Init();
-            ComponentManager.Init();
             SysNotificationManager.Init();
+            ComponentManager.Init();
 
         }
     }

@@ -12,6 +12,7 @@ using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nDataSource_ReadCom
 using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nDataSource_UpdateCommand;
 using System;
 using System.Collections.Generic;
+using System.Transactions;
 
 namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager.nDataSources.nUserListDataSources
 {
@@ -40,15 +41,15 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager.nDataSources.n
 
             //__Result.Add("TestSelect", CreateDataSourceObject("TestSelect", false, ColumnTypeIDs.String));
 
-            __Result.Add("ID", CreateDataSourceObject("ID", false, ColumnTypeIDs.Numeric, _Visible: false));
-            __Result.Add("Name", CreateDataSourceObject("Name", false, ColumnTypeIDs.String));
-            __Result.Add("Surname", CreateDataSourceObject("RealSurname", false, ColumnTypeIDs.String));
-            __Result.Add("Email", CreateDataSourceObject("Email", false, ColumnTypeIDs.String));
-            __Result.Add("Language", CreateDataSourceObject("Language", false, ColumnTypeIDs.String));
-            __Result.Add("CreateDate", CreateDataSourceObject("CreateDate", false, ColumnTypeIDs.Datetime));
-            __Result.Add("UpdateDate", CreateDataSourceObject("UpdateDate", false, ColumnTypeIDs.Datetime));
-            __Result.Add("State", CreateDataSourceObject("State", false, ColumnTypeIDs.Numeric, "StateText", _OrderFromLeft: 7, _Visible: true, _Editable: ColumnEditableIDs.Always));
-            __Result.Add("RoleCode", CreateDataSourceObject("RoleID", false, ColumnTypeIDs.Numeric, "RoleCode", _OrderFromLeft: 8, _Visible: true));
+            __Result.Add("ID", CreateDataSourceObject("ID", false, ColumnTypeIDs.Numeric, _OrderFromLeft: 3, _Visible: false));
+            __Result.Add("Name", CreateDataSourceObject("Name", false, ColumnTypeIDs.String, _OrderFromLeft: 4));
+            __Result.Add("Surname", CreateDataSourceObject("Surname", false, ColumnTypeIDs.String, _OrderFromLeft: 5));
+            __Result.Add("Email", CreateDataSourceObject("Email", false, ColumnTypeIDs.String, _OrderFromLeft: 6));
+            __Result.Add("Language", CreateDataSourceObject("Language", false, ColumnTypeIDs.String, _OrderFromLeft: 7));
+            __Result.Add("CreateDate", CreateDataSourceObject("CreateDate", false, ColumnTypeIDs.Datetime, _OrderFromLeft: 1));
+            __Result.Add("UpdateDate", CreateDataSourceObject("UpdateDate", false, ColumnTypeIDs.Datetime, _OrderFromLeft: 2));
+            __Result.Add("State", CreateDataSourceObject("State", false, ColumnTypeIDs.Numeric, "StateText", _OrderFromLeft: 8, _Visible: true, _Editable: ColumnEditableIDs.Always));
+            __Result.Add("RoleCode", CreateDataSourceObject("RoleID", false, ColumnTypeIDs.Numeric, "RoleCode", _OrderFromLeft: 9, _Visible: true));
 
             return __Result;
 

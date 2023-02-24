@@ -1,4 +1,5 @@
 ﻿using Bootstrapper.Boundary.nValueTypes.nConstType;
+using Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActions.nDataSourceMetadataResultAction;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -49,6 +50,14 @@ namespace Sys.Web.nWebGraph.nWebApiGraph.nActionGraph.nActionIDs
 		public static EActionType ValidationResult = new EActionType(GetVariableName(() => ValidationResult), 40, "", true);
         public static EActionType PageResult = new EActionType(GetVariableName(() => PageResult), 41, "", true);
         public static EActionType MenuResult = new EActionType(GetVariableName(() => MenuResult), 42, "", true);
+
+
+        public static EActionType DataSourcePermissionResult = new EActionType(GetVariableName(() => DataSourcePermissionResult), 43, "", true);
+        public static EActionType DataSourceMetadataResult = new EActionType(GetVariableName(() => DataSourceMetadataResult), 44, "", true);
+
+
+
+
 
 
         public static EActionType ModalOpen = new EActionType(GetVariableName(() => ModalOpen), 100, "", true);

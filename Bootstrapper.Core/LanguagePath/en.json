@@ -41,4 +41,15 @@
 	"Exit": {"message": "Exit","description": ""},
 	"Add": {"message": "Add","description": ""},
 	"DoYouWantToExit": {"message": "Do you want to exit?","description": ""},
+	
+	"UpdateDate": {"message": "Update Date","description": ""},
+	"CreateDate": {"message": "Create Date","description": ""},
+	"Language": {"message": "Language","description": ""},
+	"Email": {"message": "Email","description": ""},
+	"Name": {"message": "Name","description": ""},
+	"Surname": {"message": "Surname","description": ""},
+	"StateText": {"message": "StateText","description": ""},
+	"RoleCode": {"message": "RoleCode","description": ""},
+	"TotalRecord": {"message": "count {0}","description": ""},
+	"MoreThan": {"message": "more than {0}","description": ""},
 } 
