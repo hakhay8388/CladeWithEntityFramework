@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager.nDataSources.nDataSourceFieldTypes.nValueTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -10,10 +11,8 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager.nDataSources
     {
 
         public bool Calculated { get; set; }
-        public string ColumnAs { get; set; }
-        public bool InnerJoin { get; set; }
         public string Title { get; set; }
-        public string Type { get; set; }
+        public ColumnTypeIDs Type { get; set; }
         public bool Visible { get; set; }
         public bool ElasticSearch { get; set; }
         public string Editable { get; set; }
@@ -21,8 +20,6 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager.nDataSources
         public bool Readonly { get; set; }
         public bool TranslateValue { get; set; }
         public string FieldName { get; set; }
-        public object LookUpDataSource { get; set; }
-
         public int OrderFromLeft { get; set; }
         public int Width { get; set; }        
 
@@ -35,12 +32,9 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager.nDataSources
             Editable = "never";
             Removable = false;
             Readonly = false;
-            LookUpDataSource = null;
-            InnerJoin = false;
             TranslateValue = false;
             OrderFromLeft = 1;
-            ColumnAs = "";
-            Type = "string";
+            Type = ColumnTypeIDs.String;
             Width = 0;
         }
 

@@ -53,6 +53,7 @@
 	
 	"TotalRecord": {"message": "toplam {0} kayıt","description": ""},
 	"MoreThan": {"message": "{0}'den fazla","description": ""},
+	"LineCount": {"message": "Satır Sayısı","description": ""},
 
 }
 	

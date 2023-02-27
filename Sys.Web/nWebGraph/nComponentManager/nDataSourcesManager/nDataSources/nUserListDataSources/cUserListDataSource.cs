@@ -49,7 +49,6 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager.nDataSources.n
             __Result.Add("CreateDate", CreateDataSourceObject("CreateDate", false, ColumnTypeIDs.Datetime, _OrderFromLeft: 1));
             __Result.Add("UpdateDate", CreateDataSourceObject("UpdateDate", false, ColumnTypeIDs.Datetime, _OrderFromLeft: 2));
             __Result.Add("State", CreateDataSourceObject("State", false, ColumnTypeIDs.Numeric, "StateText", _OrderFromLeft: 8, _Visible: true, _Editable: ColumnEditableIDs.Always));
-            __Result.Add("RoleCode", CreateDataSourceObject("RoleID", false, ColumnTypeIDs.Numeric, "RoleCode", _OrderFromLeft: 9, _Visible: true));
 
             return __Result;
 
@@ -92,16 +91,9 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager.nDataSources.n
             {
                 __Item.CreateDate = ((DateTime)__Item.CreateDate).ToString("dd.MM.yyyy HH:mm");
                 __Item.UpdateDate = ((DateTime)__Item.UpdateDate).ToString("dd.MM.yyyy HH:mm");
-                RoleIDs __RoleId = RoleIDs.GetByID((int)__Item.RoleID, null);
-                __Item.RoleID = App.Handlers.LanguageHandler.GetWordValue(_Controller.ClientSession.Language, (__RoleId.Name));
-
-
+                //RoleIDs __RoleId = RoleIDs.GetByID((int)__Item.RoleID, null);
+                //__Item.RoleID = App.Handlers.LanguageHandler.GetWordValue(_Controller.ClientSession.Language, (__RoleId.Name));
             });
-        }
-
-        public override IQueryable<cUserEntity> SelectedColumns(IQueryable<cUserEntity> _Query)
-        {
-            return _Query;
         }
 
         public override ESortDirectionTypes DefaultDirection()

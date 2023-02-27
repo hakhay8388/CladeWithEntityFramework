@@ -41,7 +41,10 @@ namespace Sys.Data.nDataService.nDataManagers.nLoaders
         {
             List<DataSourceIDs> __DataSources = DataSourceIDs.TypeList.Where(__Item => __Item.MainRoles.Any(__Item => __Item.Code == RoleIDs.Admin.Code)).ToList();
 
-			cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Admin");
+            /*List<DataSourceIDs> __DataSources = new List<DataSourceIDs>();
+            __DataSources.Add(DataSourceIDs.UserList);*/
+
+            cDefaultDataChecksumEntity __DBCheckSum = ChecksumDataManager.GetCheckSumByCode(LoaderID.Code + "_Admin");
 			string __TotalString = GetTotalString<DataSourceIDs>(__DataSources);
 			string __StringCheckSum = App.Handlers.StringHandler.ComputeHashAsHex(__TotalString);
 

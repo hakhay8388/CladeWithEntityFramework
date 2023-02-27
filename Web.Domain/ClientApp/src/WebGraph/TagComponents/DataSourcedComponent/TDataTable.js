@@ -18,6 +18,19 @@ import { Typography, CircularProgress, Table, TableBody, TableCell, TableContain
 import { withStyles } from "@mui/styles";
 import MaterialTableStyles from "../../../ScriptStyles/MaterialTableStyles";
 
+function createData(name, calories, fat, carbs, protein)
+{
+    return { name, calories, fat, carbs, protein };
+}
+
+const rows = [
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    createData('Eclair', 262, 16.0, 24, 6.0),
+    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData('Gingerbread', 356, 16.0, 49, 3.9),
+];
+
 
 var TDataTable = Class(
     TObject,
@@ -37,6 +50,10 @@ var TDataTable = Class(
                 Rows: [],
                 Page: 0,
                 RowsPerPage: 5,
+                TotalCount: 0,
+                OrderField: "",
+                OrderDirection: "",
+                Search: "",
                 CanCreate: false,
                 CanDelete: false,
                 CanRead: false,
@@ -67,16 +84,18 @@ var TDataTable = Class(
         HandleChangePage: function (_Event, _NewPage)
         {
             this.setState({
-                Page: _NewPage
-            });
+                Page: _NewPage,
+                Loading: true
+            }, this.HandleRead);
         }
         ,
         HandleChangeRowsPerPage: function (_Event)
         {
             this.setState({
                 Page: 0,
-                RowsPerPage: _Event.target.value
-            });
+                RowsPerPage: _Event.target.value,
+                Loading : true
+            }, this.HandleRead);
         }
         ,
         Receive_DataSourceRefreshCommand: function (_Data)
@@ -142,13 +161,28 @@ var TDataTable = Class(
                 Actions.DataSource_Read(__This.props.datasource,
                     __This.state.RowsPerPage,
                     __This.state.Page,
-                    _Query.orderBy ? _Query.orderBy.field : "",
-                    _Query.orderDirection ? _Query.orderDirection : "",
-                    _Query.filters,
-                    _Query.search,
+                    __This.state.OrderField ? __This.state.OrderField : "",
+                    __This.state.OrderDirection ? __This.state.OrderDirection : "",
+                    __This.state.Search,
                     __This.props.options ? __This.props.options : null,
                     function (_Message)
                     {
+                        console.log(_Message);
+
+                        CommandIDs.ResultListCommand.RunIfHas(_Message, function (_Data)
+                        {
+                            __This.setState({
+                                TotalCount: _Data.Total,
+                                Page: _Data.Page,
+                                Rows: _Data.ResultList,
+                                Loading: false
+                            });
+
+                            console.log(_Data);
+                            /*__This.setState({
+                                PageSizes: _Data2.Item.PageSizes
+                            });*/
+                        });
 
                     });
             }
@@ -158,20 +192,6 @@ var TDataTable = Class(
         {
             TDataTable.BaseObject.Destroy.call(this);
         },
-        HandleGetRowStyle: function (_MetaItem)
-        {
-            if (_MetaItem.Visible)
-            {
-                return {};
-            }
-            else
-            {
-                return {
-                    display: "none"
-                };
-            }
-        }
-        ,
         HandleGetTableHeader: function ()
         {
             var __This = this;
@@ -185,7 +205,11 @@ var TDataTable = Class(
                 <TableRow>
                     {__This.state.Columns.map(function (_MetaItem, _Index)
                     {
-                        return <TableCell sx={__This.HandleGetRowStyle(_MetaItem)} key={_Index}>{_MetaItem.Title}</TableCell>
+                        if (_MetaItem.Visible)
+                        {
+                            return <TableCell key={_Index}>{_MetaItem.Title}</TableCell>
+                        }
+                        return null;
                     })}
                 </TableRow>
             </TableHead>;
@@ -196,46 +220,79 @@ var TDataTable = Class(
             return `${from}–${to} ${this.state.Language.TotalRecord.format(count !== -1 ? count : this.Language.MoreThan.format(to))}`;
         }
         ,
+        HandleGetRows: function ()
+        {
+            return this.state.Rows.map((_Row) =>
+            {
+                return <TableRow
+                    key={_Row.ID}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                    <TableCell component="th" scope="row">
+                        {_Row.Name}
+                    </TableCell>
+                    <TableCell>{_Row.CreateDate}</TableCell>
+                    <TableCell>{_Row.UpdateDate}</TableCell>
+                    <TableCell>{_Row.Language}</TableCell>
+                    <TableCell>{_Row.State}</TableCell>
+                </TableRow>
+            });
+        }
+        ,
         render: function ()
         {
             var __This = this;
             const { classes } = this.props;
-            return (
+            return <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Dessert (100g serving)</TableCell>
+                            <TableCell align="right">Calories</TableCell>
+                            <TableCell align="right">Fat&nbsp;(g)</TableCell>
+                            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+                            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows.map((row) => (
+                            <TableRow
+                                key={row.name}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="row">
+                                    {row.name}
+                                </TableCell>
+                                <TableCell align="right">{row.calories}</TableCell>
+                                <TableCell align="right">{row.fat}</TableCell>
+                                <TableCell align="right">{row.carbs}</TableCell>
+                                <TableCell align="right">{row.protein}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>;
+            /*return (
                 <div>
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             {__This.HandleGetTableHeader()}
-                            <TableBody sx={{ minHeight: 200 }}>
-                                {/*rows.map((row) => (
-                                    <TableRow
-                                        key={row.name}
-                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                    >
-                                        <TableCell component="th" scope="row">
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell align="right">{row.calories}</TableCell>
-                                        <TableCell align="right">{row.fat}</TableCell>
-                                        <TableCell align="right">{row.carbs}</TableCell>
-                                        <TableCell align="right">{row.protein}</TableCell>
-                                    </TableRow>
-                                ))*/}
-                            </TableBody>
+                            {__This.HandleGetRows()}                           
                         </Table>
                     </TableContainer>
                     <TablePagination
-                        labelRowsPerPage={"Test"}
+                        labelRowsPerPage={__This.state.Language.LineCount}
                         labelDisplayedRows={this.HandleGetDisplayedRows}
                         rowsPerPageOptions={__This.state.PageSizes}
                         component="div"
-                        count={this.state.Rows.length}
+                        count={this.state.TotalCount}
                         rowsPerPage={this.state.RowsPerPage}
                         page={this.state.Page}
                         onPageChange={this.HandleChangePage}
                         onRowsPerPageChange={this.HandleChangeRowsPerPage}
                     />
                 </div>
-            );
+            );*/
         },
     },
     {}

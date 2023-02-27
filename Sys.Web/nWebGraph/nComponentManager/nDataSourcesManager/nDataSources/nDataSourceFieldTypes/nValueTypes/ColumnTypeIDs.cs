@@ -20,8 +20,6 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager.nDataSources.n
         public static ColumnTypeIDs String = new ColumnTypeIDs(GetVariableName(() => String), "string", 7);
         public static ColumnTypeIDs Avatar = new ColumnTypeIDs(GetVariableName(() => Avatar), "avatar", 8);
 
-        public string ClientComponenetName { get; set; }
-
         public ColumnTypeIDs(string _Name, string _Code, int _ID)
             : base(_Name, _Code, _ID)
         {

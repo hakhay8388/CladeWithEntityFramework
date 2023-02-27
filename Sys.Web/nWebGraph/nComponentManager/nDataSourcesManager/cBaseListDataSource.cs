@@ -1,9 +1,15 @@
-﻿using Base.Data.nDatabaseService;
+﻿using Base.Data.nConfiguration;
+using Base.Data.nDatabaseService;
 using Base.Data.nDatabaseService.nDatabase;
 using Bootstrapper.Core.nApplication;
 using Bootstrapper.Core.nCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Newtonsoft.Json.Linq;
+using Npgsql;
+using Npgsql.Internal;
+using OfficeOpenXml.Style;
 using Sys.Boundary.nData;
 using Sys.Boundary.nDefaultValueTypes;
 using Sys.Data.nDatabaseService.nSystemEntities;
@@ -26,15 +32,25 @@ using Sys.Web.nWebGraph.nWebApiGraph.nCommandGraph.nCommands.nDataSource_UpdateC
 using Sys.Web.nWebGraph.nWebApiGraph.nListenerGraph;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection.PortableExecutable;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using IProperty = Microsoft.EntityFrameworkCore.Metadata.IProperty;
 
 namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
 {
     public abstract class cBaseListDataSource<TEntity, TBaseDataSourceReadOptions> : cCoreObject, IDataSource
+        where TBaseDataSourceReadOptions : class
         where TEntity : cBaseEntityType
     {
+        public string QueryAsName { get; set; }
         public DataSourceIDs DataSourceID { get; set; }
         public cDataSourceManager DataSourceManager { get; set; }
         public IDataService DataService { get; set; }
@@ -52,6 +68,7 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
             )
             : base(_App)
         {
+            QueryAsName = "DataSource_Query";
             DataSourceID = _DataSourceID;
             DataService = _DataService;
             WebGraph = _WebGraph;
@@ -69,7 +86,6 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
             ColumnEditableIDs _Editable = null,
             bool _Removable = false,
             bool _Readonly = false,
-            ILookupDataSource _LookUpDataSource = null,
             bool _TranslateValue = false,
             int _Width = 0
         )
@@ -78,7 +94,6 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
             {
                 Calculated = _Calculated,
                 Editable = (_Editable == null ? ColumnEditableIDs.Never.Code : _Editable.Code),
-                LookUpDataSource = _LookUpDataSource,
                 ElasticSearch = _ElasticSearch,
                 Readonly = _Readonly,
                 Removable = _Removable,
@@ -86,7 +101,7 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
                 Visible = _Visible,
                 Title = _Title,
                 FieldName = _FieldName,
-                Type = (_Type == null ? ColumnTypeIDs.String.Code : _Type.Code),
+                Type = (_Type == null ? ColumnTypeIDs.String : _Type),
                 OrderFromLeft = _OrderFromLeft,
                 Width = _Width
             };
@@ -168,15 +183,6 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
             List<cDataSourceColumnEntity> __Colums = DataSourceDataManager.GetDataSourceColumnsByRoleAndDataSourceID(_Controller.ClientSession.User.Roles.ToList(), DataSourceID);
             List<cBaseDataSourceObject> __FullFieldList = GetFieldList();
 
-            __FullFieldList.ForEach(__Item =>
-            {
-                if (__Item.LookUpDataSource != null && typeof(ILookupDataSource).IsAssignableFrom(__Item.LookUpDataSource.GetType()))
-                {
-                    __Item.LookUpDataSource = ((ILookupDataSource)__Item.LookUpDataSource).ToLookUpObject(null, _Controller);
-                }
-            });
-
-
             List<cBaseDataSourceObject> __Result = new List<cBaseDataSourceObject>();
 
             foreach (cDataSourceColumnEntity __ColumItem in __Colums)
@@ -204,7 +210,6 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
         public abstract string DefaultDirectionColumn();
         public abstract ESortDirectionTypes DefaultDirection();
         public abstract IQueryable<TEntity> ReadData(cListenerEvent _ListenerEvent, IController _Controller, cDataSource_ReadCommandData _ReceivedData, TBaseDataSourceReadOptions _Options);
-        public abstract IQueryable<TEntity> SelectedColumns(IQueryable<TEntity> _Query);
 
         public List<int> GetPageSizes()
         {
@@ -219,15 +224,150 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
             return 5;
         }
 
+        public void TranslateObject(IController _Controller, List<dynamic> _ItemList, List<cBaseDataSourceObject> _FieldList)
+        {
+
+            foreach (var __Item in _ItemList)
+            {
+                foreach (var __FieldItem in _FieldList)
+                {
+                    if (__FieldItem.TranslateValue && __FieldItem.Type.Code != ColumnTypeIDs.Numeric.Code)
+                    {
+                        var __DictionaryItem = (IDictionary<string, object>)__Item;
+                        object __Value = __DictionaryItem[__FieldItem.FieldName];
+                        __DictionaryItem[__FieldItem.FieldName] = _Controller.GetWordValue(__Value.ToString());
+                    }
+                }
+            }
+        }
+
         public virtual Action<dynamic> ToDynamicAction(cListenerEvent _ListenerEvent, IController _Controller,
             cDataSource_ReadCommandData _ReceivedData)
         {
             return null;
         }
 
+        public virtual string SelectCount(IQueryable<TEntity> _Query)
+        {
+            return "Count(*)";
+        }
+
+        public virtual string SelectedColumns(IController _Controller, IQueryable<TEntity> _Query)
+        {
+            List<cBaseDataSourceObject> __FieldList = GetFieldListForMyPermission(_Controller);
+
+            __FieldList.Sort((_Item1, _Item2) =>
+            {
+                return _Item1.OrderFromLeft.CompareTo(_Item2.OrderFromLeft);
+            });
+
+            string __SelectionResult = "";
+
+            for (int i = 0; i < __FieldList.Count; i++)
+            {
+                if (!__SelectionResult.IsNullOrEmpty()) __SelectionResult += ", ";
+                if (!__FieldList[i].Calculated)
+                {
+                    __SelectionResult += QueryAsName + ".\"" + __FieldList[i].FieldName + "\"";
+                }
+            }
+            
+            return __SelectionResult;
+        }
+
+        public string CreateQuerySql(IQueryable _Query, string _Selection, string _Condition, string _Order, string _Pagination)
+        {
+            string __Sql = $"SELECT {_Selection} FROM ({_Query.ToQueryString()}) AS {QueryAsName}" +
+                                    $"{(_Condition.IsNullOrEmpty() ? "" : " " + _Condition)}" +
+                                    $"{(_Order.IsNullOrEmpty() ? "" : " " + _Order)}" +
+                                    $"{(_Pagination.IsNullOrEmpty() ? "" : " " + _Pagination)}";
+            return __Sql;
+        }
+
         public void ReceiveDataSource_ReadData(cListenerEvent _ListenerEvent, IController _Controller, cDataSource_ReadCommandData _ReceivedData)
         {
-           
+            if (_Controller.ClientSession.IsLogined)
+            {
+                TBaseDataSourceReadOptions __Option = null;
+                if (_ReceivedData.Options != null)
+                {
+                    __Option = ((JObject)_ReceivedData.Options).ToObject<TBaseDataSourceReadOptions>();
+                }
+                else
+                {
+                    __Option = (TBaseDataSourceReadOptions)typeof(TBaseDataSourceReadOptions).CreateInstance();
+                }
+
+
+                List<cDataSourcePermissionEntity> __Permissions = DataSourceDataManager.GetDataSourceInRoleByDataSourceID(_Controller.ClientSession.User.Roles.ToList(), DataSourceID);
+                if (__Permissions.Find(__Item => __Item.CanRead) != null)
+                {
+                    IQueryable<TEntity> __Query = ReadData(_ListenerEvent, _Controller, _ReceivedData, __Option);
+
+
+                    int __Count = 0;
+                    DataTable __Result = null;
+
+                    DbConnection __Connection = DataService.GetCoreEFDatabaseContext().Database.GetDbConnection();
+
+                    if (__Connection.State != ConnectionState.Open) __Connection.Open();
+
+
+                    NpgsqlConnection __NpgsqlConnection = __Connection as NpgsqlConnection;
+                    if (__NpgsqlConnection == null)
+                    {
+                        throw new InvalidOperationException("Connection must be a NpgsqlConnection");
+                    }
+
+                    string __Sql = CreateQuerySql(__Query, SelectCount(__Query), null, null, null);
+                    NpgsqlCommand __Command = new NpgsqlCommand(__Sql, __NpgsqlConnection);
+                    __Count = Convert.ToInt32(__Command.ExecuteScalar());
+
+
+                    DataSet __DataSet = new DataSet();
+                    NpgsqlDataAdapter __Adapter = new NpgsqlDataAdapter();
+
+
+                    string __Pagination = "LIMIT @PageSize OFFSET(@PageIndex) * @PageSize";
+                    __Sql = CreateQuerySql(__Query, SelectedColumns(_Controller, __Query), null, null, __Pagination);
+                    __Command = new NpgsqlCommand(__Sql, __NpgsqlConnection);
+                    __Command.Parameters.Add(new NpgsqlParameter("@PageIndex", _ReceivedData.Page < 0 ? 0 : _ReceivedData.Page));
+                    __Command.Parameters.Add(new NpgsqlParameter("@PageSize", _ReceivedData.PageSize > 100 ? 100 : _ReceivedData.PageSize));
+
+
+                    __Adapter.SelectCommand = __Command;
+
+                    __Adapter.Fill(__DataSet);
+
+                    if (__DataSet.Tables.Count == 1)
+                    {
+                        __Result = __DataSet.Tables[0];
+                    }
+
+                    List<dynamic> __ResultList = __Result.ToDynamicObjectList(ToDynamicAction(_ListenerEvent, _Controller, _ReceivedData));
+
+                    List<cBaseDataSourceObject> __FieldList = GetFieldListForMyPermission(_Controller);
+
+                    TranslateObject(_Controller, __ResultList, __FieldList);
+
+                    WebGraph.SysActionGraph.ResultListAction.Action(_Controller,
+                        new nWebApiGraph.nActionGraph.nActions.nResultListAction.cResultListProps()
+                        {
+                            ResultList = __ResultList,
+                            Total = __Count,
+                            Page = _ReceivedData.Page
+                        });
+
+                }
+                else
+                {
+                    WebGraph.SysActionGraph.NoPermissionAction.Action(_Controller);
+                }
+            }
+            else
+            {
+                WebGraph.SysActionGraph.ReinitAction.Action(_Controller);
+            }
         }
 
         public void ReceiveDataSource_CreateData(cListenerEvent _ListenerEvent, IController _Controller, cDataSource_CreateCommandData _ReceivedData)
