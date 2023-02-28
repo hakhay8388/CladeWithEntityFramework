@@ -259,7 +259,7 @@ var TObject = Class(
                     style={{ minHeight: "30vh" }}
                 >
                     <Grid item>
-                        <h4 style={{ color: "#969696", fontFamily: "Montserrat" }}>
+                        <h4 style={{ color: "#969696", fontFamily: "Arial" }}>
                             {GenericWebGraph.Managers.LanguageManager.ActiveLanguage.Loading}{" "}
                         </h4>
                     </Grid>

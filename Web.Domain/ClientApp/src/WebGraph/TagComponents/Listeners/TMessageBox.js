@@ -39,14 +39,7 @@ var TMessageBox = Class(TBaseDialogModal,
         ,
         componentDidMount: function ()
         {
-            console.log("TMessageBox -> componentDidMount : working");
-            try {
-                TMessageBox.BaseObject.componentDidMount.call(this);
-            }
-            catch (Ex) {
-                console.log("TMessageBox -> componentDidMount : Error");
-                console.log(Ex); 
-            }
+           TMessageBox.BaseObject.componentDidMount.call(this);
         }
         ,
         Destroy: function () {

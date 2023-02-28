@@ -41,19 +41,33 @@ namespace App.QueryTester.cQueryTesters
 
         public void Test0002()
         {
-            Console.WriteLine("Thread ID_1: " + Thread.CurrentThread.ManagedThreadId);
-            MainAsync();
-            Task.WaitAll();
-            Console.WriteLine("Thread ID_2: " + Thread.CurrentThread.ManagedThreadId);
+            for (int i = 0; i < 1000; i++)
+            {
+                cSysDatabaseContext __DatabaseContext = DataService.GetDatabaseContext<cSysDatabaseContext>();
+                __DatabaseContext.Perform(() =>
+                {
+                    cUserEntity __UserEntity = cUserEntity.GetEntityByID(1);
+                    __UserEntity = __UserEntity.LockAndRefresh();
+
+                    try
+                    {
+                        int __Count = Convert.ToInt32(__UserEntity.Surname);
+                        __UserEntity.Surname = (__Count + 1).ToString();
+                    }
+                    catch(Exception _Ex)
+                    {
+                        __UserEntity.Surname = "0";
+                    }
+                    Console.WriteLine("Surname : " + __UserEntity.Surname);
+                    
+                    __UserEntity.Save();
+
+                    Thread.Sleep(5000);
+                });
+            }
         }
 
-        private async Task MainAsync()
-        {
-            Test();
-            Test();
-            Test();
-        }
-
+        /*
         private async Task Test()
         {
             try
@@ -70,16 +84,7 @@ namespace App.QueryTester.cQueryTesters
                     __cUserEntity.Save();
 
 
-                    /*__DatabaseContext.Perform(async () =>
-                    {
-                        Console.WriteLine("Thread ID_4: " + Thread.CurrentThread.ManagedThreadId);
-                        cPaymentEntity __PaymentEntity = cPaymentEntity.Add(new cPaymentEntity()
-                        {
-                            Price = 250,
-                            Name = "Test250",
-                        });
-                        __PaymentEntity.Save();
-                    });*/
+
 
                     Console.WriteLine("Thread ID_5: " + Thread.CurrentThread.ManagedThreadId);
                 });
@@ -88,8 +93,7 @@ namespace App.QueryTester.cQueryTesters
             {
 
             }
-        }
+        }*/
 
-      
     }
 }

@@ -90,7 +90,7 @@ var TGlobalLoading = Class(TObject,
               style={{ height: "70px" }}
             >
               <Grid item>
-                <h5 style={{ color: "#969696", fontFamily: "Montserrat" }}>
+                          <h5 style={{ color: "#969696", fontFamily: "Arial" }}>
                   {this.state.Text}{" "}
                 </h5>
               </Grid>

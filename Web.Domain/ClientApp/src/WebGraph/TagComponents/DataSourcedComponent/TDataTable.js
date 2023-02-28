@@ -14,22 +14,13 @@ import { CommandIDs } from "../../GenericWebController/CommandInterpreter/Comman
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { Typography, CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from "@mui/material";
+import { Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import MaterialTableStyles from "../../../ScriptStyles/MaterialTableStyles";
+import TDataTableToolbar from "./TDataTableToolbar";
+import TDataTableHeader from "./TDataTableHeader";
+import TDataTableRow from "./TDataTableRow";
 
-function createData(name, calories, fat, carbs, protein)
-{
-    return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
 
 var TDataTable = Class(
@@ -58,6 +49,7 @@ var TDataTable = Class(
                 CanDelete: false,
                 CanRead: false,
                 CanUpdate: false,
+                DataSourceCode: null,
                 Loading: true
             };
 
@@ -94,7 +86,7 @@ var TDataTable = Class(
             this.setState({
                 Page: 0,
                 RowsPerPage: _Event.target.value,
-                Loading : true
+                Loading: true
             }, this.HandleRead);
         }
         ,
@@ -125,25 +117,29 @@ var TDataTable = Class(
                             {
                                 CommandIDs.DataSourcePermissionResultCommand.RunIfHas(_Message, function (_Data3)
                                 {
-                                    var __CanCreate = false;
-                                    var __CanDelete = false;
-                                    var __CanRead = false;
-                                    var __CanUpdate = false;
-
-                                    for (var i = 0; i < _Data3.ResultList.length; i++)
+                                    if (_Data3.ResultList.length > 0)
                                     {
-                                        if (_Data3.ResultList[i].CanCreate) __CanCreate = true;
-                                        if (_Data3.ResultList[i].CanDelete) __CanDelete = true;
-                                        if (_Data3.ResultList[i].CanRead) __CanRead = true;
-                                        if (_Data3.ResultList[i].CanUpdate) __CanUpdate = true;
-                                    }
+                                        var __CanCreate = false;
+                                        var __CanDelete = false;
+                                        var __CanRead = false;
+                                        var __CanUpdate = false;
 
-                                    __This.setState({
-                                        CanCreate: __CanCreate,
-                                        CanDelete: __CanDelete,
-                                        CanRead: __CanRead,
-                                        CanUpdate: __CanUpdate,
-                                    }, __This.HandleRead);
+                                        for (var i = 0; i < _Data3.ResultList.length; i++)
+                                        {
+                                            if (_Data3.ResultList[i].CanCreate) __CanCreate = true;
+                                            if (_Data3.ResultList[i].CanDelete) __CanDelete = true;
+                                            if (_Data3.ResultList[i].CanRead) __CanRead = true;
+                                            if (_Data3.ResultList[i].CanUpdate) __CanUpdate = true;
+                                        }
+
+                                        __This.setState({
+                                            CanCreate: __CanCreate,
+                                            CanDelete: __CanDelete,
+                                            CanRead: __CanRead,
+                                            CanUpdate: __CanUpdate,
+                                            DataSourceCode: _Data3.ResultList[0].DataSourceCode
+                                        }, __This.HandleRead);
+                                    }
 
                                 });
                             });
@@ -156,63 +152,40 @@ var TDataTable = Class(
         {
             if (this.state.CanRead)
             {
-                var __This = this;
+                this.setState({
+                    Loading: true
+                }, () =>
+                {
+                    var __This = this;
 
-                Actions.DataSource_Read(__This.props.datasource,
-                    __This.state.RowsPerPage,
-                    __This.state.Page,
-                    __This.state.OrderField ? __This.state.OrderField : "",
-                    __This.state.OrderDirection ? __This.state.OrderDirection : "",
-                    __This.state.Search,
-                    __This.props.options ? __This.props.options : null,
-                    function (_Message)
-                    {
-                        console.log(_Message);
-
-                        CommandIDs.ResultListCommand.RunIfHas(_Message, function (_Data)
+                    Actions.DataSource_Read(__This.props.datasource,
+                        __This.state.RowsPerPage,
+                        __This.state.Page,
+                        __This.state.OrderField ? __This.state.OrderField : "",
+                        __This.state.OrderDirection ? __This.state.OrderDirection : "",
+                        __This.state.Search,
+                        __This.props.options ? __This.props.options : null,
+                        function (_Message)
                         {
-                            __This.setState({
-                                TotalCount: _Data.Total,
-                                Page: _Data.Page,
-                                Rows: _Data.ResultList,
-                                Loading: false
+                            CommandIDs.ResultListCommand.RunIfHas(_Message, function (_Data)
+                            {
+                                __This.setState({
+                                    TotalCount: _Data.Total,
+                                    Page: _Data.Page,
+                                    Rows: _Data.ResultList,
+                                    Loading: false
+                                });
+
                             });
 
-                            console.log(_Data);
-                            /*__This.setState({
-                                PageSizes: _Data2.Item.PageSizes
-                            });*/
                         });
-
-                    });
+                });
             }
         }
         ,
         Destroy: function ()
         {
             TDataTable.BaseObject.Destroy.call(this);
-        },
-        HandleGetTableHeader: function ()
-        {
-            var __This = this;
-
-            __This.state.Columns.sort((_Item1, _Item2) =>
-            {
-                return _Item1.OrderFromLeft > _Item2.OrderFromLeft;
-            });
-
-            return <TableHead>
-                <TableRow>
-                    {__This.state.Columns.map(function (_MetaItem, _Index)
-                    {
-                        if (_MetaItem.Visible)
-                        {
-                            return <TableCell key={_Index}>{_MetaItem.Title}</TableCell>
-                        }
-                        return null;
-                    })}
-                </TableRow>
-            </TableHead>;
         }
         ,
         HandleGetDisplayedRows: function ({ from, to, count, page })
@@ -224,66 +197,36 @@ var TDataTable = Class(
         {
             return this.state.Rows.map((_Row) =>
             {
-                return <TableRow
-                    key={_Row.ID}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                    <TableCell component="th" scope="row">
-                        {_Row.Name}
-                    </TableCell>
-                    <TableCell>{_Row.CreateDate}</TableCell>
-                    <TableCell>{_Row.UpdateDate}</TableCell>
-                    <TableCell>{_Row.Language}</TableCell>
-                    <TableCell>{_Row.State}</TableCell>
-                </TableRow>
+                return <TDataTableRow actions={this.props.actions} key={_Row.ID} row={_Row} columns={this.state.Columns} />
             });
+        }
+        ,
+        HandleOnSortChange: function (_Result, _MetaItem, _Event)
+        {
+            this.state.OrderField = _MetaItem.FieldName;
+            this.state.OrderDirection = _Result.Direction;
+            this.HandleRead();
         }
         ,
         render: function ()
         {
             var __This = this;
             const { classes } = this.props;
-            return <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Dessert (100g serving)</TableCell>
-                            <TableCell align="right">Calories</TableCell>
-                            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map((row) => (
-                            <TableRow
-                                key={row.name}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell component="th" scope="row">
-                                    {row.name}
-                                </TableCell>
-                                <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">{row.fat}</TableCell>
-                                <TableCell align="right">{row.carbs}</TableCell>
-                                <TableCell align="right">{row.protein}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>;
-            /*return (
-                <div>
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            {__This.HandleGetTableHeader()}
-                            {__This.HandleGetRows()}                           
+            return (
+                <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+                    <TDataTableToolbar title={this.state.DataSourceCode} />
+                    <TableContainer sx={{ maxHeight: 700 }}>
+                        <Table sx={{ minWidth: 600 }} stickyHeader aria-label="simple table">
+                            {<TDataTableHeader columns={this.state.Columns} onSortChange={this.HandleOnSortChange} />}
+                            <TableBody>
+                                {this.HandleGetRows()}
+                            </TableBody>
                         </Table>
                     </TableContainer>
                     <TablePagination
-                        labelRowsPerPage={__This.state.Language.LineCount}
+                        labelRowsPerPage={this.state.Language.LineCount}
                         labelDisplayedRows={this.HandleGetDisplayedRows}
-                        rowsPerPageOptions={__This.state.PageSizes}
+                        rowsPerPageOptions={this.state.PageSizes}
                         component="div"
                         count={this.state.TotalCount}
                         rowsPerPage={this.state.RowsPerPage}
@@ -291,8 +234,8 @@ var TDataTable = Class(
                         onPageChange={this.HandleChangePage}
                         onRowsPerPageChange={this.HandleChangeRowsPerPage}
                     />
-                </div>
-            );*/
+                </Paper>
+            );
         },
     },
     {}

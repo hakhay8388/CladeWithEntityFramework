@@ -139,6 +139,12 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
             return __Result;
         }
 
+        public bool IsFieldExist(string _FieldName)
+        {
+            List<cBaseDataSourceObject> __Result = GetFieldList();
+            return __Result.Find(__Item => __Item.FieldName == _FieldName) != null;
+        }
+
 
         public void SynchronizeColumnNames()
         {
@@ -329,7 +335,14 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
 
 
                     string __Pagination = "LIMIT @PageSize OFFSET(@PageIndex) * @PageSize";
-                    __Sql = CreateQuerySql(__Query, SelectedColumns(_Controller, __Query), null, null, __Pagination);
+                    string __OrderBy = "";
+
+                    if (IsFieldExist(_ReceivedData.OrderByField))
+                    {
+                        __OrderBy = $"ORDER BY {QueryAsName}.\"{(_ReceivedData.OrderByField)}\" {(_ReceivedData.OrderDirection == "asc" ? "ASC" : "DESC")}";
+                    }
+                    
+                    __Sql = CreateQuerySql(__Query, SelectedColumns(_Controller, __Query), null, __OrderBy, __Pagination);
                     __Command = new NpgsqlCommand(__Sql, __NpgsqlConnection);
                     __Command.Parameters.Add(new NpgsqlParameter("@PageIndex", _ReceivedData.Page < 0 ? 0 : _ReceivedData.Page));
                     __Command.Parameters.Add(new NpgsqlParameter("@PageSize", _ReceivedData.PageSize > 100 ? 100 : _ReceivedData.PageSize));
@@ -351,7 +364,7 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
                     TranslateObject(_Controller, __ResultList, __FieldList);
 
                     WebGraph.SysActionGraph.ResultListAction.Action(_Controller,
-                        new nWebApiGraph.nActionGraph.nActions.nResultListAction.cResultListProps()
+                        new cResultListProps()
                         {
                             ResultList = __ResultList,
                             Total = __Count,

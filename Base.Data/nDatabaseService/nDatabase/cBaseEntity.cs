@@ -3,10 +3,11 @@ using Bootstrapper.Core.nApplication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Nest;
+using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -14,16 +15,13 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using Unity;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static Unity.Storage.RegistrationSet;
 
 namespace Base.Data.nDatabaseService.nDatabase
 {
     public abstract class cBaseEntity<TEntity> : cBaseEntityType where TEntity : cBaseEntityType
     {
-        [Key]
-        public long ID { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime UpdateDate { get; set; }
-
         protected Action<object, string> LazyLoader { get; set; }
 
         public cBaseEntity()
@@ -64,14 +62,16 @@ namespace Base.Data.nDatabaseService.nDatabase
             }
         }
 
-        public void LockAndRefresh()
+        public TEntity LockAndRefresh()
         {
             DbContext __DbContext = DataService.GetCoreEFDatabaseContext();
-            string __EntityTableName = typeof(TEntity).Name;
-            __EntityTableName = __EntityTableName.Substring(1, __EntityTableName.Length - 7) + "s";
-
-            FormattableString __FormattableString = $"Select * from {__EntityTableName} with (updlock) where ID = {ID}";
-            __DbContext.Set<TEntity>().FromSqlInterpolated<TEntity>(__FormattableString).FirstOrDefault();
+            string __TableName = __DbContext.Set<TEntity>().EntityType.GetTableName();
+            string __Command = $"SELECT * FROM \"{__TableName}\" WHERE \"{__TableName}\".\"ID\"={ID} FOR UPDATE";
+            __DbContext.Set<TEntity>().FromSqlRaw(__Command).FirstOrDefault();
+            TEntity __Entity = Get(__Item => __Item.ID == ID).AsNoTracking().FirstOrDefault();
+            __DbContext.Entry(this).State = EntityState.Detached;
+            __DbContext.Attach(__Entity);
+            return __Entity;
         }
 
 
@@ -139,6 +139,44 @@ namespace Base.Data.nDatabaseService.nDatabase
             DbContext __DbContext = DataService.GetCoreEFDatabaseContext();
             return __DbContext.Set<TEntity>().Where<TEntity>(_Predicate);
 
+        }
+
+        public static TEntity GetWithLock(Expression<Func<TEntity, bool>> _Predicate)
+        {
+            DbContext __DbContext = DataService.GetCoreEFDatabaseContext();
+
+            //IQueryable __Query = __DbContext.Set<TEntity>().Where(_Predicate).AsQueryable();
+            //string __Command = __Query.ToQueryString() + " FOR UPDATE";
+
+             string __TableName =__DbContext.Set<TEntity>().EntityType.GetTableName();
+
+
+            string __Command = $"SELECT * FROM \"{__TableName}\" WHERE \"{__TableName}\".\"ID\"={1} FOR UPDATE";
+            return __DbContext.Set<TEntity>().FromSqlRaw(__Command).FirstOrDefault();
+
+            /*DbContext __DbContext = DataService.GetCoreEFDatabaseContext();
+
+            //IQueryable __Query = __DbContext.Set<TEntity>().Where(_Predicate).AsQueryable();
+            //string __Command = __Query.ToQueryString() + " FOR UPDATE";
+
+            DbConnection __Connection = DataService.GetCoreEFDatabaseContext().Database.GetDbConnection();
+
+
+            if (__Connection.State != ConnectionState.Open) __Connection.Open();
+
+
+            NpgsqlConnection __NpgsqlConnection = __Connection as NpgsqlConnection;
+            if (__NpgsqlConnection == null)
+            {
+                throw new InvalidOperationException("Connection must be a NpgsqlConnection");
+            }
+
+            string __TableName = __DbContext.Set<TEntity>().EntityType.GetTableName();
+
+            string __QueryCommand = $"SELECT * FROM \"{__TableName}\" WHERE \"{__TableName}\".\"ID\"={1} FOR UPDATE";
+
+            NpgsqlCommand __Command = new NpgsqlCommand(__QueryCommand, __NpgsqlConnection);
+            __Command.ExecuteScalar();*/
         }
 
         public static IQueryable<TEntity> Get(Expression<Func<TEntity,int, bool>> _Predicate)

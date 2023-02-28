@@ -65,7 +65,7 @@ const TestTheme = createTheme ({
     }
   },
   typography : {
-    fontFamily: "Montserrat",
+      fontFamily: "Arial",
     button: {
       textTransform: "none",
       textDecoration: "none",

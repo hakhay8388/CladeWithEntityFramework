@@ -11,17 +11,17 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager.nDataSources.n
     {
         public static List<ColumnTypeIDs> TypeList { get; set; }
 
-        public static ColumnTypeIDs Boolean = new ColumnTypeIDs(GetVariableName(() => Boolean), "boolean", 1);
-        public static ColumnTypeIDs Numeric = new ColumnTypeIDs(GetVariableName(() => Numeric), "numeric", 2);
-        public static ColumnTypeIDs Date = new ColumnTypeIDs(GetVariableName(() => Date), "date", 3);
-        public static ColumnTypeIDs Datetime = new ColumnTypeIDs(GetVariableName(() => Datetime), "datetime", 4);
-        public static ColumnTypeIDs Time = new ColumnTypeIDs(GetVariableName(() => Time), "time", 5);
-        public static ColumnTypeIDs Currency = new ColumnTypeIDs(GetVariableName(() => Currency), "currency", 6);
-        public static ColumnTypeIDs String = new ColumnTypeIDs(GetVariableName(() => String), "string", 7);
-        public static ColumnTypeIDs Avatar = new ColumnTypeIDs(GetVariableName(() => Avatar), "avatar", 8);
+        public static ColumnTypeIDs Boolean = new ColumnTypeIDs(GetVariableName(() => Boolean), 1);
+        public static ColumnTypeIDs Numeric = new ColumnTypeIDs(GetVariableName(() => Numeric), 2);
+        public static ColumnTypeIDs Date = new ColumnTypeIDs(GetVariableName(() => Date), 3);
+        public static ColumnTypeIDs Datetime = new ColumnTypeIDs(GetVariableName(() => Datetime), 4);
+        public static ColumnTypeIDs Time = new ColumnTypeIDs(GetVariableName(() => Time), 5);
+        public static ColumnTypeIDs Currency = new ColumnTypeIDs(GetVariableName(() => Currency), 6);
+        public static ColumnTypeIDs String = new ColumnTypeIDs(GetVariableName(() => String), 7);
+        public static ColumnTypeIDs Avatar = new ColumnTypeIDs(GetVariableName(() => Avatar), 8);
 
-        public ColumnTypeIDs(string _Name, string _Code, int _ID)
-            : base(_Name, _Code, _ID)
+        public ColumnTypeIDs(string _Code, int _ID)
+            : base(_Code, _Code, _ID)
         {
             TypeList = TypeList ?? new List<ColumnTypeIDs>();
             TypeList.Add(this);

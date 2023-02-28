@@ -75,7 +75,7 @@ var TApp = Class(TObject,
         {
             var __This = this;
             return (
-                <div style={{ fontFamily: "Arial" }}>
+                <div style={{ fontFamily: "Arial"}}>
                     <React.Suspense fallback={<div className="container">
                         <div className="center">
                             <div className="lds-ripple"><div></div><div></div></div>
