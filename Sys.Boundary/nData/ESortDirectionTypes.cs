@@ -41,5 +41,18 @@ namespace Sys.Boundary.nData
         {
             return GetByName(TypeList, _Name, _DefaultCommandID);
         }
+
+        public static string GetForDB(ESortDirectionTypes _DefaultCommandID)
+        {
+            if (_DefaultCommandID.ID == Ascending.ID)
+            {
+                return "asc";
+            }
+            else if (_DefaultCommandID.ID == Descending.ID)
+            {
+                return "desc";
+            }
+            return "";
+        }
     }
 }

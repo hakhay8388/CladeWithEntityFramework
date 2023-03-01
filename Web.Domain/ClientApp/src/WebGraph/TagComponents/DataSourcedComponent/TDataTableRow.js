@@ -15,10 +15,9 @@ import { CommandIDs } from "../../GenericWebController/CommandInterpreter/Comman
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { Typography, Toolbar, Tooltip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from "@mui/material";
+import { Typography, Toolbar, Tooltip, IconButton, Table, Checkbox, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import MaterialTableStyles from "../../../ScriptStyles/MaterialTableStyles";
-
 
 
 var TDataTableRow = Class(TObject,
@@ -38,18 +37,71 @@ var TDataTableRow = Class(TObject,
         },
         HandleGetActions: function ()
         {
+            var __This = this;
             if (JSTypeOperator.IsArray(this.props.actions))
             {
                 return this.props.actions.map(function (_Action, _Index)
                 {
-                    return <TableCell
-                        align={"left"}
-                        component="th"
-                        key={WebGraph.GetNewCreateID()}
-                        scope="row"
-                    >
-                        
-                    </TableCell>
+                    return __This.HandleGetActionInner(_Action);
+                });
+            }
+            return null;
+        }
+        ,
+        HandleGetActionInner: function (_Action)
+        {
+            var __This = this;
+            if (JSTypeOperator.IsDefined(_Action))
+            {
+                return <TableCell
+                    align={"left"}
+                    component="th"
+                    key={WebGraph.GetNewCreateID()}
+                    scope="row"
+                    padding={'none'}
+                    style={{ width: 30, paddingLeft: 10 }}
+                >
+                    {_Action.component ? _Action.component :
+                        <Tooltip title={_Action.tooltip}>
+                            <IconButton onClick={function (_Event)
+                            {
+                                if (JSTypeOperator.IsFunction(_Action.onClick))
+                                {
+                                    _Action.onClick(_Event, __This.props.row);
+                                }
+                            }} >
+                                <_Action.icon />
+                            </IconButton>
+                        </Tooltip>
+                    }
+                </TableCell>
+            }
+            return null;
+        }
+        ,
+        HandleGetEdit: function (_)
+        {
+            var __This = this;
+            if (JSTypeOperator.IsFunction(this.props.editAction))
+            {
+                return this.HandleGetActionInner({
+                    icon: EditIcon,
+                    tooltip: this.state.Language.Edit,
+                    onClick: this.props.editAction
+                });
+            }
+            return null;
+        }
+        ,
+        HandleGetDelete: function (_)
+        {
+            var __This = this;
+            if (JSTypeOperator.IsFunction(this.props.deleteAction))
+            {
+                return this.HandleGetActionInner({
+                    icon: DeleteIcon,
+                    tooltip: this.state.Language.Delete,
+                    onClick: this.props.deleteAction
                 });
             }
             return null;
@@ -59,8 +111,10 @@ var TDataTableRow = Class(TObject,
         {
             var __This = this;
             return <TableRow hover /*sx={{ '&:last-child td, &:last-child th': { border: 0 } }}*/ >
-               
+
                 {this.HandleGetActions()}
+                {this.HandleGetEdit()}
+                {this.HandleGetDelete()}
                 {__This.props.columns.map(function (_MetaItem, _Index)
                 {
                     if (_MetaItem.Visible)

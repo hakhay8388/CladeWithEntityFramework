@@ -310,6 +310,9 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
                 {
                     IQueryable<TEntity> __Query = ReadData(_ListenerEvent, _Controller, _ReceivedData, __Option);
 
+                    string __OrderByField = _ReceivedData.OrderByField.IsNullOrEmpty() ? DefaultDirectionColumn() : _ReceivedData.OrderByField;
+                    string __OrderDirection = _ReceivedData.OrderDirection.IsNullOrEmpty() ? ESortDirectionTypes.GetForDB(DefaultDirection()) : _ReceivedData.OrderDirection;
+
 
                     int __Count = 0;
                     DataTable __Result = null;
@@ -337,9 +340,9 @@ namespace Sys.Web.nWebGraph.nComponentManager.nDataSourcesManager
                     string __Pagination = "LIMIT @PageSize OFFSET(@PageIndex) * @PageSize";
                     string __OrderBy = "";
 
-                    if (IsFieldExist(_ReceivedData.OrderByField))
+                    if (IsFieldExist(__OrderByField))
                     {
-                        __OrderBy = $"ORDER BY {QueryAsName}.\"{(_ReceivedData.OrderByField)}\" {(_ReceivedData.OrderDirection == "asc" ? "ASC" : "DESC")}";
+                        __OrderBy = $"ORDER BY {QueryAsName}.\"{(__OrderByField)}\" {(__OrderDirection == "asc" ? "ASC" : "DESC")}";
                     }
                     
                     __Sql = CreateQuerySql(__Query, SelectedColumns(_Controller, __Query), null, __OrderBy, __Pagination);

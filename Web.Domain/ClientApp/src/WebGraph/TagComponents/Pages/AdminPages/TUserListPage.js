@@ -18,7 +18,7 @@ import { withStyles } from "@mui/styles";
 import GlobalStyles from "../../../../ScriptStyles/GlobalStyles";
 import classNames from "classnames";
 import TDataTable from "../../DataSourcedComponent/TDataTable";
-
+import SendIcon from '@mui/icons-material/Send';
 
 
 var TUserListPage = Class(TObject,
@@ -37,6 +37,16 @@ var TUserListPage = Class(TObject,
             TUserListPage.BaseObject.Destroy.call(this);
         }
         ,
+        HandleDelete: function (_Event, _RowData)
+        {
+            alert("Silme aksiyonu.");
+        }
+        ,
+        HandleEdit: function (_Event, _RowData)
+        {
+            alert("Edit aksiyonu.");
+        }
+        ,
         render() {
             const { classes } = this.props;
 
@@ -45,6 +55,20 @@ var TUserListPage = Class(TObject,
                     <TDataTable
                         title={this.state.Language.UserList}
                         datasource={"TUserList"}
+                        //editAction={this.HandleEdit}
+                        //deleteAction={this.HandleDelete}
+                        actions={[
+                            {
+                                icon: SendIcon,
+                                tooltip: this.state.Language.Hi,
+                                onClick: (_Event, _RowData) => this.HandleSendEmail(_Event, _RowData)
+                            },
+                            {
+                                icon: SendIcon,
+                                tooltip: this.state.Language.Hi,
+                                onClick: (_Event, _RowData) => this.HandleSendEmail(_Event, _RowData)
+                            }
+                        ]}
                         options={{}}
                     />
                 </div>

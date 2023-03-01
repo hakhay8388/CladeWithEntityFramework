@@ -197,7 +197,14 @@ var TDataTable = Class(
         {
             return this.state.Rows.map((_Row) =>
             {
-                return <TDataTableRow actions={this.props.actions} key={_Row.ID} row={_Row} columns={this.state.Columns} />
+                return <TDataTableRow
+                    actions={this.props.actions}
+                    editAction={this.props.editAction}
+                    deleteAction={this.props.deleteAction}
+                    key={_Row.ID}
+                    row={_Row}
+                    columns={this.state.Columns}
+                />
             });
         }
         ,
@@ -217,7 +224,12 @@ var TDataTable = Class(
                     <TDataTableToolbar title={this.state.DataSourceCode} />
                     <TableContainer sx={{ maxHeight: 700 }}>
                         <Table sx={{ minWidth: 600 }} stickyHeader aria-label="simple table">
-                            {<TDataTableHeader columns={this.state.Columns} onSortChange={this.HandleOnSortChange} />}
+                            {<TDataTableHeader
+                                actions={this.props.actions}
+                                deleteAction={this.props.deleteAction}
+                                editAction={this.props.editAction}
+                                columns={this.state.Columns}
+                                onSortChange={this.HandleOnSortChange} />}
                             <TableBody>
                                 {this.HandleGetRows()}
                             </TableBody>

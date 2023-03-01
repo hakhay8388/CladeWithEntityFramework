@@ -12,6 +12,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Unity;
@@ -62,16 +63,32 @@ namespace Base.Data.nDatabaseService.nDatabase
             }
         }
 
-        public TEntity LockAndRefresh()
+        public void LockAndRefresh()
         {
             DbContext __DbContext = DataService.GetCoreEFDatabaseContext();
             string __TableName = __DbContext.Set<TEntity>().EntityType.GetTableName();
             string __Command = $"SELECT * FROM \"{__TableName}\" WHERE \"{__TableName}\".\"ID\"={ID} FOR UPDATE";
             __DbContext.Set<TEntity>().FromSqlRaw(__Command).FirstOrDefault();
-            TEntity __Entity = Get(__Item => __Item.ID == ID).AsNoTracking().FirstOrDefault();
-            __DbContext.Entry(this).State = EntityState.Detached;
-            __DbContext.Attach(__Entity);
-            return __Entity;
+            __DbContext.Entry(this).Reload();
+
+
+            //TEntity __Entity = Get(__Item => __Item.ID == ID).AsNoTracking().FirstOrDefault();
+
+            /*__DbContext.Entry(this).State = EntityState.Detached;
+
+            Type __Type = typeof(TEntity);
+            Type __ExtensionType = typeof(TypeExtensitons);
+            object[] __Parameters = new object[] { __Entity, this };
+            BindingFlags __BindingFlags = BindingFlags.Static | BindingFlags.Public;
+            MethodInfo __Method = __ExtensionType.GetMethod("CopyProperties", __BindingFlags);
+            __Method = __Method.MakeGenericMethod(new Type[] { __Type });
+
+            var extensionAttribute = __Method.GetCustomAttribute(typeof(ExtensionAttribute)) as ExtensionAttribute;
+            if (extensionAttribute != null)
+            {
+                __Method.Invoke(null, __Parameters);
+            }
+            __DbContext.Attach(this);*/
         }
 
 

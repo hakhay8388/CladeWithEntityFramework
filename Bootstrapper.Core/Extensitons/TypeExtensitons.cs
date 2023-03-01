@@ -1,6 +1,8 @@
+using AutoMapper;
 using Bootstrapper.Core.nApplication;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 /// <summary>
 /// Eğer bir Extensition yazıyorsan namespace belirtmeden yazmazlısın.
@@ -18,6 +20,20 @@ public static class TypeExtensitons
             //}
         }
         throw new Exception("TypeExtensitons -> ResolveInstance");
+    }
+
+    public static void CopyProperties<T>(this T _Source, T _Destination)
+    {
+        PropertyInfo[] __Properties = typeof(T).GetProperties();
+
+        foreach (PropertyInfo __Property in __Properties)
+        {
+            if (__Property.CanWrite)
+            {
+                object __Value = __Property.GetValue(_Source);
+                __Property.SetValue(_Destination, __Value);
+            }
+        }
     }
 
 }

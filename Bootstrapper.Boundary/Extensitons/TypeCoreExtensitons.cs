@@ -5,7 +5,7 @@ using System.Reflection;
 /// <summary>
 /// Eğer bir Extensition yazıyorsan namespace belirtmeden yazmazlısın.
 /// </summary>
-public static class TypeExtensitons
+public static class TypeCoreExtensitons
 {
 
     public static object CreateInstance(this Type _Type, params object[] _Params)

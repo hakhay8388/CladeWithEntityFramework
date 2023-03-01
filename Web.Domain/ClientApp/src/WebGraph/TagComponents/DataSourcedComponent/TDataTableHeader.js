@@ -18,7 +18,7 @@ import { Typography, TableSortLabel, Table, TableBody, TableCell, TableContainer
 import { withStyles } from "@mui/styles";
 import MaterialTableStyles from "../../../ScriptStyles/MaterialTableStyles";
 import { visuallyHidden } from '@mui/utils';
-
+import { WebGraph } from "../../GenericCoreGraph/WebGraph/WebGraph";
 
 var TDataTableHeader = Class(TObject, 
     {
@@ -59,6 +59,30 @@ var TDataTableHeader = Class(TObject,
             if (JSTypeOperator.IsFunction(this.props.onSortChange)) this.props.onSortChange(__Result, _MetaItem, _Event);
         }
         ,
+        HandleGetActions: function ()
+        {
+            var __This = this;
+            if (JSTypeOperator.IsArray(__This.props.actions) && __This.props.actions.length > 0)
+            {
+                return __This.props.actions.map(function (_MetaItem, _Index)
+                {
+                    return __This.HandleGetActionItem();
+                });
+            }
+            return null;
+        }
+        ,
+        HandleGetActionItem: function ()
+        {
+            return <TableCell
+                key={WebGraph.GetNewCreateID()}
+                align={"left"}
+                style={{ width: 30, paddingLeft: 10 }}
+                padding={'none'}
+            >
+            </TableCell>
+        }
+        ,
         render: function ()
         {
             var __This = this;
@@ -70,6 +94,9 @@ var TDataTableHeader = Class(TObject,
 
             return <TableHead>
                 <TableRow>
+                    {__This.HandleGetActions()}
+                    {JSTypeOperator.IsFunction(__This.props.editAction) && __This.HandleGetActionItem()}
+                    {JSTypeOperator.IsFunction(__This.props.deleteAction) && __This.HandleGetActionItem()}
                     {__This.props.columns.map(function (_MetaItem, _Index)
                     {
                         if (!JSTypeOperator.IsDefined(__This.state[_MetaItem.FieldName])) __This.state[_MetaItem.FieldName] = { Active: false, Direction: 'asc' };

@@ -47,7 +47,7 @@ namespace App.QueryTester.cQueryTesters
                 __DatabaseContext.Perform(() =>
                 {
                     cUserEntity __UserEntity = cUserEntity.GetEntityByID(1);
-                    __UserEntity = __UserEntity.LockAndRefresh();
+                    __UserEntity.LockAndRefresh();
 
                     try
                     {
