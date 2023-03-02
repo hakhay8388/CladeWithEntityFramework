@@ -43,6 +43,16 @@ var TBaseContainerLayout = Class(
              }*/
         }
         ,
+        HandleIsShowFooter: function ()
+        {
+            return true;
+        }
+        ,
+        HandleIsShowHeader: function ()
+        {
+            return true;
+        }
+        ,
         HandleOpenLeftDrawer: function () {
             this.setState({ leftMenu: true });
         },
@@ -222,14 +232,16 @@ var TBaseContainerLayout = Class(
                             minHeight: "100vh",
                         }}
                     >
-                        <div style={{ width: "100%", position: "fixed", zIndex: 1020 }}>
-                            <Suspense>
-                                {this.HandleGetHeader()}
-                            </Suspense>
-                        </div>
+                        {this.HandleIsShowHeader() &&
+                            <div style={{ width: "100%", position: "fixed", zIndex: 1020 }}>
+                                <Suspense>
+                                    {this.HandleGetHeader()}
+                                </Suspense>
+                            </div>
+                        }
                         <div
                             style={{
-                                marginTop: window.Settings.HeaderHeight + "px",
+                                marginTop: this.HandleIsShowHeader() ? window.Settings.HeaderHeight + "px" : 0,
                                 flexDirection: "row",
                                 flexGrow: 1,
                                 overflowX: "hidden",
@@ -305,7 +317,7 @@ var TBaseContainerLayout = Class(
                                 </div>
                             </main>
                         </div>
-                        <div
+                        {this.HandleIsShowFooter() && <div
                             style={{
                                 flex: "0 0 50px",
                                 display: "flex",
@@ -318,7 +330,7 @@ var TBaseContainerLayout = Class(
                             <Suspense>
                                 {this.HandleGetFooter()}
                             </Suspense>
-                        </div>
+                        </div>}
                     </div>
                 </Suspense>
 

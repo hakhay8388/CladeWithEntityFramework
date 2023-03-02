@@ -13,6 +13,8 @@
 	"LiveSessionsPage": {"message": "Açık Oturumlar", "description": ""},
 	"UsersMenu": {"message": "Kullanıcı İşlemleri", "description": ""},
     "UserList": {"message": "Kullanıcı Listesi","description": ""},
+	"TeamMemberPage": {"message": "TeamMemberPage", "description": ""},
+	"TeamMemberHayriPage": {"message": "TeamMemberHayriPage", "description": ""},
 	
 	
 	"Hi": {"message": "Merhaba", "description": ""},

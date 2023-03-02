@@ -13,6 +13,8 @@
 	"SystemSettingsPage": {"message": "System Settings Page", "description": ""},
 	"LiveSessionsPage": {"message": "Live Sessions Page", "description": ""},
 	"UsersMenu": {"message": "Users Menu", "description": ""},
+	"TeamMemberPage": {"message": "TeamMemberPage", "description": ""},
+	"TeamMemberHayriPage": {"message": "TeamMemberHayriPage", "description": ""},
 	
 	
 	"Hi": {"message": "Hi","description": ""},

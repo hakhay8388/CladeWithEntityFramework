@@ -16,5 +16,8 @@ namespace Domain.Data.nDatabaseService
 
         public DbSet<cPaymentEntity> Payments { get; set; }
 
+        public DbSet<cLawsuitEntity> Lawsuits { get; set; }
+        
+
     }
 }

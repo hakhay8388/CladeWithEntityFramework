@@ -12,10 +12,14 @@ namespace Domain.Boundary.nDefaultValueTypes
     public class DomainPageIDs : PageIDs
     {
         public static PageIDs TestPage { get; set; }
+        public static PageIDs TeamMemberHayriPage { get; set; }
+
 
         public static void Init()
         {
             TestPage = new PageIDs(GetVariableName(() => TestPage), "TestPage", "testpage", "TTestPage", 1000, new List<RoleIDs>() { RoleIDs.Admin });
+
+            TeamMemberHayriPage = new PageIDs(GetVariableName(() => TeamMemberHayriPage), "TeamMemberHayriPage", "teammemberhayripage", "TTeamMemberHayriPage", 1001, new List<RoleIDs>() { RoleIDs.Admin });
         }
 
         public DomainPageIDs(string _Code, string _Name, string _Url, string _Component, int _ID, List<RoleIDs> _MainRoles, string[] _SubParamName = null) 

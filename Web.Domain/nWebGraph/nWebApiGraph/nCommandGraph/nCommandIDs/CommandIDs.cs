@@ -12,11 +12,13 @@ namespace Web.Domain.nWebGraph.nWebApiGraph.nCommandGraph.nCommandIDs
     public class CommandIDs
     {
         public static ECommandType Test { get; private set; }
+        public static ECommandType AddLawsuit { get; private set; }
 
 
         public static void Init()
         {
             Test = new ECommandType(nameof(Test), 1000, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.Unlogined, RoleIDs.Developer, RoleIDs.User });
+            AddLawsuit = new ECommandType(nameof(AddLawsuit), 1001, "", true, new List<RoleIDs>() { RoleIDs.Admin, RoleIDs.User });
         }
     }
 }
